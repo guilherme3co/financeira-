@@ -10,7 +10,41 @@
   "background_color": "#F1F3EE",
   "theme_color": "#1F8A55",
   "icons": [
-    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
-    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable"}
-  ]
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Falar um lançamento",
+      "short_name": "Falar",
+      "description": "Abre o app já ouvindo o microfone",
+      "url": "./index.html?mic=1",
+      "icons": [
+        {
+          "src": "icon.svg",
+          "sizes": "any",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ],
+  "share_target": {
+    "action": "./index.html",
+    "method": "GET",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url"
+    }
+  }
 }
