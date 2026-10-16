@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v35">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iljFDIm8lv1tz/TIdczHKNNFSDN593R/1SzDLBnQAyI=' 'sha256-ih9S5xjL4dZrbZ5AkMXT3ZZD9L2v3cNLcm/eI+DF740=' 'sha256-0ilQ92uJ/i/ryPaBAPXgW3K4iSWSQy7BnBZqXf2Z/UQ='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v36">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iljFDIm8lv1tz/TIdczHKNNFSDN593R/1SzDLBnQAyI=' 'sha256-ih9S5xjL4dZrbZ5AkMXT3ZZD9L2v3cNLcm/eI+DF740=' 'sha256-xxUIBBWRQ4fOHmZk9xbvJ2l9+OupD33p5d7qSOXTH+k='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças v29</title>
@@ -302,7 +302,12 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 .mb.card{width:88%}.mb.mini{font-size:12px;color:var(--mute);background:transparent;padding:0 4px}
 .menops{display:flex;flex-wrap:wrap;gap:8px;padding:6px 0 8px;max-height:34vh;overflow:auto}.menops:empty{display:none}
 .mchip{border:1.5px solid var(--ink);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;font:600 14px 'DM Sans',sans-serif;cursor:pointer;min-height:40px;text-align:left}
-.menin{display:flex;gap:8px;align-items:center}.menin input{flex:1;min-width:0}.menin .add{width:auto;margin:0;padding:11px 16px}
+.menin[hidden]{display:none}.menin{display:flex;gap:8px;align-items:center}.menin input{flex:1;min-width:0}.menin .add{width:auto;margin:0;padding:11px 16px}
+.mb.sol{width:88%;background:var(--card);border:2px solid var(--pos);border-radius:14px}
+.msolh{font:800 12px 'DM Sans',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--pos);margin-bottom:4px}
+.msolt{margin:0;white-space:pre-line}
+.mchip.ac{background:var(--ink);color:var(--bg)}
+.mnovo{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--neg);color:#fff;font:700 11px 'DM Sans',sans-serif;vertical-align:middle}
 .mrow{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:14px}.mrow span{color:var(--mute)}.mrow b{text-align:right}
 .mzona{font-weight:700;margin-bottom:6px}
 .mbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin:8px 0 2px}.mbar i{display:block;height:100%;background:var(--pos)}
@@ -559,7 +564,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 </div></div>
 <div class="tut" id="tut" hidden role="dialog" aria-modal="true" aria-label="Tutorial"><div class="tut-hole" id="tuth"></div><div class="tut-b" id="tutb"><div class="tut-ar" id="tuta"></div><b id="tutt"></b><p id="tutx"></p><div class="tf"><button type="button" class="tp" id="tutp">Pular</button><span id="tutn"></span><button type="button" id="tutv">Voltar</button><button type="button" class="pri" id="tutk">Próximo</button></div></div></div>
 <button type="button" class="robo" id="robo" hidden aria-label="Abrir o mentor financeiro" title="Mentor financeiro"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><i id="robodot" hidden></i></button>
-<div class="sheet" id="men" hidden role="dialog" aria-modal="true" aria-labelledby="ment"><div class="sheetbox menbox"><div class="lanh"><h2 class="mhead" id="ment"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Mentor</h2><button type="button" class="add" id="menx">Fechar</button></div><div class="menlog" id="menlog" aria-live="polite"></div><div class="menops" id="menops"></div><div class="menin"><input id="mentx" autocomplete="off" maxlength="300" placeholder="Escreva uma dúvida" aria-label="Mensagem para o mentor"><button type="button" class="add pri" id="mensend">Enviar</button></div></div></div>
+<div class="sheet" id="men" hidden role="dialog" aria-modal="true" aria-labelledby="ment"><div class="sheetbox menbox"><div class="lanh"><h2 class="mhead" id="ment"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Mentor</h2><button type="button" class="add" id="menx">Fechar</button></div><div class="menlog" id="menlog" aria-live="polite"></div><div class="menops" id="menops"></div><div class="menin" id="menin" hidden><input id="mentx" autocomplete="off" maxlength="300" placeholder="Escreva uma dúvida" aria-label="Mensagem para o mentor"><button type="button" class="add pri" id="mensend">Enviar</button></div></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="tmsg"></span><button type="button" id="tuti" hidden>Útil</button><button type="button" id="tdes" hidden>Desnecessário</button><button type="button" id="tund">Desfazer</button></div>
 
 <script type="text/plain" id="pdfW">(function(){/**
@@ -582,7 +587,7 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v35';
+var VERSAO='v36';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -1735,7 +1740,6 @@ window.addEventListener('resize',function(){if(tutAt)tutShow()});
 $('tut').addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
 
 /* ---------- mentor financeiro (robozinho) — roda só no aparelho, nada é enviado ---------- */
-var ETAPAS=['Diagnóstico','Sair das dívidas','Reserva de emergência','Fazer o dinheiro render','Missões da semana'];
 var MEN={esp:null};
 function limpaMentor(m){m=(m&&typeof m==='object')?m:{};
 var n=function(v,a,b,d){v=Number(v);return(isFinite(v)&&v>=a&&v<=b)?v:d},ym=function(s){return /^\d{4}-\d{2}$/.test(s)?s:''},ymd=function(s){return /^\d{4}-\d{2}-\d{2}$/.test(s)?s:''};
@@ -1744,7 +1748,8 @@ var p=(m.plano&&typeof m.plano==='object')?m.plano:null,mi=(m.mis&&typeof m.mis=
 return{et:Math.round(n(m.et,0,4,0)),diag:!!m.diag,sal2:n(m.sal2,0,1e9,0),ess:n(m.ess,0,1e9,0),res:n(m.res,0,1e9,0),info:info,
 plano:p?{extra:n(p.extra,0,1e9,0),est:p.est==='aval'?'aval':'neve',ini:ym(p.ini)||mesAt(),meses:Math.round(n(p.meses,0,600,0))}:null,
 mis:(mi&&['des','gua','top','sem'].indexOf(mi.t)>=0&&ymd(mi.ini))?{t:mi.t,alvo:n(mi.alvo,0,1e9,0),k:String(mi.k||'').slice(0,60),nome:String(mi.nome||'').slice(0,60),ini:ymd(mi.ini)}:null,
-resVisto:ymd(m.resVisto),misOk:Math.round(n(m.misOk,0,1e5,0)),misTot:Math.round(n(m.misTot,0,1e5,0)),seq:Math.round(n(m.seq,0,1e5,0)),
+resVisto:ymd(m.resVisto),dd:ymd(m.dd),novos:(function(o){var r={};if(o&&typeof o==='object')['dia','div','gua','mais','mis','evo','sols','ren'].forEach(function(k){if(o[k])r[k]=1});return r})(m.novos),
+sols:(Array.isArray(m.sols)?m.sols:[]).filter(function(x){return x&&ymd(x.d)&&typeof x.t==='string'}).slice(0,15).map(function(x){return{d:x.d,t:x.t.slice(0,500)}}),misOk:Math.round(n(m.misOk,0,1e5,0)),misTot:Math.round(n(m.misTot,0,1e5,0)),seq:Math.round(n(m.seq,0,1e5,0)),
 hist:(Array.isArray(m.hist)?m.hist:[]).filter(function(h){return h&&ym(h.m)}).slice(-24).map(function(h){return{m:h.m,div:n(h.div,0,1e10,0),gua:n(h.gua,-1e10,1e10,0)}})}}
 function mI(id){var M=st.mentor,k=String(id);if(!M.info[k])M.info[k]={j:-1,sd:0,atr:false,fixa:false,base:mesAt()};return M.info[k]}
 function pctTxt(x){return(Math.round(x*1000)/10).toFixed(1).replace('.',',').replace(',0','')+'%'}
@@ -1768,17 +1773,27 @@ function mExtra(Z){var P=st.mentor.plano;return P?P.extra:r2(Z.livre/2)}
 function mEst(Z){var P=st.mentor.plano;return P?P.est:(Z.ds.some(function(x){return x.jo>0})?'aval':'neve')}
 function mOff(){return(st.dividas||[]).some(function(d){return dvAtivo(d)&&ehPar(d)&&!dvPago(d)})?0:1}
 function mQuando(R){return R.nunca?'nunca (o pagamento não cobre os juros)':R.meses+(R.meses===1?' mês':' meses')+' ('+mesDepois(R.meses-1+mOff())+')'}
-/* ---------- interface do chat ---------- */
+/* ---------- interface do chat (balões) ---------- */
+var MKEYS=['dia','div','gua','mais','mis','evo','sols','ren'];
+function mLib(k){var M=st.mentor;if(!M.diag)return false;
+ if(k==='mis')return !!(M.plano||M.res>0||M.mis||M.misTot>0);
+ if(k==='evo')return M.hist.length>=2||(!!M.dd&&isoDias(M.dd,hoje())>=7);
+ if(k==='sols')return M.sols.length>0;
+ if(k==='ren')return M.res>0||guardadoTotal()>0;return true}
+function mNovo(k){return mLib(k)&&!st.mentor.novos[k]}
 function mLog(){return $('menlog')}
 function mRol(){var l=mLog();setTimeout(function(){l.scrollTop=l.scrollHeight},40)}
 function mSay(t,cls){var b=el_('div','mb'+(cls?' '+cls:''));if(typeof t==='string')b.textContent=t;else b.appendChild(t);mLog().appendChild(b);mRol();return b}
 function mEu(t){mLog().appendChild(el_('div','mu',t));mRol()}
-function mOps(ops){var o=$('menops');o.innerHTML='';MEN.esp=null;var i=$('mentx');i.placeholder='Escreva uma dúvida';i.inputMode='text';
- (ops||[]).forEach(function(x){var b=el_('button','mchip',x[0]);b.type='button';b.onclick=function(){MEN.esp=null;mEu(x[0]);o.innerHTML='';x[1]()};o.appendChild(b)});mRol()}
-function mPede(ph,fn,ops,num){mOps(ops||[]);MEN.esp=fn;var i=$('mentx');i.placeholder=ph;i.inputMode=num?'decimal':'text';setTimeout(function(){try{i.focus()}catch(e){}},60)}
+/* ops: [rótulo, função, chave para liberar (opcional), chaves filhas (opcional)] */
+function mOps(ops){var o=$('menops'),M=st.mentor,mud=false;o.innerHTML='';MEN.esp=null;$('menin').hidden=true;var i=$('mentx');i.value='';
+ (ops||[]).forEach(function(x){if(x[2]&&!mLib(x[2]))return;var nv=(x[2]&&mNovo(x[2]))||(x[3]||[]).some(mNovo),b=el_('button','mchip'+(x[4]?' '+x[4]:''),x[0]);b.type='button';
+  if(nv){var s=el_('span','mnovo','novo');b.appendChild(s)}if(x[2]&&!M.novos[x[2]]){M.novos[x[2]]=1;mud=true}
+  b.onclick=function(){MEN.esp=null;mEu(x[0]);o.innerHTML='';$('menin').hidden=true;x[1]()};o.appendChild(b)});if(mud)save();mRol()}
+function mPede(ph,fn,ops,num){mOps(ops||[]);MEN.esp=fn;$('menin').hidden=false;var i=$('mentx');i.placeholder=ph;i.inputMode=num?'decimal':'text';setTimeout(function(){try{i.focus()}catch(e){}},60);mRol()}
 function mNum(ph,fn,ops,min){mPede(ph,function(v){var n=lerReais(v);if(!(n>=(min||0))||n>1e9){mSay('Não entendi o valor. Digite só o número, por exemplo 350,00.');mNum(ph,fn,ops,min);return}fn(r2(n))},ops,true)}
 function mInt(ph,fn,a,b){mPede(ph,function(v){var n=parseInt(String(v).replace(/\D/g,''),10);if(!(n>=a&&n<=b)){mSay('Digite um número de '+a+' a '+b+'.');mInt(ph,fn,a,b);return}fn(n)},null,true)}
-function mEnvia(){var i=$('mentx'),v=(i.value||'').trim();if(!v)return;i.value='';mEu(v.slice(0,300));if(MEN.esp){var f=MEN.esp;MEN.esp=null;$('menops').innerHTML='';f(v)}else mDuvida(v)}
+function mEnvia(){var i=$('mentx'),v=(i.value||'').trim();if(!v)return;i.value='';mEu(v.slice(0,300));var f=MEN.esp||mDuvida;MEN.esp=null;$('menops').innerHTML='';$('menin').hidden=true;f(v)}
 function mCard(tit,cor,rows,nota){var c=el_('div');if(tit){var t=el_('div','mzona',tit);if(cor)t.style.color='var('+cor+')';c.appendChild(t)}
  rows.forEach(function(r){var d=el_('div','mrow');d.appendChild(el_('span',null,r[0]));d.appendChild(el_('b',null,r[1]));c.appendChild(d)});if(nota)c.appendChild(el_('p','mleg',nota));return c}
 function mBarra(p,cor){var b=el_('div','mbar'),i=el_('i');i.style.width=Math.max(0,Math.min(100,p))+'%';if(cor)i.style.background='var('+cor+')';b.appendChild(i);return b}
@@ -1787,20 +1802,27 @@ function mGraf(h1,h2,leg){var W=300,H=110,P=6,all=h1.concat(h2||[]),mx=Math.max.
  function ln(x1,y1,x2,y2){var l=document.createElementNS(ns,'line');l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);l.setAttribute('class','mg0');s.appendChild(l)}
  function pl(h,cls){var p=document.createElementNS(ns,'polyline');p.setAttribute('points',h.map(function(v,i){return(P+i*(W-2*P)/n).toFixed(1)+','+(H-P-(v/mx)*(H-2*P)).toFixed(1)}).join(' '));p.setAttribute('class',cls);s.appendChild(p)}
  ln(P,H-P,W-P,H-P);if(h2)pl(h2,'mg2');pl(h1,'mg1');var c=el_('div');c.appendChild(s);if(leg)c.appendChild(el_('p','mleg',leg));return c}
+/* cartão SOLUÇÃO: fecha cada caminho com o que fazer + balões de ação */
+function mSol(txt,acoes){var M=st.mentor,c=el_('div');c.appendChild(el_('div','msolh','Solução'));c.appendChild(el_('p','msolt',txt));mSay(c,'sol');
+ M.sols.unshift({d:hoje(),t:String(txt).slice(0,500)});if(M.sols.length>15)M.sols=M.sols.slice(0,15);save();
+ mOps((acoes||[]).map(function(a){return[a[0],a[1],null,null,a[2]===false?'':'ac']}).concat([['Início',mRaiz]]))}
+function mFeito(t){mSay(t,'ok');mOps([['Início',mRaiz]])}
 function saud(){var h=new Date().getHours();return h<12?'Bom dia!':h<18?'Boa tarde!':'Boa noite!'}
-function mDot(){var b=$('robo');if(!b)return;b.hidden=false;var M=st&&st.mentor;if(!M)return;$('robodot').hidden=!(!M.diag||M.resVisto!==hoje()||(M.mis&&hoje()>isoAdd(M.mis.ini,6)))}
+function mDot(){var b=$('robo');if(!b)return;b.hidden=false;var M=st&&st.mentor;if(!M)return;$('robodot').hidden=!(!M.diag||M.resVisto!==hoje()||(M.mis&&hoje()>isoAdd(M.mis.ini,6))||MKEYS.some(mNovo))}
 function abreMentor(){if(!st)return;$('men').hidden=false;$('robodot').hidden=true;mLog().innerHTML='';var M=st.mentor;mHist();
- var rd=false;if(M.resVisto!==hoje()){M.resVisto=hoje();save();mResDia(isoAdd(hoje(),-1),true);rd=true}
- if(!M.diag){mSay('Oi! Sou seu mentor financeiro. Vou te fazer algumas perguntas, montar um plano para sair das dívidas e acompanhar você semana a semana.');mSay('Tudo fica só no seu celular. Leva uns 2 minutos.');mOps([['Vamos começar',mDiag0],['Agora não',fechaMentor]]);return}
- mSay((rd?'':saud()+' ')+'Você está na etapa '+(M.et+1)+' de 5: '+ETAPAS[M.et]+'.');mNovidades();mMenu(true)}
+ if(M.resVisto!==hoje()){M.resVisto=hoje();save();mResDia(isoAdd(hoje(),-1),true);return}
+ if(M.diag){mSay(saud()+' Que bom te ver.');mNovidades()}mRaiz()}
 function fechaMentor(){$('men').hidden=true;MEN.esp=null;if(st)mDot()}
-function mMenu(quieto){if(!quieto)mSay('O que vamos ver agora?');var M=st.mentor;
- mOps([[M.et<4?'Continuar: '+ETAPAS[M.et]:'Missão da semana',mTrilha],['Minhas dívidas',mDividas],['Simular saída das dívidas',mPlanoDiv],['Resumo de ontem',function(){mResDia(isoAdd(hoje(),-1));mMenu(true)}],['Resumo de hoje',function(){mResDia(hoje());mMenu(true)}],['Como estou indo',mEvolucao],['Missão da semana',mMissao],['Tirar uma dúvida',mFaq],['Perguntar ao Claude',mClaude],['Refazer diagnóstico',mDiag0]].filter(function(x,i){return !(i===6&&M.et>=4)}))}
-function mTrilha(){[mDiag0,mPlanoDiv,mReserva,mRender,mMissao][st.mentor.et]()}
-function mAvanca(k){var M=st.mentor;if(k>M.et)M.et=Math.min(4,k);save();mSay('Etapa concluída ✓ Próxima: '+ETAPAS[M.et]+'.','ok');mOps([['Continuar',mTrilha],['Menu',function(){mMenu()}]])}
-/* ---------- 1. diagnóstico ---------- */
+/* pergunta de introdução e raiz da conversa */
+function mRaiz(){var M=st.mentor;
+ if(!M.diag){mSay('Oi! Sou seu mentor financeiro. Vou te conhecer, montar um plano para você sair das dívidas e te acompanhar dia a dia. Tudo fica só no seu celular.');mSay('Vamos começar?');mOps([['Vamos nos conhecer',mDiag0],['Agora não',fechaMentor]]);return}
+ mSay('O que você quer ver agora?');
+ mOps([['Meu dia',mDia,'dia',['mis']],['Minhas dívidas',mDivR,'div'],['Guardar dinheiro',mGua,'gua',['ren']],['Mais',mMais,'mais',['evo','sols']]])}
+function mAgora(){mOps([['Início',mRaiz],['Fechar',fechaMentor]])}
+
+/* ---------- diagnóstico (pergunta de introdução) ---------- */
 function mDiag0(){var s=st.salario||0;if(s>0){mSay('Seu salário cadastrado é '+brl(s)+' por mês. Está certo?');mOps([['Sim',mDiag1],['Mudar',function(){mSay('Quanto você recebe por mês?');mNum('Salário por mês',function(v){st.salario=v;save();render();mDiag1()},null,0)}]])}
- else{mSay('Quanto você recebe de salário por mês?');mNum('Salário por mês',function(v){st.salario=v;save();render();mDiag1()},null,0)}}
+ else{mSay('Para começar: quanto você recebe de salário por mês?');mNum('Salário por mês',function(v){st.salario=v;save();render();mDiag1()},null,0)}}
 function mDiag1(){mSay('Tem alguma renda extra todo mês (bico, venda, comissão)?');mOps([['Não tenho',function(){st.mentor.sal2=0;save();mDiag2()}],['Tenho',function(){mSay('Quanto, em média, por mês?');mNum('Renda extra por mês',function(v){st.mentor.sal2=v;save();mDiag2()})}]])}
 function mDiag2(){var M=st.mentor,q=(st.dividas||[]).filter(function(d){return(ehPar(d)?dvAtivo(d):true)&&!M.info[String(d.id)]});if(!q.length){mDiag3();return}
  var d=q[0],I={j:-1,sd:0,atr:false,fixa:false,base:mesAt()};function fim(){M.info[String(d.id)]=I;save();mDiag2()}
@@ -1808,31 +1830,97 @@ function mDiag2(){var M=st.mentor,q=(st.dividas||[]).filter(function(d){return(e
   mOps([['Sem juros',function(){I.j=0;fim()}],['Tem, sei a taxa',function(){mSay('Quantos % ao mês?');mNum('Juros ao mês, em %',function(v){I.j=Math.min(50,v);fim()})}],['Não sei',fim]])}
  else{mSay('“'+d.nome+'” ('+brl(d.valor)+' por mês) é uma conta fixa, como aluguel ou internet, ou uma dívida que um dia acaba?');
   mOps([['Conta fixa',function(){I.fixa=true;fim()}],['Dívida para quitar',function(){mSay('Quanto falta pagar nela hoje, no total?');mNum('Quanto falta',function(v){I.sd=v;mSay('Qual o juro ao mês, em %?');mNum('Juros ao mês, em %',function(j){I.j=Math.min(50,j);fim()},[['Sem juros',function(){I.j=0;fim()}],['Não sei',fim]])},null,0.01)}]])}}
-function mDiag3(){mSay('Tem alguma dívida que ainda não está no app? Cartão atrasado, empréstimo, cheque especial, conta atrasada, dinheiro emprestado de alguém...');mOps([['Não, está tudo aí',mDiag4],['Tenho, vou adicionar',function(){mAddDiv(mDiag3b)}]])}
+function mDiag3(){mSay('Tem alguma dívida que ainda não está no app? Cartão atrasado, empréstimo, cheque especial, dinheiro emprestado de alguém...');mOps([['Não, está tudo aí',mDiag4],['Tenho, vou adicionar',function(){mAddDiv(mDiag3b)}]])}
 function mDiag3b(){mSay('Mais alguma dívida fora do app?');mOps([['Não',mDiag4],['Sim',function(){mAddDiv(mDiag3b)}]])}
 function mDiag4(){var ds=mDiv().filter(function(x){return !x.atr});if(!ds.length){mDiag5();return}mSay('Alguma dessas está atrasada?');
- mOps([['Nenhuma',mDiag5]].concat(ds.map(function(x){return[x.nome,function(){mI(x.id).atr=true;save();mSay('Anotado.');mDiag4b()}]})))}
-function mDiag4b(){var ds=mDiv().filter(function(x){return !x.atr});if(!ds.length){mDiag5();return}mSay('Mais alguma atrasada?');mOps([['Não, só essa(s)',mDiag5]].concat(ds.map(function(x){return[x.nome,function(){mI(x.id).atr=true;save();mDiag4b()}]})))}
+ mOps([['Nenhuma',mDiag5]].concat(ds.map(function(x){return[x.nome,function(){mI(x.id).atr=true;save();mDiag4b()}]})))}
+function mDiag4b(){var ds=mDiv().filter(function(x){return !x.atr});if(!ds.length){mDiag5();return}mSay('Anotado. Mais alguma atrasada?');mOps([['Não, só essa(s)',mDiag5]].concat(ds.map(function(x){return[x.nome,function(){mI(x.id).atr=true;save();mDiag4b()}]})))}
 function mDiag5(){var M=st.mentor,e=r2(mediaCampo(function(t){return t.uti+t.sem})||0);
- var pede=function(){mSay('Quanto você gasta por mês com o essencial (mercado, contas, transporte, remédio)?');mNum('Essencial por mês',function(v){M.ess=v;save();mDiagRes()},null,1)};
- if(e>=50){mSay('Pelos seus lançamentos, o essencial gira em torno de '+brl(e)+' por mês. Uso esse valor?');mOps([['Sim',function(){M.ess=e;save();mDiagRes()}],['Outro valor',pede]])}else pede()}
-function mDiagRes(){var M=st.mentor;M.diag=true;save();var Z=mZona();
- mSay('Pronto. Este é o seu retrato hoje:');
+ var pede=function(){mSay('Última pergunta: quanto você gasta por mês com o essencial (mercado, contas, transporte, remédio)?');mNum('Essencial por mês',function(v){M.ess=v;save();mDiagRes()},null,1)};
+ if(e>=50){mSay('Última: pelos seus lançamentos, o essencial gira em torno de '+brl(e)+' por mês. Uso esse valor?');mOps([['Sim',function(){M.ess=e;save();mDiagRes()}],['Outro valor',pede]])}else pede()}
+function mDiagRes(){var M=st.mentor,pri=!M.diag;M.diag=true;M.dd=hoje();if(pri)['dia','div','gua','mais'].forEach(function(k){M.novos[k]=1});save();var Z=mZona();
+ mSay('Pronto, já te conheço. Este é o seu retrato hoje:');
  mSay(mCard(Z.z.n+' · '+Z.z.t,Z.z.c,[['Renda por mês',brl(Z.renda)],['Contas e dívidas por mês',brl(Z.mens)+' ('+Math.round(Z.pct*100)+'%)'],['Sobra por mês',brl(Z.sobra)],['Falta quitar (dívidas)',brl(Z.tot)],['Guardado',brl(Z.gua)],['Desnecessários por mês',brl(Z.des)]],'Ideal: contas e dívidas até 30% da renda. Acima de 50% é zona vermelha.'),'card');
- mSay('Meus conselhos para você agora:');mDicas(Z).slice(0,4).forEach(function(t,i){mSay((i+1)+'. '+t,'dica')});
- mSay('Orientação educativa, não substitui um profissional.','mini');mAvanca(1)}
+ var d=mDicas(Z).slice(0,3);mSay('Orientação educativa, não substitui um profissional.','mini');
+ mSol('Seu plano agora:\n'+d.map(function(t,i){return(i+1)+'. '+t}).join('\n'),Z.ds.length?[['Montar plano das dívidas',mLivreQ]]:[['Quanto guardar?',mQuanto]])}
 function mDicas(Z){var out=[],ex=mExtra(Z),es=mEst(Z);
- if(Z.sobra<=0)out.push('Suas contas fixas passam da renda. Primeiro passo: renegociar parcelas menores ou buscar uma renda extra. Sem isso, nenhuma estratégia fecha.');
- if(Z.atr)out.push('Você tem '+Z.atr+(Z.atr>1?' dívidas atrasadas':' dívida atrasada')+'. Negocie antes de tudo: multa e juros de atraso crescem rápido. Peça desconto à vista ou uma parcela que caiba na sua sobra.');
- if(Z.caro.length){var c=Z.caro[0];out.push('“'+c.nome+'” cobra '+pctTxt(c.jo)+' ao mês. É a mais cara: todo dinheiro extra vai para ela primeiro. Se der, troque por um parcelamento com juros menores.')}
+ if(Z.sobra<=0)out.push('Suas contas fixas passam da renda. Renegocie parcelas menores ou busque uma renda extra. Sem isso, nenhuma estratégia fecha.');
+ if(Z.atr)out.push('Negocie '+(Z.atr>1?'as '+Z.atr+' dívidas atrasadas':'a dívida atrasada')+' antes de tudo: multa e juros de atraso crescem rápido. Peça desconto à vista ou parcela que caiba na sua sobra.');
+ if(Z.caro.length){var c=Z.caro[0];out.push('Todo dinheiro extra vai para “'+c.nome+'” ('+pctTxt(c.jo)+' ao mês), a mais cara. Se der, troque por um parcelamento com juros menores.')}
  if(Z.des>0&&Z.renda>0&&Z.des/Z.renda>=0.04){var meio=r2(Z.des/2);if(Z.ds.length){var b0=mSim(Z.ds,ex,es),b1=mSim(Z.ds,ex+meio,es);
-  if(!b1.nunca&&(b0.nunca||b1.meses<b0.meses))out.push('Seus desnecessários dão uns '+brl(Z.des)+' por mês. Cortando metade ('+brl(meio)+'), você sai das dívidas '+(b0.nunca?'— e elas passam a ter fim':(b0.meses-b1.meses)+((b0.meses-b1.meses)===1?' mês':' meses')+' antes')+'.');
-  else out.push('Seus desnecessários dão uns '+brl(Z.des)+' por mês. Cortar metade libera '+brl(meio)+' por mês.')}
-  else out.push('Seus desnecessários dão uns '+brl(Z.des)+' por mês. Cortando metade, sobram '+brl(meio)+' a mais para guardar.')}
- if(Z.ess>0&&Z.gua<Z.ess)out.push('Seu guardado ainda não cobre 1 mês do essencial. Mesmo pagando dívidas, guarde o mínimo'+(Z.guar>0?' ('+brl(Z.guar)+' por mês)':'')+': é o que evita uma dívida nova no primeiro imprevisto.');
- var cr=0,g=0;st.items.forEach(function(i){if(i.ent||i.cor==='gua')return;g+=i.val;if(pagCred(i))cr+=i.val});if(g>0&&cr/g>0.5)out.push('Mais da metade dos gastos deste mês foi no crédito. Enquanto estiver endividado, prefira débito ou Pix: o cartão empurra o problema para o mês seguinte.');
+  if(!b1.nunca&&(b0.nunca||b1.meses<b0.meses))out.push('Corte metade dos desnecessários ('+brl(meio)+' de '+brl(Z.des)+' por mês) e saia das dívidas '+(b0.nunca?'— elas passam a ter fim':(b0.meses-b1.meses)+((b0.meses-b1.meses)===1?' mês':' meses')+' antes')+'.');
+  else out.push('Corte metade dos desnecessários: libera '+brl(meio)+' por mês.')}
+  else out.push('Corte metade dos desnecessários ('+brl(Z.des)+' por mês): sobram '+brl(meio)+' a mais para guardar.')}
+ if(Z.ess>0&&Z.gua<Z.ess)out.push('Guarde o mínimo'+(Z.guar>0?' ('+brl(Z.guar)+' por mês)':'')+' até ter 1 mês do essencial: é o que evita uma dívida nova no primeiro imprevisto.');
+ var cr=0,g=0;st.items.forEach(function(i){if(i.ent||i.cor==='gua')return;g+=i.val;if(pagCred(i))cr+=i.val});if(g>0&&cr/g>0.5)out.push('Prefira débito ou Pix: mais da metade dos gastos do mês foi no crédito.');
  if(!out.length)out.push('Tudo em ordem. Mantenha o plano, guarde todo mês e cumpra as missões da semana.');return out}
-/* adicionar dívida pelo chat (vai para o Planejamento também) */
+/* ---------- MEU DIA ---------- */
+function mDia(){mSay('Qual dia você quer ver?');mOps([['Ontem',function(){mResDia(isoAdd(hoje(),-1))}],['Hoje',function(){mResDia(hoje())}],['Missão da semana',mMissao,'mis']])}
+function mDiaDados(iso){var L=itemsTodos(),it=L.filter(function(i){return i.d===iso}),r={iso:iso,n:it.length,ent:0,gas:0,gua:0,ret:0,c:{uti:0,des:0,sem:0},cr:0,gs:[]};
+ it.forEach(function(i){var v=Number(i.val)||0;if(i.ent){r.ent+=v;return}if(i.cor==='gua'){if(i.ret)r.ret+=v;else r.gua+=v;return}r.gas+=v;r.c[(i.cor==='uti'||i.cor==='des')?i.cor:'sem']+=v;if(pagCred(i))r.cr+=v;r.gs.push(i)});
+ ['ent','gas','gua','ret','cr'].forEach(function(k){r[k]=r2(r[k])});
+ var ini=isoAdd(iso,-30),soma=0,pri=iso;L.forEach(function(i){if(i.d>=ini&&i.d<iso&&!i.ent&&i.cor!=='gua'){soma+=Number(i.val)||0;if(i.d<pri)pri=i.d}});var nd=Math.max(1,isoDias(pri,iso));r.med=nd>=3?r2(soma/nd):0;return r}
+function mResDia(iso,auto){var D=mDiaDados(iso),c=D.c,dd=new Date(iso+'T12:00:00'),hj=iso===hoje(),tit=(hj?'Resumo de hoje':'Resumo de ontem')+' · '+['dom','seg','ter','qua','qui','sex','sáb'][dd.getDay()]+' '+dm(iso);
+ if(auto)mSay(saud()+' Aqui está o resumo de ontem.');
+ if(!D.n){mSay(mCard(tit,null,[['Lançamentos','nenhum']]),'card');mSay(hj?'Nada lançado hoje ainda. Gastou alguma coisa?':'Nenhum lançamento ontem. Gastou alguma coisa?');
+  mOps([['Gastei, vou lançar',function(){fechaMentor();try{fr.focus()}catch(e){}}],['Não gastei nada',function(){mSol('Dia sem gastos conta muito a seu favor. Tente ter 2 dias assim por semana: é um jeito fácil de sobrar dinheiro.')}]]);return}
+ var rows=[['Entradas',brl(D.ent)],['Saídas (gastos)',brl(D.gas)]];if(c.uti>0)rows.push(['   Útil',brl(r2(c.uti))]);if(c.des>0)rows.push(['   Desnecessário',brl(r2(c.des))]);if(c.sem>0)rows.push(['   Sem categoria',brl(r2(c.sem))]);if(D.cr>0)rows.push(['   No crédito',brl(D.cr)]);
+ if(D.gua>0)rows.push(['Guardado',brl(D.gua)]);if(D.ret>0)rows.push(['Retirado do guardado',brl(D.ret)]);rows.push(['Saldo do dia',(D.ent-D.gas>=0?'+ ':'− ')+brl(Math.abs(r2(D.ent-D.gas)))]);
+ var card=mCard(tit,null,rows);if(D.gas>0&&c.des>0){card.appendChild(el_('p','mleg','Desnecessário: '+Math.round(c.des/D.gas*100)+'% dos gastos do dia'));card.appendChild(mBarra(c.des/D.gas*100,'--des'))}mSay(card,'card');
+ var med=D.med,gas=D.gas;if(med>0)mSay(gas>=med*2?'Gastou '+(gas/med).toFixed(1).replace('.',',')+' vezes a sua média diária ('+brl(med)+' por dia).':gas>med*1.05?'Gastou '+Math.round((gas/med-1)*100)+'% acima da sua média diária ('+brl(med)+' por dia).':gas<med*0.95?'Gastou '+Math.round((1-gas/med)*100)+'% abaixo da sua média diária ('+brl(med)+' por dia). Boa!':'Gasto na média diária ('+brl(med)+' por dia).',gas>med*1.05?'alerta':'ok');
+ var alto=(med>0&&gas>med*1.05)||(med===0&&gas>0&&c.des/gas>=0.3);
+ if(alto){mSay('Quer entender para onde foi?');mOps([['Onde foi?',function(){mOnde(D)}],['Foi uma exceção',function(){mSol('Tudo bem acontecer. Para compensar, tente ficar em até '+brl(r2(Math.max(10,(med||gas/3)*0.8)))+' por dia nos próximos 3 dias.')}],['Ver o mês',mMes]])}
+ else{mSay(gas>0?'Dia controlado. Quer ver como está o mês?':'Sem gastos neste dia. Quer ver como está o mês?');mOps([['Ver o mês',mMes],['Maiores gastos',function(){mOnde(D)}],['Início',mRaiz]])}}
+function mOnde(D){var c=D.c,tp=D.gs.slice().sort(function(a,b){return b.val-a.val}).slice(0,3);if(tp.length)mSay('Maiores gastos:\n'+tp.map(function(i,k){return(k+1)+'. '+(i.desc||'Sem descrição')+' · '+brl(i.val)+(i.cor==='des'?' (desnecessário)':i.cor==='uti'?' (útil)':' (sem categoria)')}).join('\n'));
+ if(c.sem>0&&c.sem>=c.des){mSol('Classifique '+(c.sem===D.gas?'os gastos':'os '+brl(r2(c.sem))+' sem categoria')+' como Útil ou Desnecessário no Histórico. Sem isso, não dá para saber onde cortar.',[['Abrir Histórico',function(){fechaMentor();vaiPagina(3)}]]);return}
+ if(c.des>0){var cd=mCand().filter(function(x){return x.t==='des'})[0],alvo=cd?cd.alvo:Math.max(10,Math.round(c.des*0.7/5)*5),des=mZona().des,eco=r2(Math.max(0,des-alvo*4.3));
+  mSol('Esta semana: no máximo '+brl(alvo)+' em desnecessários. '+(tp[0]&&tp[0].cor==='des'?'Comece cortando “'+(tp[0].desc||'o maior gasto')+'”. ':'')+(eco>0?'Assim sobram uns '+brl(eco)+' no mês.':''),[['Aceitar como missão',function(){var M=st.mentor;M.mis={t:'des',alvo:alvo,k:'',nome:'',ini:hoje()};save();mFeito('Missão valendo até '+dm(isoAdd(hoje(),6))+'. Eu confiro sozinho pelos seus lançamentos.')}],['Agora não',mRaiz,false]]);return}
+ mSol('Foram gastos úteis. Para equilibrar, segure os próximos 2 dias'+(D.med>0?' em até '+brl(r2(D.med*0.8))+' por dia':'')+' e evite compras por impulso.')}
+function mMes(){var m=mesesLista(),mm=m[m.length-1],sm=statsMes(mm),rec=sm.rec||st.salario||0,lim=(st.cons&&st.cons.limDes>0)?st.cons.limDes:r2(rec*0.10),rw=[['Disponível agora',brl(saldoAtual())],['Gasto no mês',brl(r2(sm.gasto))]],f=dfMes(),rest=Math.max(1,f.tot-f.dia+1);
+ if(lim>0)rw.push(['Desnecessários do mês',brl(r2(sm.des))+' de '+brl(lim)]);var cm=mCard('Mês até agora',null,rw);if(lim>0)cm.appendChild(mBarra(sm.des/lim*100,sm.des>lim?'--neg':sm.des>=lim*0.7?'--mid':'--pos'));mSay(cm,'card');
+ if(!(lim>0)){mSol('Cadastre o salário (Planejamento) ou lance suas entradas para eu calcular o limite de desnecessários do mês.');return}
+ if(sm.des>lim)mSol('Os desnecessários já passaram do limite em '+brl(r2(sm.des-lim))+'. Até o fim do mês: zero desnecessários. Cada real que sobrar vai para a dívida ou para o guardado.',[['Aceitar como missão',function(){st.mentor.mis={t:'des',alvo:0,k:'',nome:'',ini:hoje()};save();mFeito('Missão valendo até '+dm(isoAdd(hoje(),6))+': nenhum desnecessário.')}]]);
+ else mSol('Ainda cabem '+brl(r2(lim-sm.des))+' em desnecessários até o fim do mês: uns '+brl(r2((lim-sm.des)/rest))+' por dia. Passando disso, o dinheiro sai do que iria para dívidas e guardado.')}
+/* ---------- missões ---------- */
+function mMissao(){var M=st.mentor;mFecha();if(M.mis){var r=mAval(M.mis),x=M.mis;mSay('Missão até '+r.ate+': '+mTxt(x)+'.\n'+r.txt,r.ok?'ok':'dica');
+  var dias=Math.max(1,isoDias(hoje(),isoAdd(x.ini,6))+1),t=r.ok?'Você está dentro da missão. ':'';
+  if(x.t==='des'){var s=r2(itemsTodos().filter(function(i){return i.d>=x.ini&&i.d<=isoAdd(x.ini,6)&&!i.ent&&i.cor==='des'}).reduce(function(a,i){return a+i.val},0));t+=s<x.alvo?'Restam '+brl(r2(x.alvo-s))+' até '+r.ate+': no máximo '+brl(r2((x.alvo-s)/dias))+' por dia.':'O limite acabou: até '+r.ate+', só o essencial.'}
+  else if(x.t==='gua')t+=r.ok?'Meta batida! Se puder, guarde mais um pouco.':'Separe o que falta hoje mesmo: guardar no começo é mais fácil que no fim.';
+  else if(x.t==='top')t+=r.ok?'Segure até '+r.ate+'.':'Passou do combinado. Até '+r.ate+', nenhum “'+x.nome+'”.';
+  else t+='Abra o Histórico e toque em cada gasto sem categoria.';
+  mSol(t,[['Trocar missão',function(){M.mis=null;save();mNova()},false]]);return}mNova()}
+function mNova(sem){var M=st.mentor,c=mCand(),x=c.filter(function(y){return y.t!==sem})[0]||c[0];
+ if(!x){mSay('Ainda não tenho dados para montar uma missão. Lance seus gastos por uns dias.');mAgora();return}
+ mSol('Missão para os próximos 7 dias: '+mTxt(x)+'.',[['Aceitar',function(){x.ini=hoje();M.mis=x;save();mFeito('Valendo até '+dm(isoAdd(x.ini,6))+'! Eu confiro sozinho pelos seus lançamentos.')}],['Outra missão',function(){mNova(x.t)},false]])}
+/* ---------- MINHAS DÍVIDAS ---------- */
+function mDivR(){var ds=mDiv(),gi=function(id){return st.mentor.info[String(id)]||{}},fx=(st.dividas||[]).filter(function(d){var I=gi(d.id);return !ehPar(d)&&!(I.sd>0&&!I.fixa)});
+ if(!ds.length){mSay('Você não tem dívidas para quitar cadastradas.'+(fx.length?' Contas fixas: '+fx.map(function(d){return d.nome}).join(', ')+'.':''));mSay('O que quer fazer?');mOps([['Adicionar uma dívida',function(){mAddDiv(mDivR)}],['Início',mRaiz]]);return}
+ var Z=mZona();mSay(mCard('Falta quitar: '+brl(Z.tot),null,ds.map(function(x){return[x.nome+(x.atr?' (atrasada)':''),brl(x.rest)+' · '+brl(x.parc)+'/mês'+(x.jr>0?' · '+pctTxt(x.jo)+' a.m.':x.jr===0?' · sem juros':'')]}),fx.length?'Contas fixas (não entram aqui): '+fx.map(function(d){return d.nome}).join(', ')+'.':''),'card');
+ mSay('O que você quer fazer?');mOps([['Quando fico livre?',mLivreQ],['Adicionar uma dívida',function(){mAddDiv(mDivR)}],['Atualizar uma',mAtuQ]])}
+function mAtuQ(){var ds=(st.dividas||[]).filter(function(d){return ehPar(d)?dvAtivo(d):true});if(!ds.length){mDivR();return}mSay('Qual?');mOps(ds.map(function(d){return[d.nome,function(){mEditDiv(d.id)}]}).concat([['Voltar',mDivR]]))}
+function mLivreQ(){var Z=mZona();if(!Z.ds.length){mDivR();return}var P=st.mentor.plano,ex=P?P.extra:0,R=mSim(Z.ds,ex,P?P.est:mEst(Z));
+ mSay(mGraf(R.hist,null,'Quanto falta, mês a mês'+(ex>0?' (com o seu plano de '+brl(ex)+' a mais)':'')+'.'),'card');
+ if(R.nunca){mSay('Do jeito que está, a dívida não acaba: o pagamento não cobre os juros.','alerta');var c=Z.caro[0]||Z.ds[0];
+  mSol('Renegocie “'+c.nome+'”: peça uma parcela fixa que caiba na sua sobra ('+brl(Z.livre)+' livres), ou troque por um empréstimo com juros menores. Pagar só o mínimo não resolve.',[['Ver como negociar',function(){var f=FAQ[3];mSol(f.a(mZona()))},false]]);return}
+ mSay((P?'No seu plano':'Do jeito que está')+', você fica livre em '+mQuando(R)+'.'+(R.jur>0?' Juros até lá: '+brl(R.jur)+'.':''),'ok');
+ mSay('Quer chegar antes?');mOps([['Sim, me mostre como',mAntesQ],['Ver ordem de pagamento',function(){mOrdem(ex)}],['Início',mRaiz]])}
+function mAntesQ(){var Z=mZona();if(Z.sobra<=0){mSol('Hoje não sobra nada depois das contas. Para sair antes: corte desnecessários ('+brl(Z.des)+' por mês) ou busque uma renda extra, e use esse dinheiro na dívida mais cara.');return}
+ mSay('Quanto dá para colocar a mais por mês? Depois de guardar o mínimo ('+brl(Z.guar)+'), sobram uns '+brl(Z.livre)+' livres.');
+ var ops=[];if(Z.livre>=10){ops.push(['Metade: '+brl(r2(Z.livre/2)),function(){mPlanoSol(r2(Z.livre/2))}]);ops.push(['Tudo: '+brl(Z.livre),function(){mPlanoSol(Z.livre)}])}
+ ops.push(['Outro valor',function(){mNum('Valor extra por mês',function(v){mPlanoSol(v)},null,0)}]);mOps(ops)}
+function mMelhor(Z,ex){var a=mSim(Z.ds,ex,'neve'),b=mSim(Z.ds,ex,'aval'),tj=Z.ds.some(function(x){return x.jo>0}),best=(tj&&!b.nunca&&(a.nunca||b.jur<a.jur-0.5||b.meses<a.meses))?'aval':'neve';return{R:best==='aval'?b:a,est:best,a:a,b:b,tj:tj}}
+function mAplica(ex,X){return function(){st.mentor.plano={extra:ex,est:X.est,ini:mesAt(),meses:X.R.meses};save();mFeito('Plano aplicado. Eu acompanho e te aviso se você estiver adiantado ou atrasado.')}}
+function mPlanoSol(ex){var Z=mZona(),s0=mSim(Z.ds,0,'neve'),X=mMelhor(Z,ex),R=X.R;
+ if(R.nunca){mSol('Mesmo com '+brl(ex)+' a mais, o pagamento não cobre os juros. Renegocie a dívida mais cara antes de qualquer coisa.');return}
+ mSay(mGraf(R.hist,ex>0?s0.hist:null,ex>0?'Verde: com '+brl(ex)+' a mais por mês. Tracejada: só as parcelas.':'Quanto falta, mês a mês.'),'card');
+ if(X.tj&&(X.a.meses!==X.b.meses||Math.abs(X.a.jur-X.b.jur)>0.5))mSay('Comparei dois jeitos:\n• Menor dívida primeiro: '+X.a.meses+' meses, '+brl(X.a.jur)+' de juros.\n• Juros mais alto primeiro: '+X.b.meses+' meses, '+brl(X.b.jur)+' de juros.');
+ var ord=R.ds.slice().sort(function(p,q){return(p.fim-q.fim)||(q.jo-p.jo)}),pri=ord[0],eco=r2(Math.max(0,s0.jur-R.jur)),ant=s0.nunca?0:s0.meses-R.meses;
+ mSol((ex>0?'Coloque '+brl(ex)+' a mais por mês em “'+pri.nome+'”'+(pri.jo>0?' ('+pctTxt(pri.jo)+' ao mês)':'')+'. Quando ela acabar, passe tudo para a próxima.\n':'Mantenha as parcelas em dia.\n')+'Você fica livre em '+mQuando(R)+(ant>0?', '+ant+(ant===1?' mês':' meses')+' antes':'')+(eco>0?' e economiza '+brl(eco)+' de juros':'')+'.'+(ex>0&&Z.ds.some(function(x){return x.par})?'\nAo adiantar parcelas, peça o desconto dos juros (Código de Defesa do Consumidor, art. 52).':''),
+  [['Aplicar este plano',mAplica(ex,X)],['Outro valor',mAntesQ,false]])}
+function mOrdem(ex){var Z=mZona(),X=mMelhor(Z,ex),R=X.R;if(R.nunca){mLivreQ();return}var ord=R.ds.slice().sort(function(p,q){return(p.fim-q.fim)||(q.jo-p.jo)});
+ mSay('Ordem para quitar:\n'+ord.map(function(x,i){return(i+1)+'º '+x.nome+' — quitada em '+mesDepois(x.fim-1+mOff())}).join('\n'));
+ mSol('Pague todas as parcelas em dia e coloque todo dinheiro extra em “'+ord[0].nome+'”. '+(X.est==='aval'?'Ela tem os juros mais altos: é onde cada real rende mais.':'É a menor: quitar rápido libera a parcela dela para a próxima.')+' Quando acabar, a parcela dela vai para “'+(ord[1]?ord[1].nome:'o guardado')+'”.',[['Aplicar este plano',mAplica(ex,X)]])}
+/* adicionar e editar dívida (vai para o Planejamento também) */
 function mAddDiv(next){mSay('Qual o nome da dívida? Ex.: Cartão Nubank, Empréstimo, Moto.');
  mPede('Nome da dívida',function(v){var nome=String(v).replace(/\s+/g,' ').trim().slice(0,40);if(nome.length<2){mSay('Digite um nome com pelo menos 2 letras.');mAddDiv(next);return}
   if((st.dividas||[]).length>=90){mSay('Você já tem muitas dívidas cadastradas. Apague alguma no Planejamento antes.');next();return}
@@ -1844,59 +1932,64 @@ function mAddDiv(next){mSay('Qual o nome da dívida? Ex.: Cartão Nubank, Empré
      var cria=function(j){if(n<=1)grava({nome:nome,valor:tot,pago:false,n:0,total:0,pagas:0,ult:''},{j:j,sd:tot,atr:false,fixa:false});else grava({nome:nome,valor:r2(tot/n),pago:false,n:n,total:tot,pagas:0,ult:''},{j:j,sd:0,atr:false,fixa:false})};
      mOps([['Sem juros',function(){cria(0)}],['Sei a taxa',function(){mNum('Juros ao mês, em %',function(j){cria(Math.min(50,j))})}],['Não sei',function(){cria(-1)}]])},1,360)},null,0.01)}],
    ['Cartão, cheque especial ou empréstimo',function(){mSay('Quanto você deve hoje nela?');mNum('Quanto deve hoje',function(sd){mSay('Qual o juro ao mês, em %? Cartão rotativo e cheque especial costumam passar de 8%.');mNum('Juros ao mês, em %',function(j){porMes(sd,Math.min(50,j))},[['Não sei',function(){porMes(sd,-1)}]])},null,0.01)}]])},null,false)}
-/* ---------- minhas dívidas ---------- */
-function mDividas(){var ds=mDiv(),gi=function(id){return st.mentor.info[String(id)]||{}},fx=(st.dividas||[]).filter(function(d){var I=gi(d.id);return !ehPar(d)&&!(I.sd>0&&!I.fixa)});
- if(!ds.length)mSay('Nenhuma dívida para quitar cadastrada.');else{var Z=mZona();mSay(mCard('Falta quitar: '+brl(Z.tot),null,ds.map(function(x){return[x.nome+(x.atr?' (atrasada)':''),brl(x.rest)+' · '+brl(x.parc)+'/mês'+(x.jr>0?' · '+pctTxt(x.jo)+' a.m.':x.jr===0?' · sem juros':'')]}),fx.length?'Contas fixas (não entram na conta de quitar): '+fx.map(function(d){return d.nome}).join(', ')+'.':''),'card')}
- mOps(ds.map(function(x){return[x.nome,function(){mEditDiv(x.id)}]}).concat([['Adicionar dívida',function(){mAddDiv(mDividas)}],['Menu',function(){mMenu()}]]))}
-function mEditDiv(id){var d=(st.dividas||[]).filter(function(x){return x.id===id})[0];if(!d){mDividas();return}var I=mI(id),ops=[];
+function mEditDiv(id){var d=(st.dividas||[]).filter(function(x){return x.id===id})[0];if(!d){mDivR();return}var I=mI(id),ops=[];
  mSay(ehPar(d)?'“'+d.nome+'”: '+d.pagas+' de '+d.n+' parcelas pagas. As parcelas avançam quando você marca como paga no Planejamento.':'“'+d.nome+'”: deve '+brl(I.sd)+', paga '+brl(d.valor)+' por mês.');
- if(!ehPar(d))ops.push(['Atualizar quanto falta',function(){mNum('Quanto falta hoje',function(v){I.sd=v;I.base=mesAt();save();if(v<=0.004){mSay('Quitada! 🎉 Quer apagar do app?');mOps([['Apagar',function(){mApaga(d)}],['Manter',mDividas]])}else{mSay('Atualizado.');mDividas()}})}]);
- if(!ehPar(d))ops.push(['Mudar valor por mês',function(){mNum('Pagamento por mês',function(v){d.valor=v;save();render();mSay('Atualizado.');mDividas()},null,0.01)}]);
- ops.push(['Mudar juros',function(){mNum('Juros ao mês, em %',function(j){I.j=Math.min(50,j);save();mSay('Atualizado.');mDividas()},[['Sem juros',function(){I.j=0;save();mDividas()}],['Não sei',function(){I.j=-1;save();mDividas()}]])}]);
- ops.push([I.atr?'Não está mais atrasada':'Marcar como atrasada',function(){I.atr=!I.atr;save();mSay('Anotado.');mDividas()}]);
- ops.push(['Apagar',function(){mSay('Apagar “'+d.nome+'” do app (também some do Planejamento)?');mOps([['Sim, apagar',function(){mApaga(d)}],['Não',mDividas]])}]);
- ops.push(['Voltar',mDividas]);mOps(ops)}
-function mApaga(d){st.dividas=(st.dividas||[]).filter(function(x){return x.id!==d.id});delete st.mentor.info[String(d.id)];save();render();mSay('“'+d.nome+'” apagada.');mDividas()}
-/* ---------- 2. sair das dívidas ---------- */
-function mPlanoDiv(){var Z=mZona();if(!Z.ds.length){mSay('Você não tem dívidas para quitar cadastradas. Ótimo! Se tiver alguma fora do app, adicione em “Minhas dívidas”.');if(st.mentor.et===1)mAvanca(2);else mMenu();return}
- mSay('Você deve '+brl(Z.tot)+' em '+Z.ds.length+(Z.ds.length>1?' dívidas':' dívida')+' e paga '+brl(r2(Z.ds.reduce(function(a,x){return a+x.parc},0)))+' por mês nelas.');
- if(Z.sobra<=0){mSay('Hoje não sobra nada depois das contas, então a simulação usa só as parcelas atuais.');mPlano2(Z,0);return}
- mSay('Quanto você consegue colocar a mais por mês para adiantar? Depois de guardar o mínimo ('+brl(Z.guar)+'), ficam uns '+brl(Z.livre)+' livres.');
- var ops=[['Nada a mais',function(){mPlano2(Z,0)}]];if(Z.livre>=10){ops.push(['Metade: '+brl(r2(Z.livre/2)),function(){mPlano2(Z,r2(Z.livre/2))}]);ops.push(['Tudo: '+brl(Z.livre),function(){mPlano2(Z,Z.livre)}])}
- ops.push(['Outro valor',function(){mNum('Valor extra por mês',function(v){mPlano2(Z,v)},null,0)}]);mOps(ops)}
-function mPlano2(Z,ex){var s0=mSim(Z.ds,0,'neve'),a=mSim(Z.ds,ex,'neve'),b=mSim(Z.ds,ex,'aval'),tj=Z.ds.some(function(x){return x.jo>0}),best=(tj&&!b.nunca&&(a.nunca||b.jur<a.jur-0.5||b.meses<a.meses))?'aval':'neve',R=best==='aval'?b:a;
- if(R.nunca){mSay('Com esses valores a dívida não acaba: o pagamento não cobre os juros. É preciso renegociar ou aumentar o valor por mês.','alerta');mOps([['Testar outro valor',mPlanoDiv],['Minhas dívidas',mDividas],['Menu',function(){mMenu()}]]);return}
- mSay(mGraf(R.hist,ex>0?s0.hist:null,ex>0?'Linha verde: com '+brl(ex)+' a mais por mês. Tracejada: só as parcelas.':'Quanto falta, mês a mês.'),'card');
- mSay((ex>0?'Só com as parcelas: livre em '+mQuando(s0)+'.\n':'')+'Com '+(ex>0?brl(ex)+' a mais':'as parcelas atuais')+': livre em '+mQuando(R)+(ex>0&&!s0.nunca&&s0.meses>R.meses?', '+(s0.meses-R.meses)+(s0.meses-R.meses===1?' mês':' meses')+' antes':'')+'.'+(R.jur>0?' Juros pagos no caminho: '+brl(R.jur)+'.':''),'ok');
- if(tj&&(a.meses!==b.meses||Math.abs(a.jur-b.jur)>0.5))mSay('Comparando os jeitos de pagar:\n• Menor dívida primeiro: '+a.meses+' meses, '+brl(a.jur)+' de juros.\n• Juros mais alto primeiro: '+b.meses+' meses, '+brl(b.jur)+' de juros.\nRecomendo: '+(best==='aval'?'juros mais alto primeiro (paga menos juros).':'menor dívida primeiro (vitórias rápidas).'));
- var ord=R.ds.slice().sort(function(p,q){return p.fim-q.fim});mSay('Ordem para quitar:\n'+ord.map(function(x,i){return(i+1)+'º '+x.nome+' — quitada em '+mesDepois(x.fim-1+mOff())}).join('\n')+(ex>0?'\nO valor extra vai sempre para a primeira da fila. Quando ela acaba, a parcela dela também passa a adiantar a próxima.':''));
- if(ex>0&&Z.ds.some(function(x){return x.par}))mSay('Ao adiantar parcelas, peça o desconto dos juros: é seu direito pelo Código de Defesa do Consumidor (art. 52).','dica');
- mOps([['Combinado, vou seguir',function(){st.mentor.plano={extra:ex,est:best,ini:mesAt(),meses:R.meses};save();mSay('Plano salvo. Vou acompanhar e te dizer se está adiantado ou atrasado.');if(st.mentor.et<=1)mAvanca(2);else mMenu()}],['Testar outro valor',mPlanoDiv],['Depois',function(){mMenu()}]])}
-/* ---------- 3. reserva ---------- */
+ if(!ehPar(d))ops.push(['Atualizar quanto falta',function(){mNum('Quanto falta hoje',function(v){I.sd=v;I.base=mesAt();save();if(v<=0.004){mSay('Quitada! 🎉 Quer apagar do app?');mOps([['Apagar',function(){mApaga(d)}],['Manter',mDivR]])}else{mSay('Atualizado.','ok');mDivR()}})}]);
+ if(!ehPar(d))ops.push(['Mudar valor por mês',function(){mNum('Pagamento por mês',function(v){d.valor=v;save();render();mSay('Atualizado.','ok');mDivR()},null,0.01)}]);
+ ops.push(['Mudar juros',function(){mNum('Juros ao mês, em %',function(j){I.j=Math.min(50,j);save();mSay('Atualizado.','ok');mDivR()},[['Sem juros',function(){I.j=0;save();mDivR()}],['Não sei',function(){I.j=-1;save();mDivR()}]])}]);
+ ops.push([I.atr?'Não está mais atrasada':'Marcar como atrasada',function(){I.atr=!I.atr;save();mSay('Anotado.','ok');mDivR()}]);
+ ops.push(['Apagar',function(){mSay('Apagar “'+d.nome+'” do app (também some do Planejamento)?');mOps([['Sim, apagar',function(){mApaga(d)}],['Não',mDivR]])}]);
+ ops.push(['Voltar',mDivR]);mOps(ops)}
+function mApaga(d){st.dividas=(st.dividas||[]).filter(function(x){return x.id!==d.id});delete st.mentor.info[String(d.id)];save();render();mSay('“'+d.nome+'” apagada.');mDivR()}
+/* ---------- GUARDAR DINHEIRO ---------- */
+function mGua(){var gt=guardadoTotal();mSay('Você tem '+brl(gt)+' guardado. O que quer saber?');mOps([['Quanto guardar?',mQuanto],['Reserva de emergência',mReserva],['Fazer render',mRender,'ren']])}
+function mDefMeta(v,txt){return function(){st.mentor.res=v;save();mFeito(txt||'Meta definida: guardar '+brl(v)+' por mês. Eu acompanho pelo Guardado.')}}
+function mQuanto(){var Z=mZona(),M=st.mentor,ess=M.ess||0,falta=ess>0?Math.max(0,r2(ess-Z.gua)):0;
+ if(Z.sobra<=0){mSol('Hoje não sobra nada depois das contas. Comece pequeno: R$ 10 por semana (R$ 40 por mês) já cria o hábito. Ao mesmo tempo, renegocie parcelas para abrir espaço.',[['Definir R$ 40 por mês',mDefMeta(40)]]);return}
+ mSay('Sua sobra é de '+brl(Z.sobra)+' por mês. A regra do app: acima de R$ 200 guarde 15%; de R$ 100 a 200, 10%; abaixo, 8%.');
+ var n=falta>0?Math.ceil(falta/Z.guar):0;
+ mSol('Guarde '+brl(Z.guar)+' por mês ('+Math.round(faixa(Z.sobra)*100)+'% da sobra) numa caixinha que pague 100% do CDI.'+(n>0?' Em '+n+(n===1?' mês':' meses')+' você tem 1 mês do essencial de reserva.':''),[['Definir como meta',mDefMeta(Z.guar)],['Outro valor',function(){mNum('Guardar por mês',function(v){var k=falta>0&&v>0?Math.ceil(falta/v):0;mSol('Guarde '+brl(v)+' por mês.'+(k>0?' Em '+k+(k===1?' mês':' meses')+' você tem 1 mês do essencial.':''),[['Definir como meta',mDefMeta(v)]])},null,1)},false]])}
 function mReserva(){var M=st.mentor,Z=mZona(),ess=M.ess;if(!(ess>0)){mSay('Quanto você gasta por mês com o essencial (mercado, contas, transporte, remédio)?');mNum('Essencial por mês',function(v){M.ess=v;save();mReserva()},null,1);return}
  var a3=r2(ess*3),a6=r2(ess*6),g=Z.gua,meta=Z.ds.length?ess:(g>=a3?a6:a3);
- mSay('Reserva de emergência é o dinheiro para imprevisto: remédio, conserto, ficar sem renda. Ela impede que um susto vire dívida nova.');
- mSay(Z.ds.length?'Enquanto paga dívidas, a meta é pequena: 1 mês do essencial ('+brl(ess)+'). Depois de quitar, sobe para 3 meses ('+brl(a3)+') e então 6 ('+brl(a6)+').':'Meta: 3 meses do essencial ('+brl(a3)+'), depois 6 meses ('+brl(a6)+').');
+ mSay('Reserva de emergência é o dinheiro para imprevisto: remédio, conserto, ficar sem renda. Ela impede que um susto vire dívida nova. '+(Z.ds.length?'Enquanto paga dívidas, a meta é 1 mês do essencial. Depois: 3 e 6 meses.':'Meta: 3 meses do essencial, depois 6.'));
  var c=mCard('Reserva',null,[['Guardado',brl(g)],['Meta agora',brl(meta)]]);c.appendChild(mBarra(meta>0?g/meta*100:0,'--gua'));mSay(c,'card');
- if(g>=meta){mSay('Meta atingida! Continue guardando para a próxima.','ok');mOps([['Próxima etapa',function(){mAvanca(3)}],['Menu',function(){mMenu()}]]);return}
- var falta=r2(meta-g);mSay('Faltam '+brl(falta)+'. Quanto vai guardar por mês para isso?');
+ if(g>=meta){mSol('Meta atingida! Próxima meta: '+brl(g>=a6?a6:g>=a3?a6:a3)+'. Continue guardando todo mês e deixe o dinheiro rendendo com saque na hora.');return}
+ var falta=r2(meta-g);mSay('Faltam '+brl(falta)+'. Quanto dá para guardar por mês?');
  var ops=[];if(Z.guar>0)ops.push(['Mínimo sugerido: '+brl(Z.guar),function(){mRes2(falta,Z.guar)}]);if(M.res>0&&M.res!==Z.guar)ops.push(['O de antes: '+brl(M.res),function(){mRes2(falta,M.res)}]);
- ops.push(['Outro valor',function(){mNum('Guardar por mês',function(v){mRes2(falta,v)},null,0)}]);mOps(ops)}
-function mRes2(falta,v){var M=st.mentor;M.res=v;save();var n=v>0?Math.ceil(falta/v):0;
- mSay(v>0?'Guardando '+brl(v)+' por mês, você chega lá em '+n+(n===1?' mês':' meses')+' ('+mesDepois(n)+').':'Sem guardar nada, não chega. Tente ao menos R$ 20 por mês.',v>0?'ok':'alerta');
- mSay('Onde deixar: num lugar que rende e que você saca na hora, como uma caixinha ou CDB com liquidez diária que pague 100% do CDI. Não deixe parado na conta corrente.','dica');
- mOps([['Combinado',function(){if(M.et<=2)mAvanca(3);else mMenu()}],['Depois',function(){mMenu()}]])}
-/* ---------- 4. fazer render ---------- */
+ ops.push(['Outro valor',function(){mNum('Guardar por mês',function(v){mRes2(falta,v)},null,1)}]);mOps(ops)}
+function mRes2(falta,v){var n=Math.ceil(falta/v);mSol('Guarde '+brl(v)+' por mês e você completa a reserva em '+n+(n===1?' mês':' meses')+' ('+mesDepois(n)+'). Deixe num lugar que rende e saca na hora, como uma caixinha ou CDB com liquidez diária pagando 100% do CDI.',[['Definir como meta',mDefMeta(v)]])}
 function mRender(){var M=st.mentor,R=rendTudo(),gt=guardadoTotal(),cdi=(st.cdi&&st.cdi.anual>0)?st.cdi.anual:0,lg=guaLugares(),pm=0,pw=0;
  Object.keys(st.rend||{}).forEach(function(k){var v=Math.max(0,lg[k]||0);pm+=v*st.rend[k].pct;pw+=v});pm=pw>0?pm/pw:100;
- if(!(gt>0))mSay('Quando tiver dinheiro guardado, eu mostro quanto ele rende. Registre na aba Guardado.');
- else if(!R.length)mSay('Seu guardado ('+brl(gt)+') ainda não está com rendimento ligado no app. Na aba Guardado, toque nos ⋯ do lugar, escolha Rendimento e informe a % do CDI.','dica');
- else{var tot=r2(R.reduce(function(a,x){return a+x.r.tot},0));mSay('Seu dinheiro já rendeu '+brl(tot)+' desde que você ligou o rendimento.','ok')}
+ if(R.length){var tot=r2(R.reduce(function(a,x){return a+x.r.tot},0));mSay('Seu dinheiro já rendeu '+brl(tot)+' desde que você ligou o rendimento.','ok')}
  if(gt>0&&cdi>0){var y=cdi/100*pm/100,p6=r2(gt*(Math.pow(1+y,0.5)-1)),p12=r2(gt*y);mSay('Com o CDI em '+String(cdi).replace('.',',')+'% ao ano'+(pw>0?' e seus lugares pagando em média '+Math.round(pm)+'% dele':' a 100% dele')+', '+brl(gt)+' rende uns '+brl(p6)+' em 6 meses e '+brl(p12)+' em 12 meses, antes do imposto.')}
- if(M.res>0&&cdi>0){var ym=Math.pow(1+cdi/100*pm/100,1/12)-1,fv=0;for(var i=0;i<12;i++)fv=(fv+M.res)*(1+ym);mSay('Guardando '+brl(M.res)+' por mês, em 12 meses você terá uns '+brl(r2(gt+fv))+'.')}
- mSay('Regras de ouro:\n1. Prefira 100% do CDI ou mais, com saque na hora.\n2. Poupança costuma render menos que isso.\n3. Desconfie de ganho alto e “garantido”: é golpe na maioria das vezes.\nNão é recomendação de investimento.','dica');
- mOps([['Combinado',function(){if(M.et<=3)mAvanca(4);else mMenu()}],['Depois',function(){mMenu()}]])}
-/* ---------- 5. missões da semana ---------- */
+ mSay('Regras de ouro: prefira 100% do CDI ou mais, com saque na hora; poupança costuma render menos; desconfie de ganho alto “garantido”. Não é recomendação de investimento.','dica');
+ if(gt>0&&!R.length){mSol('Ligue o rendimento no app: na aba Guardado, toque nos ⋯ do lugar onde está o dinheiro, escolha Rendimento e informe a % do CDI. Assim você vê o dinheiro crescendo todo dia.',[['Abrir Guardado',function(){fechaMentor();vaiPagina(0);try{setGaugePanel(1)}catch(e){}}]]);return}
+ if(M.res>0&&cdi>0){var ym=Math.pow(1+cdi/100*pm/100,1/12)-1,fv=0;for(var i=0;i<12;i++)fv=(fv+M.res)*(1+ym);mSol('Mantendo '+brl(M.res)+' por mês, em 12 meses você terá uns '+brl(r2(gt+fv))+'. Não pare de guardar, nem em mês apertado: mesmo pouco mantém o hábito.');return}
+ mSol('Defina quanto guardar por mês: é isso que faz o rendimento ganhar força.',[['Quanto guardar?',mQuanto]])}
+/* ---------- MAIS ---------- */
+function mMais(){mSay('Mais opções:');mOps([['Como estou indo',mEvolucao,'evo'],['Dúvidas',mDuvQ],['Minhas soluções',mSols,'sols'],['Refazer diagnóstico',mDiag0]])}
+function mDuvQ(){mSay('Como prefere?');mOps([['Ver dúvidas prontas',function(){mFaq(0)}],['Escrever uma dúvida',function(){mPede('Escreva sua dúvida',mDuvida)}],['Perguntar ao Claude',mClaude]])}
+function mSols(){var S=st.mentor.sols.slice(0,5);mSay('Suas últimas soluções:');S.forEach(function(s){var c=el_('div');c.appendChild(el_('div','msolh','Solução · '+dm(s.d)));c.appendChild(el_('p','msolt',s.t));mSay(c,'sol')});mAgora()}
+function mEvolucao(){var M=st.mentor,h=M.hist,Z=mZona();
+ if(h.length>=2){var a=h[0],b=h[h.length-1];mSay(mCard('Desde '+MESES[+a.m.slice(5)-1]+'/'+a.m.slice(0,4),null,[['Dívidas para quitar',brl(a.div)+' → '+brl(b.div)],['Guardado',brl(a.gua)+' → '+brl(b.gua)]]),'card');if(h.length>=3)mSay(mGraf(h.map(function(x){return x.div}),null,'Dívida mês a mês desde que você começou.'),'card')}
+ else mSay('Ainda é seu primeiro mês comigo. A partir do próximo eu mostro a comparação.');
+ mSay(mCard(Z.z.n+' · '+Z.z.t,Z.z.c,[['Contas e dívidas',Math.round(Z.pct*100)+'% da renda'],['Falta quitar',brl(Z.tot)],['Guardado',brl(Z.gua)],['Missões cumpridas',M.misOk+' de '+M.misTot+(M.seq>1?' · '+M.seq+' seguidas':'')]]),'card');
+ var R=(M.plano&&Z.ds.length)?mSim(Z.ds,M.plano.extra,M.plano.est):null;
+ mSol((R?'No ritmo do plano, você fica livre em '+mQuando(R)+'. ':'')+'Próximo passo: '+mDicas(Z)[0])}
+/* dúvidas prontas, de 3 em 3 */
+function mFaq(p){var ini=p*3,pg=FAQ.slice(ini,ini+3);mSay(p?'Mais dúvidas:':'Escolha uma dúvida:');
+ mOps(pg.map(function(f){return[f.q,function(){mSol(f.a(mZona()),[['Outra dúvida',function(){mFaq(0)},false]])}]}).concat(ini+3<FAQ.length?[['Ver mais',function(){mFaq(p+1)}]]:[]).concat([['Início',mRaiz]]))}
+function mDuvida(t){var n=' '+normT(t)+' ',best=null,bs=0;FAQ.forEach(function(f){var s=0;f.k.forEach(function(k){if(n.indexOf(normT(k))>=0)s+=k.length>6?2:1});if(s>bs){bs=s;best=f}});
+ if(best&&bs>=1){mSay('Sobre “'+best.q+'”:');mSol(best.a(mZona()),[['Outra dúvida',mDuvQ,false]])}
+ else{mSay('Essa eu não tenho pronta. Toque em “Perguntar ao Claude”: eu copio um resumo só com números e você cola na conversa com o Claude.');mOps([['Perguntar ao Claude',mClaude],['Ver dúvidas prontas',function(){mFaq(0)}],['Início',mRaiz]])}}
+function mClaude(){var t=mResumo(),ta=el_('textarea','mres');ta.readOnly=true;ta.value=t;ta.rows=8;
+ var fim=function(ok){mSay(ok?'Copiei o resumo. Abra o Claude, cole e escreva sua pergunta no fim. Nomes e descrições não vão junto.':'Toque no texto, selecione tudo e copie.',ok?'ok':'');mAgora()};
+ mSay(ta,'card');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){fim(true)},function(){fim(false)});else fim(false)}
+$('robo').onclick=abreMentor;$('menx').onclick=fechaMentor;$('men').onclick=function(e){if(e.target===this)fechaMentor()};
+$('mensend').onclick=mEnvia;$('mentx').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();mEnvia()}};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('men').hidden)fechaMentor()});
+
+/* ---------- missões: candidatas e conferência ---------- */
 function mCand(){var out=[],L=itemsTodos(),h=hoje(),d30=isoAdd(h,-29),rc=L.filter(function(i){return i.d>=d30&&i.d<=h&&!i.ent});
  var des=rc.filter(function(i){return i.cor==='des'}).reduce(function(a,i){return a+(Number(i.val)||0)},0);
  if(des>=15)out.push({t:'des',alvo:Math.max(10,Math.round(des/4.3*0.7/5)*5)});
@@ -1913,43 +2006,14 @@ function mAval(x){var fim=isoAdd(x.ini,6),h=hoje(),w=itemsTodos().filter(functio
  r.ate=dm(fim);return r}
 function mFecha(){var M=st.mentor,x=M.mis;if(!x)return;var r=mAval(x);if(!r.fim)return;M.misTot++;if(r.ok){M.misOk++;M.seq++}else M.seq=0;M.mis=null;save();
  mSay(r.ok?'Missão cumprida: '+mTxt(x)+'! 🎉 '+r.txt+(M.seq>1?' Sequência: '+M.seq+' semanas seguidas.':''):'Missão da semana passada não foi cumprida ('+r.txt+') Sem problema: vamos de novo.',r.ok?'ok':'alerta')}
-function mMissao(){var M=st.mentor;mFecha();if(M.mis){var r=mAval(M.mis);mSay('Missão até '+r.ate+': '+mTxt(M.mis)+'.\n'+r.txt,r.ok?'ok':'dica');mOps([['Trocar missão',function(){M.mis=null;save();mNova()}],['Menu',function(){mMenu()}]]);return}mNova()}
-function mNova(sem){var M=st.mentor,c=mCand(),x=c.filter(function(y){return y.t!==sem})[0]||c[0];
- if(!x){mSay('Ainda não tenho dados para montar uma missão. Lance seus gastos por uns dias.');mMenu(true);return}
- mSay('Missão para os próximos 7 dias: '+mTxt(x)+'.');
- mOps([['Aceito',function(){x.ini=hoje();M.mis=x;if(M.et<4)M.et=4;save();mSay('Valendo até '+dm(isoAdd(x.ini,6))+'! Eu confiro sozinho pelos seus lançamentos.','ok');mMenu(true)}],['Outra missão',function(){mNova(x.t)}],['Agora não',function(){mMenu()}]])}
-/* ---------- resumo do dia ---------- */
-function mResDia(iso,auto){var L=itemsTodos(),it=L.filter(function(i){return i.d===iso}),ent=0,gas=0,gua=0,ret=0,c={uti:0,des:0,sem:0},cr=0,gs=[];
- it.forEach(function(i){var v=Number(i.val)||0;if(i.ent){ent+=v;return}if(i.cor==='gua'){if(i.ret)ret+=v;else gua+=v;return}gas+=v;c[(i.cor==='uti'||i.cor==='des')?i.cor:'sem']+=v;if(pagCred(i))cr+=v;gs.push(i)});
- ent=r2(ent);gas=r2(gas);gua=r2(gua);ret=r2(ret);
- var ini=isoAdd(iso,-30),soma=0,pri=iso;L.forEach(function(i){if(i.d>=ini&&i.d<iso&&!i.ent&&i.cor!=='gua'){soma+=Number(i.val)||0;if(i.d<pri)pri=i.d}});var nd=Math.max(1,isoDias(pri,iso)),med=nd>=3?r2(soma/nd):0;
- var dd=new Date(iso+'T12:00:00'),tit=(iso===hoje()?'Resumo de hoje':'Resumo de ontem')+' · '+['dom','seg','ter','qua','qui','sex','sáb'][dd.getDay()]+' '+dm(iso);
- if(auto)mSay(saud()+' Aqui está o resumo de ontem.');
- if(!it.length){mSay(mCard(tit,null,[['Lançamentos','nenhum']],iso===hoje()?'Nada lançado hoje ainda.':'Se gastou ou recebeu algo ontem, lance agora (dá para escolher a data) para o resumo ficar certo.'),'card')}
- else{var rows=[['Entradas',brl(ent)],['Saídas (gastos)',brl(gas)]];if(c.uti>0)rows.push(['   Útil',brl(r2(c.uti))]);if(c.des>0)rows.push(['   Desnecessário',brl(r2(c.des))]);if(c.sem>0)rows.push(['   Sem categoria',brl(r2(c.sem))]);if(cr>0)rows.push(['   No crédito',brl(r2(cr))]);
-  if(gua>0)rows.push(['Guardado',brl(gua)]);if(ret>0)rows.push(['Retirado do guardado',brl(ret)]);rows.push(['Saldo do dia',(ent-gas>=0?'+ ':'− ')+brl(Math.abs(r2(ent-gas)))]);
-  var card=mCard(tit,null,rows);if(gas>0&&c.des>0){card.appendChild(el_('p','mleg','Desnecessário: '+Math.round(c.des/gas*100)+'% dos gastos do dia'));card.appendChild(mBarra(c.des/gas*100,'--des'))}mSay(card,'card');
-  if(gs.length){var tp=gs.slice().sort(function(a,b){return b.val-a.val}).slice(0,3);mSay('Maiores gastos:\n'+tp.map(function(i,k){return(k+1)+'. '+(i.desc||'Sem descrição')+' · '+brl(i.val)+(i.cor==='des'?' (desnecessário)':'')}).join('\n'))}
-  if(med>0)mSay(gas>=med*2?'Gastou '+(gas/med).toFixed(1).replace('.',',')+' vezes a sua média diária ('+brl(med)+' por dia).':gas>med*1.05?'Gastou '+Math.round((gas/med-1)*100)+'% acima da sua média diária ('+brl(med)+' por dia).':gas<med*0.95?'Gastou '+Math.round((1-gas/med)*100)+'% abaixo da sua média diária ('+brl(med)+' por dia). Boa!':'Gasto na média diária ('+brl(med)+' por dia).',gas>med*1.05?'alerta':'ok')}
- var m=mesesLista(),mm=m[m.length-1],sm=statsMes(mm),rec=sm.rec||st.salario||0,lim=(st.cons&&st.cons.limDes>0)?st.cons.limDes:r2(rec*0.10),rw=[['Disponível agora',brl(saldoAtual())],['Gasto no mês',brl(r2(sm.gasto))]];
- if(lim>0)rw.push(['Desnecessários do mês',brl(r2(sm.des))+' de '+brl(lim)]);var cm=mCard('Mês até agora',null,rw);if(lim>0)cm.appendChild(mBarra(sm.des/lim*100,sm.des>lim?'--neg':sm.des>=lim*0.7?'--mid':'--pos'));mSay(cm,'card');
- var M=st.mentor;if(M.mis){var r=mAval(M.mis);mSay('Missão até '+r.ate+': '+mTxt(M.mis)+'. '+r.txt,r.ok?'ok':'dica')}
- var dica='';if(it.length){if(c.sem>0)dica='Classifique os gastos sem categoria no Histórico: assim o resumo e as missões ficam certos.';else if(gas>0&&c.des/gas>=0.3)dica='Quase '+Math.round(c.des/gas*100)+'% foi desnecessário. Hoje, tente um dia só com o essencial.';else if(cr>0&&cr/gas>0.5)dica='A maior parte foi no crédito. Lembre que isso vira fatura no mês que vem.';else if(med>0&&gas>med*1.5)dica='Dia pesado. Compense segurando os gastos nos próximos dias.';else if(gas>0)dica='Dia controlado. Continue assim!'}
- if(lim>0&&sm.des>lim)dica=(dica?dica+' ':'')+'Os desnecessários do mês já passaram do limite em '+brl(r2(sm.des-lim))+'.';if(dica)mSay(dica,'dica')}
 /* ---------- evolução ---------- */
 function mHist(){var M=st.mentor,ds=mDiv(),div=r2(ds.reduce(function(a,x){return a+x.rest},0)),m=mesAt(),h=M.hist,u=h[h.length-1];if(u&&u.m===m){u.div=div;u.gua=guardadoTotal()}else h.push({m:m,div:div,gua:guardadoTotal()});if(h.length>24)M.hist=h.slice(-24);save()}
 function mMesesDe(a,b){var x=a.split('-'),y=b.split('-');return(+y[0]-+x[0])*12+(+y[1]-+x[1])}
 function mNovidades(){var M=st.mentor,h=M.hist;mFecha();
  if(h.length>=2){var a=h[h.length-2],b=h[h.length-1];if(a.div-b.div>0.5)mSay('Desde o mês passado sua dívida caiu '+brl(r2(a.div-b.div))+'. Boa!','ok');else if(b.div-a.div>0.5)mSay('Sua dívida subiu '+brl(r2(b.div-a.div))+' desde o mês passado. Vamos olhar o plano?','alerta')}
  var P=M.plano,Z=mZona();if(P&&Z.ds.length){var R=mSim(Z.ds,P.extra,P.est),pass=mMesesDe(P.ini,mesAt()),prev=P.meses-pass;if(!R.nunca&&pass>0){if(R.meses<prev)mSay('Você está '+(prev-R.meses)+(prev-R.meses===1?' mês':' meses')+' adiantado no plano das dívidas.','ok');else if(R.meses>prev)mSay('Você está '+(R.meses-prev)+(R.meses-prev===1?' mês':' meses')+' atrasado no plano das dívidas. Que tal revisar o valor extra?','alerta')}}
- else if(P&&!Z.ds.length&&M.et>=1)mSay('Você não tem mais dívidas para quitar. Parabéns! 🎉','ok');
+ else if(P&&!Z.ds.length&&M.diag)mSay('Você não tem mais dívidas para quitar. Parabéns! 🎉','ok');
  if(M.mis){var r=mAval(M.mis);mSay('Missão até '+r.ate+': '+mTxt(M.mis)+'. '+r.txt,r.ok?'ok':'dica')}}
-function mEvolucao(){var M=st.mentor,h=M.hist,Z=mZona();
- if(h.length>=2){var a=h[0],b=h[h.length-1];mSay(mCard('Desde '+MESES[+a.m.slice(5)-1]+'/'+a.m.slice(0,4),null,[['Dívidas para quitar',brl(a.div)+' → '+brl(b.div)],['Guardado',brl(a.gua)+' → '+brl(b.gua)]]),'card');if(h.length>=3)mSay(mGraf(h.map(function(x){return x.div}),null,'Dívida mês a mês desde que você começou.'),'card')}
- else mSay('Ainda é seu primeiro mês com o mentor. A partir do próximo eu mostro a comparação.');
- mSay(mCard(Z.z.n+' · '+Z.z.t,Z.z.c,[['Contas e dívidas',Math.round(Z.pct*100)+'% da renda'],['Falta quitar',brl(Z.tot)],['Guardado',brl(Z.gua)],['Missões cumpridas',M.misOk+' de '+M.misTot+(M.seq>1?' · '+M.seq+' seguidas':'')]]),'card');
- if(M.plano&&Z.ds.length){var R=mSim(Z.ds,M.plano.extra,M.plano.est);mSay('No ritmo do plano ('+brl(M.plano.extra)+' a mais por mês), você fica livre em '+mQuando(R)+'.')}
- mMenu(true)}
 /* ---------- dúvidas prontas ---------- */
 var FAQ=[
 {q:'Quito dívida ou guardo dinheiro?',k:['quitar','guardar','primeiro','ou'],a:function(Z){return'Os dois, nessa ordem: 1) pague as parcelas em dia; 2) guarde o mínimo ('+brl(Z.guar)+' por mês) até ter 1 mês do essencial; 3) o resto vai para adiantar a dívida mais cara. Dívida com juros alto (cartão, cheque especial) cresce mais rápido do que qualquer investimento rende.'}},
@@ -1965,24 +2029,12 @@ var FAQ=[
 {q:'Quanto devo guardar por mês?',k:['quanto guardar','porcentagem','por mes'],a:function(Z){return Z.sobra>0?'Pela sua sobra ('+brl(Z.sobra)+'), o mínimo é '+brl(Z.guar)+' por mês ('+Math.round(faixa(Z.sobra)*100)+'%). Quando quitar dívidas, a parcela que sumir também vai para o guardado.':'Hoje não sobra nada depois das contas. O primeiro passo é baixar as parcelas ou aumentar a renda. Mesmo R$ 10 por semana já cria o hábito.'}},
 {q:'Como melhorar meu score?',k:['score','credito','limite','nome'],a:function(){return'Pague contas em dia (o que mais pesa), mantenha o Cadastro Positivo ativo, quite ou negocie dívidas atrasadas e evite pedir crédito em vários lugares ao mesmo tempo. Leva alguns meses para subir.'}},
 {q:'Como organizar as contas do casal?',k:['casal','esposa','marido','dividir','juntos'],a:function(){return'Conversem uma vez por mês sobre números, sem culpa. Uma forma justa: cada um contribui para as contas da casa proporcional ao que ganha, e cada um tem um valor livre só seu. Metas em comum (reserva, sair das dívidas) ficam visíveis para os dois.'}}];
-function mFaq(){mSay('Escolha uma pergunta ou escreva a sua.');mOps(FAQ.map(function(f){return[f.q,function(){mSay(f.a(mZona()));mPos()}]}).concat([['Menu',function(){mMenu()}]]))}
-function mPos(){mOps([['Outra dúvida',mFaq],['Perguntar ao Claude',mClaude],['Menu',function(){mMenu()}]])}
-function mDuvida(t){var n=' '+normT(t)+' ',best=null,bs=0;FAQ.forEach(function(f){var s=0;f.k.forEach(function(k){if(n.indexOf(normT(k))>=0)s+=k.length>6?2:1});if(s>bs){bs=s;best=f}});
- if(best&&bs>=1){mSay('Sobre “'+best.q+'”:');mSay(best.a(mZona()));mPos()}
- else{mSay('Essa eu não tenho pronta. Toque em “Perguntar ao Claude”: eu copio um resumo só com números e você cola na conversa com o Claude.');mOps([['Perguntar ao Claude',mClaude],['Ver dúvidas prontas',mFaq],['Menu',function(){mMenu()}]])}}
 /* ---------- resumo só com números para colar no Claude ---------- */
 function mResumo(){var M=st.mentor,Z=mZona(),L=['Resumo do meu app de finanças (só números):','- Renda por mês: '+brl(Z.renda)+(M.sal2>0?' (inclui '+brl(M.sal2)+' de renda extra)':''),'- Contas e dívidas por mês: '+brl(Z.mens)+' ('+Math.round(Z.pct*100)+'% da renda)','- Sobra por mês: '+brl(Z.sobra)+'; guardar mínimo sugerido: '+brl(Z.guar)];
  if(Z.ds.length){L.push('- Dívidas para quitar ('+brl(Z.tot)+' no total):');Z.ds.forEach(function(x,i){L.push('  • Dívida '+(i+1)+' ('+(x.par?'parcelada':'com saldo')+'): falta '+brl(x.rest)+', paga '+brl(x.parc)+'/mês, '+(x.jr>0?pctTxt(x.jo)+' de juros ao mês':x.jr===0?'sem juros':'juros não informado')+(x.atr?', atrasada':''))})}else L.push('- Sem dívidas para quitar.');
  L.push('- Desnecessários: média de '+brl(Z.des)+' por mês');L.push('- Guardado: '+brl(Z.gua)+(M.ess>0?'; essencial por mês: '+brl(M.ess):''));
  if(M.plano&&Z.ds.length){var R=mSim(Z.ds,M.plano.extra,M.plano.est);L.push('- Plano: '+brl(M.plano.extra)+' a mais por mês; livre em '+mQuando(R))}
  L.push('','Minha pergunta: ');return L.join('\n')}
-function mClaude(){var t=mResumo(),ta=el_('textarea','mres');ta.readOnly=true;ta.value=t;ta.rows=8;
- var ok=function(){mSay('Copiei o resumo. Abra o Claude, cole e escreva sua pergunta no fim. Nomes e descrições não vão junto.','ok');mPos()};
- mSay(ta,'card');if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,function(){mSay('Toque no texto, selecione tudo e copie.');mPos()});else{mSay('Toque no texto, selecione tudo e copie.');mPos()}}
-$('robo').onclick=abreMentor;$('menx').onclick=fechaMentor;$('men').onclick=function(e){if(e.target===this)fechaMentor()};
-$('mensend').onclick=mEnvia;$('mentx').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();mEnvia()}};
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('men').hidden)fechaMentor()});
-
 /* ---------- início ---------- */
 $('ver2').textContent='Minhas Finanças '+VERSAO;
 initGaugeCarousel();
