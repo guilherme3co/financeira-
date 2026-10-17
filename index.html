@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v44">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-9I2RMWy0+DAOJG/7LKzw1LmiVSb2z38y903OswoVFUY='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v45">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-mULXaRISYCrYh7UaCrVlALWSjylAWIHNnebVDpcXVnY='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças</title>
@@ -707,7 +707,7 @@ table.itab{margin-top:8px}
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v44';
+var VERSAO='v45';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -1324,18 +1324,25 @@ if(!micFeito&&(PARAMS.mic||st.abreMic)&&st.tut&&st.tut.pg1){micFeito=true;PARAMS
 
 /* ---------- comprovante compartilhado (texto) ---------- */
 function secNome(t,tit){var i=t.toLowerCase().indexOf(tit);if(i<0)return'';var m=t.slice(i,i+220).match(/\bnome\s*[:\-]?\s*([^\n\r]{2,60})/i);return m?m[1]:''}
-function parseComp(t){t=String(t||'').replace(/[\u0000-\u0009\u000b-\u001f]/g,' ').slice(0,4000);var low=t.toLowerCase(),mv=t.match(/R\$\s*(\d{1,3}(?:\.\d{3})+(?:,\d{2})?|\d+(?:,\d{2})?)/i),v=mv?toVal(mv[1]):0;
+/* data com mês abreviado (Nubank: “17 OUT. 2026”) */
+var MABR={jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+function mesExt(t){var m=String(t).match(/\b(\d{1,2})\s+(jan|fev|mar|abr|mai|jun|jul|ago|set|out|nov|dez)[a-zç]*\.?\s+(?:de\s+)?(\d{4})\b/i);return m?[m[0],pad(+m[1]),pad(MABR[m[2].toLowerCase()]),m[3]]:null}
+function parcComp(t){var m=String(t).match(/\b(\d{1,2})\s*x\s*de\s*R\$/i);var n=m?parseInt(m[1],10):1;return n>1&&n<=60?n:0}
+/* primeira letra maiúscula, sem estragar nomes como “iFood” */
+function cap1(d){d=String(d||'');return /^[a-zà-ÿ][A-Z]/.test(d)?d:d.charAt(0).toUpperCase()+d.slice(1)}
+function parseComp(t){t=String(t||'').replace(/[\u0000-\u0009\u000b-\u001f]/g,' ').slice(0,4000);var low=t.toLowerCase(),mv=t.replace(/\d{1,2}\s*x\s*de\s*R\$\s*[\d.,]+/gi,' ').match(/R\$\s*(\d{1,3}(?:\.\d{3})+(?:,\d{2})?|\d+(?:,\d{2})?)/i),v=mv?toVal(mv[1]):0;
 if(!(v>0)){var a=achaNum(low);v=a?toVal(a.txt):0}
 var pay='Não informada';if(/\bpix\b/.test(low))pay='Pix';else if(/cr[eé]dito/.test(low))pay='Crédito';else if(/d[eé]bito/.test(low))pay='Débito';else if(/boleto/.test(low))pay='Boleto';else if(/transfer[eê]ncia|\bted\b|\bdoc\b/.test(low))pay='Transferência';
 var ent=/voc[eê] recebeu|pix recebido|recebido de|dep[oó]sito recebido|transfer[eê]ncia recebida/.test(low);
-var desc=secNome(t,ent?'quem pagou':'quem recebeu')||secNome(t,ent?'remetente':'favorecido')||secNome(t,'destinat');
+var desc=secNome(t,ent?'quem pagou':'quem recebeu')||secNome(t,ent?'origem':'destino')||secNome(t,ent?'remetente':'favorecido')||secNome(t,'destinat');
 if(!desc){var mm=t.match(/(?:\bpara\b|destinat[aá]rio|favorecido|recebedor|estabelecimento|\blocal\b|\bloja\b|compra\s+(?:aprovada\s+)?(?:em|no|na))\s*[:\-]?\s*\n?\s*([^\n\r]{2,60})/i);desc=mm?mm[1]:''}
 desc=desc.replace(/\s+(cpf|cnpj|ag[eê]ncia|banco|conta|institui[cç][aã]o)\b.*$/i,'').replace(/[\d.\-\/]{8,}.*$/,'').trim().slice(0,50);
-var md=t.match(/(\d{2})\/(\d{2})\/(\d{4})/),dt='',hh=t.match(/\b([01]\d|2[0-3]):([0-5]\d)\b/),hm=hh?hh[0]:'';
+var md=t.match(/(\d{2})\/(\d{2})\/(\d{4})/),dt='',hh=t.match(/\b([01]\d|2[0-3]):([0-5]\d)\b/),hm=hh?hh[0]:'';if(!md)md=mesExt(t);
 if(!hm){var h2=t.match(/\b([01]?\d|2[0-3])h([0-5]\d)\b/i);if(h2)hm=pad(+h2[1])+':'+h2[2]}
 if(md){var y=+md[3],mo=+md[2],dd=+md[1];if(y>=2000&&y<=2100&&mo>=1&&mo<=12&&dd>=1&&dd<=31&&new Date(y,mo-1,dd).getDate()===dd){dt=y+'-'+pad(mo)+'-'+pad(dd);if(dt>hoje())dt=''}}
-if(desc)desc=desc.charAt(0).toUpperCase()+desc.slice(1);
-return{desc:desc,val:r2(v),pay:pay,ent:ent,tipo:ent?'rec':null,d:dt,t:hm,valOk:!!mv&&v>0}}
+if(desc)desc=cap1(desc);
+var pc=parcComp(t);if(pc&&!ent&&pay==='Não informada')pay='Crédito';
+return{desc:desc,val:r2(v),pay:pay,ent:ent,tipo:ent?'rec':null,d:dt,t:hm,valOk:!!mv&&v>0,parc:pc}}
 /* ---------- OCR de foto do comprovante (motor local em ocr/, nada sai do aparelho) ---------- */
 function fixDig(x){return String(x).replace(/[Oo]/g,'0').replace(/[Il|]/g,'1').replace(/S/g,'5').replace(/B/g,'8')}
 function parseBR(x){x=String(x).replace(/\s/g,'');if(!x)return NaN;if(/^\d{1,3}(\.\d{3})*,\d{2}$/.test(x)||/^\d+,\d{2}$/.test(x))return parseFloat(x.replace(/\./g,'').replace(',','.'));
@@ -1346,22 +1353,23 @@ t=t.replace(/[\dOoIl]{1,2}\s?[\/\-.]\s?[\dOoIl]{1,2}\s?[\/\-.]\s?[\dOoIl]{4}/g,f
 t=t.replace(/\b[\dOoIl]{2}:[\dOoIl]{2}\b/g,function(m){var f=fixDig(m);return /^\d{2}:\d{2}$/.test(f)?f:m});
 return t}
 function ocrValores(t){var out=[],seen={},lines=t.split('\n');
-lines.forEach(function(ln,k){if(/saldo|limite|tarifa|taxa|\biof\b|juros|desconto|cashback/i.test(ln))return;var re=/R\$\s?([\dOoIlSB.,]+(?:\s\d{3}(?:,\d{2})?)?)/g,m;
+lines.forEach(function(ln,k){if(/saldo|limite|tarifa|taxa|\biof\b|desconto|cashback|parcelamento|\d\s*x\s*de\s*R/i.test(ln))return;var re=/R\$\s?([\dOoIlSB.,]+(?:\s\d{3}(?:,\d{2})?)?)/g,m;
 while((m=re.exec(ln))){var raw=fixDig(m[1]).replace(/[.,]+$/,''),v=parseBR(raw);if(!(v>=0.01&&v<=1e7))continue;v=Math.round(v*100)/100;var key=String(Math.round(v*100)),ctx=((lines[k-1]||'')+' '+ln).toLowerCase();var lab=/valor|total|quantia|pagamento de|voc[eê] (enviou|recebeu)|pix (enviado|recebido)/.test(ctx);
 if(!seen[key])seen[key]={v:v,lab:false,n:0,k:key,c:false};seen[key].n++;if(lab)seen[key].lab=true;if(/,\d{2}$/.test(raw))seen[key].c=true}});
 var all=Object.keys(seen).map(function(k){return seen[k]}),lab=all.filter(function(x){return x.lab});
 var pick=all.length===1?all:(lab.length===1?lab:null);
 return{n:pick?1:all.length,v:pick?pick[0].v:0,c:pick?pick[0].c:false,lista:all.map(function(x){return brl(x.v)}).join(' e ')}}
-function ocrDir(t){var n=normT(t),sai=/pix\s+envi\w+|voce\s+envi\w+|transfer\w*\s+envi\w+|pagamento\s+(realiz|efetu)\w+|pix\s+(realiz|efetu)\w+/.test(n),rec=/pix\s+receb\w+|voce\s+receb\w+|transfer\w*\s+receb\w+|dep\w+\s+receb\w+|valor\s+receb\w+/.test(n);
+function ocrDir(t){var n=normT(t),sai=/comprovante\s+de\s+pagamento|nupay\s+(credito|debito)|compra\s+aprovada|pix\s+envi\w+|voce\s+envi\w+|transfer\w*\s+envi\w+|pagamento\s+(realiz|efetu)\w+|pix\s+(realiz|efetu)\w+/.test(n),rec=/pix\s+receb\w+|voce\s+receb\w+|transfer\w*\s+receb\w+|dep\w+\s+receb\w+|valor\s+receb\w+/.test(n);
 return sai&&rec?'?':rec?'ent':sai?'sai':''}
-function ocrTxid(t){var c=t.replace(/[ \t]+/g,''),m=c.match(/\b[ED]\d{8}\d{12}[A-Za-z0-9]{11}\b/);if(m)return m[0].toUpperCase();
+function ocrUuid(t){var i=t.search(/id\s+da\s+transa/i);if(i<0)return'';var z=t.slice(i,i+160).replace(/^[^:]*:?/,'').replace(/[\s\n]+/g,''),m=z.match(/[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}/i);if(!m)return'';var u=fixDig(m[0]).toLowerCase().replace(/[^0-9a-f-]/g,'');return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/.test(u)?u.toUpperCase():''}
+function ocrTxid(t){var c=t.replace(/[ \t]+/g,''),m=c.match(/\b[ED]\d{8}\d{12}[A-Za-z0-9]{11}\b/);if(m)return m[0].toUpperCase();var uu=ocrUuid(t);if(uu)return uu;
 m=c.match(/\b[ED][\dOoIlSB]{20}[A-Za-z0-9]{11}\b/);if(m){var q=m[0];q=(q.charAt(0)+fixDig(q.slice(1,21))+q.slice(21)).toUpperCase();if(/^[ED]\d{20}[A-Z0-9]{11}$/.test(q))return q}
 var l=t.match(/(?:id\s+da\s+transa[cç][aã]o|c[oó]digo\s+da\s+transa[cç][aã]o|n[uú]mero\s+da\s+transa[cç][aã]o|id\s+pix|autentica[cç][aã]o|protocolo)\s*[:\-]?\s*\n?\s*([A-Za-z0-9][A-Za-z0-9 \n]{9,48})/i);
 if(l){var z=l[1].replace(/[\s\n]+/g,'').slice(0,40);if(z.length>=10&&/\d/.test(z))return z.toUpperCase()}return''}
-function ocrNome(t,ent){var re=ent?/quem\s+pag\w+/i:/quem\s+rece\w+/i,m=re.exec(t);if(!m)return'';var seg=t.slice(m.index+m[0].length,m.index+m[0].length+240),n=seg.match(/\bnome\b[ \t:\-]*\n?[ \t]*([^\n]{2,60})/i);if(!n)return'';
+function ocrNome(t,ent){var re=ent?/quem\s+pag\w+|\borigem\b/i:/quem\s+rece\w+|\bdestino\b/i,m=re.exec(t);if(!m)return'';var seg=t.slice(m.index+m[0].length,m.index+m[0].length+240),n=seg.match(/\bnome\b[ \t:\-]*\n?[ \t]*([^\n]{2,60})/i);if(!n)return'';
 var d=n[1].replace(/\s+(cpf|cnpj|ag[eê]ncia|banco|conta|institui[cç][aã]o)\b.*$/i,'').replace(/[\d.\-\/*]{6,}.*$/,'').replace(/^[^A-Za-zÀ-ÿ0-9]+/,'').replace(/[^A-Za-zÀ-ÿ0-9]+$/,'').trim().slice(0,50);
-if((d.match(/[A-Za-zÀ-ÿ]/g)||[]).length<3||/^(cpf|cnpj|institui|chave|ag[eê]ncia|conta)/i.test(d))return'';return d.charAt(0).toUpperCase()+d.slice(1)}
-function ocrDoc(t,ent){var re=ent?/quem\s+pag\w+/i:/quem\s+rece\w+/i,m=re.exec(t);if(!m)return'';var seg=t.slice(m.index,m.index+300),d=seg.match(/\b(\d{2})[.,]?(\d{3})[.,]?(\d{3})\s?\/\s?(\d{4})\s?-?\s?(\d{2})\b/);return d?d.slice(1).join(''):''}
+if((d.match(/[A-Za-zÀ-ÿ]/g)||[]).length<3||/^(cpf|cnpj|institui|chave|ag[eê]ncia|conta)/i.test(d))return'';return cap1(d)}
+function ocrDoc(t,ent){var re=ent?/quem\s+pag\w+|\borigem\b/i:/quem\s+rece\w+|\bdestino\b/i,m=re.exec(t);if(!m)return'';var seg=t.slice(m.index,m.index+300),d=seg.match(/\b(\d{2})[.,]?(\d{3})[.,]?(\d{3})\s?\/?\s?(\d{4})\s?-?\s?(\d{2})\b/);return d?d.slice(1).join(''):''}
 function idInfo(tx){var m=/^[ED](\d{8})(\d{4})(\d{2})(\d{2})(\d{2})(\d{2})[A-Za-z0-9]{11}$/.exec(tx||'');if(!m)return null;var y=+m[2],mo=+m[3],dd=+m[4],hh=+m[5],mi=+m[6];if(y<2020||y>2100||mo<1||mo>12||dd<1||dd>31||hh>23||mi>59)return null;
 var u=new Date(Date.UTC(y,mo-1,dd,hh,mi));if(isNaN(u.getTime())||u.getUTCDate()!==dd)return null;return{d:u.getFullYear()+'-'+pad(u.getMonth()+1)+'-'+pad(u.getDate()),t:pad(u.getHours())+':'+pad(u.getMinutes()),min:Math.round(u.getTime()/60000)}}
 function minDe(d,t){var a=/^(\d{4})-(\d{2})-(\d{2})$/.exec(d||''),b=/^(\d{2}):(\d{2})$/.exec(t||'');if(!a||!b)return null;return Math.round(new Date(+a[1],+a[2]-1,+a[3],+b[1],+b[2]).getTime()/60000)}
@@ -1374,11 +1382,12 @@ var dir=ocrDir(x),dirOk=false;if(dir==='ent'){r.ent=true;r.tipo='rec';dirOk=true
 r.txid=ocrTxid(x);var ii=idInfo(r.txid),idOk=false;
 if(ii){if(!r.d){r.d=ii.d;r.dId=true}if(!r.t){r.t=ii.t;r.tId=true}
  var mm=minDe(r.d,r.t);if(mm!==null&&!r.dId&&!r.tId){var df=mm-ii.min;if(Math.abs(df)<=3)idOk=true;else av.push('A data e a hora não batem com o ID da transação. Confira.')}else if(r.dId&&r.tId)av.push('Não achei data e hora na foto. Confira.');else if(r.dId||r.tId)av.push('Data ou hora lida só em parte. Confira.')}
+else if(/^[0-9A-F]{8}-[0-9A-F]{4}-/.test(r.txid)){if(r.d&&r.t)idOk=true}
 else if(r.txid)av.push('ID da transação duvidoso. Confira.');else av.push('Não achei o ID da transação.');
 if(!r.d){av.push(/\d{2}\/\d{2}\/\d{4}/.test(x)?'Data inválida: usei hoje.':'Não achei a data: usei hoje.')}
 r.desc=dirOk?ocrNome(x,r.ent):'';r.doc=dirOk?ocrDoc(x,r.ent):'';if(!r.desc)av.push('Não achei o nome. Digite a descrição.');
 if(r.pay==='Não informada')av.push('Não achei a forma de pagamento.');
-r.av=av;r.valOk=!!(r.val>0&&vs.n===1&&(conf||vs.c));r.dirOk=dirOk;r.auto=!!(conf&&dirOk&&idOk&&r.val>0&&r.desc&&r.d&&r.t&&av.length===0);return r}
+r.parc=parcComp(x);if(r.parc&&r.pay==='Não informada')r.pay='Crédito';r.av=av;r.valOk=!!(r.val>0&&vs.n===1&&(conf||vs.c));r.dirOk=dirOk;r.auto=!!(conf&&dirOk&&idOk&&r.val>0&&r.desc&&r.d&&r.t&&av.length===0&&!r.parc);return r}
 function normTx(x){return String(x||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
 function hmMin(t){var m=/^(\d{2}):(\d{2})$/.exec(t||'');return m?(+m[1])*60+(+m[2]):null}
 function compDup(r){var tx=normTx(r.txid),dd=r.d||hoje(),hit=null,soft=false,rm=hmMin(r.t),p21=/^[ED]\d{20}/.test(tx)?tx.slice(0,21):'';
@@ -1387,7 +1396,7 @@ if(!i.ent!==!r.ent)return;if(Math.abs((Number(i.val)||0)-(Number(r.val)||0))>0.0
 if(r.t&&i.t&&i.t!==r.t){var im=hmMin(i.t);if(!(r.solto&&!ix&&rm!==null&&im!==null&&Math.abs(im-rm)<=180))return}hit=i;soft=true});
 if(!hit)return'';return(soft?'Parece já lançado: ':'Este comprovante já foi lançado: ')+(hit.desc||'sem descrição')+', '+dm(hit.d)+(hit.t?' às '+hit.t:'')+'.'}
 /* gasto que o app já conhece (mesmo nome ou CNPJ, já classificado): entra sozinho se o valor está seguro e não é repetido */
-function compMem(r,fonte){if(st.autoComp===false||!r||r.ent||!r.desc||!(r.val>0)||!r.valOk)return'';if(fonte==='ocr'&&(!r.dirOk||!r.d||(r.av||[]).some(function(x){return !/^(Não achei o ID da transação|ID da transação duvidoso|Não achei a forma de pagamento)/.test(x)})))return'';var g=memRegra(r.desc,r.doc);if(!g||(g.cor!=='uti'&&g.cor!=='des'))return'';
+function compMem(r,fonte){if(st.autoComp===false||!r||r.ent||r.parc>1||!r.desc||!(r.val>0)||!r.valOk)return'';if(fonte==='ocr'&&(!r.dirOk||!r.d||(r.av||[]).some(function(x){return !/^(Não achei o ID da transação|ID da transação duvidoso|Não achei a forma de pagamento)/.test(x)})))return'';var g=memRegra(r.desc,r.doc);if(!g||(g.cor!=='uti'&&g.cor!=='des'))return'';
  if(compDup(Object.assign({},r,{d:r.d||hoje(),solto:true})))return'';return g.n||r.desc}
 function lancaAuto(r,mem){var ent=!!r.ent,it={id:nid(),d:r.d||hoje(),t:r.t||hora(),desc:r.desc,val:Math.round(r.val*100)/100,pay:r.pay,cor:ent?'rec':'sem',ent:ent,txid:r.txid};if(r.doc)it.doc=r.doc;
 if(r.txid)it.txid=r.txid;else delete it.txid;addItem(it);var db=ligaDivida(it);render();if(mem){toast('Lançado sozinho (já conhecido): '+it.desc+' · '+brl(it.val)+rotulo(it)+' · '+dm(it.d),it.id,db?function(){dvMarca(db,false);save()}:null,null);return}hint.textContent='Lido pela foto e lançado: '+it.desc+' · '+brl(it.val)+' · '+dm(it.d)+' às '+it.t+(ent?' · Entrada':'')+'. Confira o valor no aviso e desfaça se estiver errado.';
@@ -1767,7 +1776,7 @@ function autoAtualiza(nova,tent){var tk='financas-tentativa',ant='';try{ant=loca
  try{localStorage.setItem(tk,nova+'|'+Date.now());localStorage.setItem('financas-atualizado',nova)}catch(e){}
  if(st)save();setTimeout(atualizaApp,1200)}
 function avisoAtualizado(){var v='';try{v=localStorage.getItem('financas-atualizado')||''}catch(e){}if(v&&v===VERSAO){try{localStorage.removeItem('financas-atualizado');localStorage.removeItem('financas-tentativa')}catch(e){}}}
-var NOVIDADES={v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
+var NOVIDADES={v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
 function mostraNovidades(v){var L=NOVIDADES[v||VERSAO];if(!L)return false;$('novt').textContent='Novidades da '+(v||VERSAO);var u=$('novl');u.innerHTML='';L.forEach(function(x){u.appendChild(el_('li',null,x))});$('nov').hidden=false;try{$('novok').focus()}catch(e){}return true}
 function novidades(){var vis='';try{vis=localStorage.getItem('financas-visto')||''}catch(e){}if(vis===VERSAO)return false;try{localStorage.setItem('financas-visto',VERSAO)}catch(e){}
  if(!st||!(st.items.length||(st.arquivo&&st.arquivo.length)||(st.tut&&st.tut.pg1)))return false;return mostraNovidades()}
