@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v39">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iljFDIm8lv1tz/TIdczHKNNFSDN593R/1SzDLBnQAyI=' 'sha256-ih9S5xjL4dZrbZ5AkMXT3ZZD9L2v3cNLcm/eI+DF740=' 'sha256-vCYMejxJdcQRHT1LrN+ntxeVxJJHvf6D8uLzQSYNnmw='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v40">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iljFDIm8lv1tz/TIdczHKNNFSDN593R/1SzDLBnQAyI=' 'sha256-ih9S5xjL4dZrbZ5AkMXT3ZZD9L2v3cNLcm/eI+DF740=' 'sha256-Vjr3zFW4lXMs5sWgY7CdcN+pj+6hueaP4Zo/Y6EHDzA='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças v29</title>
@@ -413,6 +413,14 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <button type="button" class="add" id="impb">Importar backup</button>
 <input type="file" id="imp" accept="application/json,.json" hidden>
 <p class="msg" id="bkmsg"></p>
+<h3 style="margin:18px 0 4px">Backup na nuvem (automático)</h3>
+<div id="nvoff"><p class="msg">Uma cópia criptografada vai sozinha para a nuvem depois de cada mudança. Só abre com a senha do backup.</p>
+<label for="nvpw">Crie a senha do backup na nuvem</label><input id="nvpw" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+<label for="nvpw2">Repita a senha</label><input id="nvpw2" type="password" autocomplete="new-password">
+<button type="button" class="add pri" id="nvliga">Ligar backup na nuvem</button></div>
+<div id="nvon" hidden><p class="msg" id="nvst"></p><button type="button" class="add" id="nvagora">Enviar agora</button><button type="button" class="add perigo" id="nvdesl">Desligar e apagar da nuvem</button></div>
+<details style="margin-top:10px"><summary class="msg" style="cursor:pointer">Restaurar da nuvem</summary><p class="msg">Usa o nome desta conta e a senha do backup na nuvem. Substitui os dados deste aparelho.</p><input id="nvrpw" type="password" autocomplete="current-password" placeholder="senha do backup na nuvem"><button type="button" class="add" id="nvrest">Restaurar</button></details>
+<p class="msg" id="nvmsg" role="status"></p>
 <hr>
 <h2>Conta</h2>
 <p class="msg" id="quem"></p>
@@ -568,6 +576,8 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <input id="ini0" inputmode="decimal" value="" placeholder="639,73" autocomplete="off">
 <p class="hint" id="ini0msg">Depois, na engrenagem ⚙, você adiciona outras contas.</p>
 <button class="add pri" id="ini0ok" type="button">Começar</button>
+<button class="linkb" id="ininv" type="button" style="margin-top:14px">Já usava o app? Restaurar da nuvem</button>
+<div id="ininvw" hidden><p class="hint">Use o mesmo nome de conta do outro celular e a senha do backup na nuvem.</p><input id="ininvpw" type="password" autocomplete="current-password" placeholder="senha do backup na nuvem"><button class="add" id="ininvok" type="button">Restaurar</button><p class="msg" id="ininvmsg" role="status"></p></div>
 </section>
 </main>
 </section>
@@ -621,7 +631,7 @@ this.workerSrc)).WorkerMessageHandler})())}}class WorkerTransport{downloadInfoCa
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v39';
+var VERSAO='v40';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -640,7 +650,7 @@ o.obj=(Array.isArray(o.obj)?o.obj:[]).slice(0,30).map(function(x,k){x=x||{};retu
 o.parcelas=(Array.isArray(o.parcelas)?o.parcelas:[]).slice(0,60).map(function(p,k){p=p||{};var n=Math.max(2,Math.min(60,parseInt(p.n)||2));return{id:Number(p.id)||Date.now()+k,desc:String(p.desc||'Compra').slice(0,60),tot:Math.max(0,Number(p.tot)||0),n:n,k:Math.max(2,Math.min(n+1,parseInt(p.k)||2)),d0:/^\d{4}-\d{2}-\d{2}$/.test(p.d0)?p.d0:hoje(),cor:(p.cor==='uti'||p.cor==='des')?p.cor:'sem'}});
 var mt=(o.metas&&typeof o.metas==='object')?o.metas:{};o.metas={uti:Math.max(0,Number(mt.uti)||0),des:Math.max(0,Number(mt.des)||0),tot:Math.max(0,Number(mt.tot)||0)};
 var ma=(o.metaAv&&typeof o.metaAv==='object')?o.metaAv:{};function nv_(x){x=+x;return(x===80||x===100)?x:0}o.metaAv={m:/^\d{4}-\d{2}$/.test(ma.m)?ma.m:'',uti:nv_(ma.uti),des:nv_(ma.des),tot:nv_(ma.tot)};
-var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
+var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);o.nuvem=limpaNuvem(o.nuvem);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
 var tu={};if(o.tut&&typeof o.tut==='object')['pg1','pg3','pgp','pgk','pg4','pgc','pgr','sheet'].forEach(function(k){if(o.tut[k])tu[k]=1});o.tut=tu;
 var gb={};if(o.gBase&&typeof o.gBase==='object')Object.keys(o.gBase).slice(0,30).forEach(function(k){var v=Number(o.gBase[k]);if(isFinite(v))gb[String(k).slice(0,30)]=v});o.gBase=gb;
 var rd={};if(o.rend&&typeof o.rend==='object')Object.keys(o.rend).slice(0,30).forEach(function(k){var r=o.rend[k];if(!r||typeof r!=='object')return;var p=Number(r.pct);if(!(p>=1&&p<=500)||!/^\d{4}-\d{2}-\d{2}$/.test(r.ini))return;rd[String(k).slice(0,30)]={pct:p,ini:r.ini,iso:!!r.iso}});o.rend=rd;
@@ -664,7 +674,7 @@ function unb64(s){var b=atob(s),a=new Uint8Array(b.length);for(var i=0;i<b.lengt
 function derive(pw,salt,it){return crypto.subtle.importKey('raw',new TextEncoder().encode(pw),'PBKDF2',false,['deriveKey']).then(function(k){return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:it,hash:'SHA-256'},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt'])})}
 function enc(key,txt){var iv=crypto.getRandomValues(new Uint8Array(12));return crypto.subtle.encrypt({name:'AES-GCM',iv:iv},key,new TextEncoder().encode(txt)).then(function(ct){return{iv:b64(iv),ct:b64(ct)}})}
 function dec(key,rec){return crypto.subtle.decrypt({name:'AES-GCM',iv:unb64(rec.iv)},key,unb64(rec.ct)).then(function(b){return new TextDecoder().decode(b)})}
-function save(){if(!uid||!KEYC||!st)return;var snap=JSON.stringify(st),id=uid,k=KEYC;
+function save(){if(!uid||!KEYC||!st)return;nvAgenda();var snap=JSON.stringify(st),id=uid,k=KEYC;
 wq=wq.then(function(){return enc(k,snap)}).then(function(r){try{localStorage.setItem(dkey(id),JSON.stringify(r))}catch(e){avisaSalvar()}}).catch(function(){})}
 var saveWarn=false;function avisaSalvar(){if(saveWarn)return;saveWarn=true;try{mostraAviso('Não consegui salvar neste aparelho (sem espaço ou bloqueado). Faça um backup agora.','Ok',function(){$('aviso').hidden=true},'Fechar')}catch(e){}}
 function limpaCampo(el){el.value='';setTimeout(function(){if(el.value&&el.dataset.novo!=='1')el.value=''},90)}
@@ -695,7 +705,7 @@ function vaiPagina(k){if(!st)return;k=Math.max(0,Math.min(3,k));ALLP.forEach(fun
 function irPara(n,direto){vaiPagina(0)}
 function abreHistorico(){vaiPagina(3)}
 function renderHistorico(){var L=$('listaHist');if(!L||!st)return;L.innerHTML='';renderCal();desenhaHistCats();var arr=st.items.concat(faturaView()).sort(function(a,b){return (b.d||'').localeCompare(a.d||'')||(Number(b.id)||0)-(Number(a.id)||0)});if(histCat)arr=arr.filter(function(i){return !i.ent&&i.cor!=='gua'&&!i.fat&&(histCat==='_'?!(i.cat&&catOk(i.cat)):i.cat===histCat)});if(!arr.length){L.innerHTML='<p class="vazio">Nenhum lançamento neste mês.</p>';arquivoHist(L);return}arr.forEach(function(i){var r=document.createElement('div');r.className='it';var c=document.createElement('span');c.className='c';c.style.display='inline-block';c.style.background='var('+kor(i).v+')';var t=document.createElement('div');t.className='t';t.innerHTML='<b></b><small></small>';t.firstChild.textContent=i.desc;t.lastChild.textContent=dm(i.d)+(i.t?' · '+i.t:'')+' · '+i.pay+' · '+(i.ent?'Entrada':kor(i).n)+(i.cat&&catOk(i.cat)?' · '+catNome(i.cat):'')+(i.lug?' · '+i.lug:'');var v=document.createElement('div');v.className='v'+(i.ent?' pos':'');v.style.color='var('+(i.ent?'--pos':(i.cor==='gua'?'--gua':'--ink'))+')';v.textContent=(i.ent?'+ ':'− ')+brl(i.val);if(!i.fat){t.title='Toque para editar';t.onclick=function(){abreEdicao(i.id)}}r.appendChild(c);r.appendChild(t);r.appendChild(v);L.appendChild(r)});arquivoHist(L)}
-function entra(){cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false)},1600);avisoAtualizado();setTimeout(function(){checaVersao();lembreteBackup();lembreteFechar();tour('pg1')},1200);setTimeout(aposEntrada,900);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
+function entra(){cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();lembreteBackup();lembreteFechar();tour('pg1')},1200);setTimeout(aposEntrada,900);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
 var modo='login';
 function authModo(m){modo=m;var novo=(m==='criar');$('atit').textContent=novo?'Criar conta':'Entrar';$('ucw').hidden=!novo;$('uok').textContent=novo?'Criar conta':'Entrar';$('usw').textContent=novo?'Já tenho conta':'Criar conta';
 $('up').autocomplete=novo?'new-password':'current-password';$('umsg').textContent='';
@@ -1660,7 +1670,7 @@ var alvo=r2(v),dif=r2(alvo-limAtual());if(dif===0){m.textContent='O limite já �
 var c=st.contas[0];c.cred=r2((Number(c.cred)||0)+dif);save();render();desenhaCfg();m.textContent='Limite ajustado para '+brl(alvo)+'.'};
 $('limv').onblur=function(){var v=lerReais(this.value);if(v>=0)this.value=fmt2(v)};
 /* microfone */
-function desenhaOpc(){desenhaMem();desenhaBio();$('abremic').checked=!!st.abreMic;$('autocomp').checked=st.autoComp!==false}
+function desenhaOpc(){desenhaMem();desenhaBio();desenhaNuvem();$('abremic').checked=!!st.abreMic;$('autocomp').checked=st.autoComp!==false}
 $('abremic').onchange=function(){st.abreMic=this.checked;save()};
 $('autocomp').onchange=function(){st.autoComp=this.checked;save()};
 $('rever').onclick=function(){st.tut={};save();vaiPagina(0)};
@@ -1702,7 +1712,7 @@ if(env.cripto===1){var pw=$('bkpw').value;if(!pw){m.textContent='Backup criptogr
 else{legado=true;pr=Promise.resolve(env)}
 pr.then(function(o){var v=validaBackup(o);
  if(!confirm((legado?'Atenção: este backup antigo não é criptografado. ':'')+'Substituir os dados atuais pelo backup ('+v.items.length+' lançamentos)?'))return;
- var novo=migra(v);st=novo;save();render();m.textContent='Backup importado: '+st.items.length+' lançamentos.'+(legado?' Faça um novo backup para ele ficar criptografado.':'')})
+ var novo=migra(v);novo.nuvem=(st&&st.nuvem)||{on:false};st=novo;save();render();m.textContent='Backup importado: '+st.items.length+' lançamentos.'+(legado?' Faça um novo backup para ele ficar criptografado.':'')})
 .catch(function(e){m.textContent=e==='senha'?'Senha do backup incorreta ou arquivo alterado.':'Arquivo inválido. Use um backup gerado por este app.'}).then(function(){inp.value=''})};r.readAsText(f)};
 var zArm=false,zTm=null;
 $('zera').onclick=function(){var b=this;
@@ -1793,6 +1803,54 @@ document.addEventListener('keydown',function(e){if(tutAt&&e.key==='Escape')tutFi
 window.addEventListener('resize',function(){if(tutAt)tutShow()});
 $('tut').addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
 
+/* ---------- backup na nuvem (Supabase): sai do celular já criptografado ---------- */
+var SB_URL='https://ezivqczibtsqqqzpzcdh.supabase.co',SB_KEY='sb_publishable_YhQFxwQmRruAh7aDATquFQ_sR81kg-Z',NV_IT=310000;
+var nvTm=null,nvRodando=false,nvMudo=false;
+function limpaNuvem(n){if(!n||typeof n!=='object'||!n.on)return{on:false};var ok=/^[a-f0-9]{64}$/.test(n.id)&&typeof n.salt==='string'&&typeof n.k==='string'&&n.k.length>=40&&n.k.length<=64;
+ return ok?{on:true,id:n.id,salt:n.salt,it:Math.max(100000,Math.min(2000000,parseInt(n.it,10)||NV_IT)),k:n.k,ult:typeof n.ult==='string'?n.ult.slice(0,30):'',pend:!!n.pend,err:typeof n.err==='string'?n.err.slice(0,120):''}:{on:false}}
+function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return('0'+b.toString(16)).slice(-2)}).join('')}
+function nvEndereco(nome,senha){return crypto.subtle.importKey('raw',new TextEncoder().encode(senha),'PBKDF2',false,['deriveBits']).then(function(k){return crypto.subtle.deriveBits({name:'PBKDF2',salt:new TextEncoder().encode('financas-nuvem|'+normT(nome)),iterations:NV_IT,hash:'SHA-256'},k,256)}).then(hex)}
+function nvChave(senha,salt,it){return crypto.subtle.importKey('raw',new TextEncoder().encode(senha),'PBKDF2',false,['deriveKey']).then(function(k){return crypto.subtle.deriveKey({name:'PBKDF2',salt:salt,iterations:it,hash:'SHA-256'},k,{name:'AES-GCM',length:256},true,['encrypt','decrypt'])})}
+function sbRpc(fn,args){return fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(args),cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error('http'+r.status);try{return JSON.parse(t)}catch(e){return t}})})}
+function nomeConta(){return(users.filter(function(u){return u.id===uid})[0]||{}).nome||''}
+/* envia a cópia criptografada (chamado sozinho depois de cada mudança e uma vez por dia) */
+function nvEnvia(){var N=st&&st.nuvem;if(!N||!N.on||nvRodando)return Promise.resolve(false);if(!navigator.onLine){nvMarca(true,'Sem internet: envio quando a conexão voltar.');return Promise.resolve(false)}
+ nvRodando=true;var txt;try{txt=JSON.stringify(snapshot())}catch(e){nvRodando=false;return Promise.resolve(false)}
+ return crypto.subtle.importKey('raw',unb64(N.k),{name:'AES-GCM'},false,['encrypt']).then(function(k){return enc(k,txt)}).then(function(r){
+  var env=JSON.stringify({app:'financas',cripto:1,it:N.it,salt:N.salt,iv:r.iv,ct:r.ct});return sbRpc('salvar_backup',{p_id:N.id,p_dados:env})}).then(function(){nvRodando=false;st.nuvem.ult=new Date().toISOString();nvMarca(false,'');return true},
+  function(){nvRodando=false;nvMarca(true,'Não consegui enviar agora. Tento de novo sozinho.');return false})}
+function nvMarca(pend,err){if(!st||!st.nuvem||!st.nuvem.on)return;st.nuvem.pend=pend;st.nuvem.err=err||'';nvMudo=true;save();nvMudo=false;try{if(!$('cfg').hidden)desenhaNuvem()}catch(e){}}
+function nvAgenda(){if(nvMudo||!st||!st.nuvem||!st.nuvem.on)return;clearTimeout(nvTm);if(!st.nuvem.pend){st.nuvem.pend=true}nvTm=setTimeout(nvEnvia,20000)}
+function nvDiario(){var N=st&&st.nuvem;if(!N||!N.on)return;var ult=Date.parse(N.ult||'')||0;if(N.pend||Date.now()-ult>20*3600000)setTimeout(nvEnvia,4000)}
+window.addEventListener('online',function(){if(st&&st.nuvem&&st.nuvem.on&&st.nuvem.pend)setTimeout(nvEnvia,2000)});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&st&&st.nuvem&&st.nuvem.on&&st.nuvem.pend&&nvTm){clearTimeout(nvTm);nvEnvia()}});
+/* ⚙ */
+function desenhaNuvem(){var N=st&&st.nuvem,on=!!(N&&N.on);$('nvoff').hidden=on;$('nvon').hidden=!on;$('nvmsg').textContent='';
+ if(on){var d=N.ult?new Date(N.ult):null;$('nvst').textContent=(d?'Último envio: '+pad(d.getDate())+'/'+pad(d.getMonth()+1)+' às '+pad(d.getHours())+':'+pad(d.getMinutes())+'.':'Ainda não enviado.')+(N.pend?' '+(N.err||'Envio pendente.'):' Tudo em dia.')}}
+function nvAtiva(pw){var salt=crypto.getRandomValues(new Uint8Array(16)),nome=nomeConta(),id;
+ return nvEndereco(nome,pw).then(function(x){id=x;return nvChave(pw,salt,NV_IT)}).then(function(k){return crypto.subtle.exportKey('raw',k)}).then(function(raw){
+  st.nuvem={on:true,id:id,salt:b64(salt),it:NV_IT,k:b64(raw),ult:'',pend:true,err:''};nvMudo=true;save();nvMudo=false;return nvEnvia()})}
+$('nvliga').onclick=function(){var pw=$('nvpw').value,pw2=$('nvpw2').value,m=$('nvmsg'),b=this;
+ if(pw.length<8){m.textContent='A senha do backup precisa de 8 ou mais caracteres.';return}if(pw!==pw2){m.textContent='As senhas não são iguais.';return}
+ b.disabled=true;m.textContent='Preparando... leva alguns segundos.';
+ nvAtiva(pw).then(function(ok){$('nvpw').value=$('nvpw2').value='';b.disabled=false;desenhaNuvem();
+  m.textContent=ok?'Backup na nuvem ligado. A partir de agora ele é enviado sozinho. Anote a senha: sem ela não dá para restaurar.':'Ligado, mas o primeiro envio falhou. O app tenta de novo sozinho.'},function(){b.disabled=false;m.textContent='Não consegui ligar agora. Tente de novo.'})};
+$('nvagora').onclick=function(){var m=$('nvmsg');m.textContent='Enviando...';nvEnvia().then(function(ok){desenhaNuvem();m.textContent=ok?'Enviado.':'Não consegui enviar agora. Tento de novo sozinho.'})};
+var nvArm=false,nvArmT=null;
+$('nvdesl').onclick=function(){var b=this,m=$('nvmsg');if(!nvArm){nvArm=true;b.textContent='Toque de novo: desliga e apaga a cópia da nuvem';nvArmT=setTimeout(function(){nvArm=false;b.textContent='Desligar e apagar da nuvem'},4000);return}
+ clearTimeout(nvArmT);nvArm=false;b.textContent='Desligar e apagar da nuvem';var id=st.nuvem&&st.nuvem.id;m.textContent='Apagando da nuvem...';
+ (id?sbRpc('apagar_backup',{p_id:id}):Promise.resolve(true)).then(function(){clearTimeout(nvTm);st.nuvem={on:false};nvMudo=true;save();nvMudo=false;desenhaNuvem();$('nvmsg').textContent='Backup na nuvem desligado e apagado.'},function(){m.textContent='Não consegui apagar agora (sem internet?). Tente de novo.'})};
+/* restaurar: com nome da conta + senha do backup */
+function nvRestaura(nome,senha,m,depois){m.textContent='Buscando na nuvem... leva alguns segundos.';
+ nvEndereco(nome,senha).then(function(id){return sbRpc('ler_backup',{p_id:id})}).then(function(r){var row=Array.isArray(r)?r[0]:null;if(!row||!row.dados)throw 'nada';var env=JSON.parse(row.dados);
+  if(env.cripto!==1||typeof env.salt!=='string'||typeof env.iv!=='string'||typeof env.ct!=='string'||!(env.it>=100000&&env.it<=2000000))throw 'formato';
+  return derive(senha,unb64(env.salt),env.it).then(function(k){return dec(k,{iv:env.iv,ct:env.ct})}).then(function(t){return{o:JSON.parse(t),quando:row.atualizado}},function(){throw 'senha'})}).then(function(x){var v=validaBackup(x.o),d=new Date(x.quando);
+  if(!confirm('Achei um backup de '+pad(d.getDate())+'/'+pad(d.getMonth()+1)+' às '+pad(d.getHours())+':'+pad(d.getMinutes())+' com '+v.items.length+' lançamentos. Substituir os dados deste aparelho por ele?')){m.textContent='Nada foi alterado.';return}
+  var novo=migra(v);novo.nuvem={on:false};st=novo;save();m.textContent='Backup restaurado: '+st.items.length+' lançamentos. O backup na nuvem continua ligado.';return nvAtiva(senha).catch(function(){}).then(function(){if(depois)depois()})})
+ .catch(function(e){m.textContent=e==='nada'?'Não achei backup com esse nome e senha. Confira o nome da conta (igual ao do outro celular) e a senha do backup.':e==='senha'?'Senha do backup incorreta.':'Não consegui buscar agora (sem internet?). Tente de novo.'})}
+$('nvrest').onclick=function(){var pw=$('nvrpw').value,m=$('nvmsg');if(pw.length<8){m.textContent='Digite a senha do backup.';return}nvRestaura(nomeConta(),pw,m,function(){$('nvrpw').value='';render();desenhaCfg()})};
+$('ininv').onclick=function(){$('ininvw').hidden=!$('ininvw').hidden};
+$('ininvok').onclick=function(){var pw=$('ininvpw').value,m=$('ininvmsg');if(pw.length<8){m.textContent='Digite a senha do backup.';return}nvRestaura(nomeConta(),pw,m,function(){$('ininvpw').value='';entra()})};
 /* ---------- entrar com a digital / Face ID (WebAuthn no próprio aparelho) ---------- */
 var BIO_MS=60000,bioEsc=0,bioAberto=false;
 function bioLe(){try{var o=JSON.parse(localStorage.getItem('financas-bio')||'{}');return(o&&typeof o==='object')?o:{}}catch(e){return{}}}
