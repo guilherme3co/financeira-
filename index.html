@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v43">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-7Y66BnXjQqM1haImVq0zuhUZFkoUosIUi/POZPgx0kg='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v44">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-9I2RMWy0+DAOJG/7LKzw1LmiVSb2z38y903OswoVFUY='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças</title>
@@ -403,6 +403,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 details.iobj{border-top:1px solid var(--line);padding:6px 0}details.iobj>summary{cursor:pointer;list-style:none;padding:4px 0}details.iobj>summary::-webkit-details-marker{display:none}details.iobj>summary b{display:block}details.iobj>summary small{color:var(--mute);font-size:12px}
 .igraf{width:100%;height:auto;display:block;margin:6px 0}.igraf .ax{font:500 10px 'DM Sans',sans-serif;fill:var(--mute)}
 table.itab{margin-top:8px}
+.porco,.gauge .porco,#pg1 .gauge .porco{display:block;width:52px;height:52px;max-width:none;margin:0 auto 6px;color:var(--pos)}.gcard .porco{width:40px;height:40px}
 </style>
 </head>
 <body>
@@ -539,7 +540,7 @@ table.itab{margin-top:8px}
     <div class="ringbox"><svg id="ring" viewBox="0 0 200 200" role="img" aria-label="Anel: verde é o disponível, vermelho os gastos"></svg><div class="ringc"><span class="dl">Disponível</span><p class="saldo" id="saldo">R$ 0,00</p><span class="lim" id="limc" hidden></span></div></div>
     <p class="rleg"><span><i style="background:var(--pos)"></i>Disponível</span><span><i style="background:var(--neg)"></i>Gastos</span><button type="button" class="linkb" id="fatbtn" hidden>Pagar fatura</button></p>
   </div>
-  <div class="gauge-slide" data-gslide="1" aria-label="Guardado" id="gaugeSaved"><div class="gsimp"><span class="dl">Guardado</span><p class="saldo" id="gsv">R$ 0,00</p><p class="sub" id="gss"></p><button type="button" class="linkb" id="gsver">Ver guardados e investir ›</button></div></div>
+  <div class="gauge-slide" data-gslide="1" aria-label="Guardado" id="gaugeSaved"><div class="gsimp"><svg class="porco" aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4.6" r="2.4"/><path d="M8.2 13.6c1-3 4.5-5 9-5 3.5 0 6.4 1.2 8 3.3l2.6-.3-.6 3.6.9 1.2v2.6l-1.9.6c-.6 1.3-1.6 2.4-2.9 3.2v3.3h-3.2l-.7-2.1c-1.4.3-3 .3-4.5 0l-.7 2.1h-3.2v-3.4c-2.2-1.4-3.3-3.4-3.3-5.6 0-.5 0-1 .1-1.5"/><path d="M8.2 13.6c-1.4.2-2.9-.6-3-2.2"/><path d="M19.6 8.9l2-2.7 1.3 3.5"/><path d="M13.6 12.2h5.2" stroke-width="1.6"/><circle cx="22.2" cy="14.4" r=".9" fill="currentColor" stroke="none"/></svg><span class="dl">Guardado</span><p class="saldo" id="gsv">R$ 0,00</p><p class="sub" id="gss"></p><button type="button" class="linkb" id="gsver">Ver guardados e investir ›</button></div></div>
 </div>
 <div class="gauge-nav" aria-label="Mudar painel">
   <button type="button" id="gPrev" aria-label="Painel anterior" title="Painel anterior">‹</button>
@@ -559,7 +560,7 @@ table.itab{margin-top:8px}
 <section class="pg" id="pg3">
 <main>
 <h1>Guardados</h1>
-<div class="gcard"><span class="dl">Total guardado</span><p class="saldo" id="gtot">R$ 0,00</p><p class="sub" id="gsub" style="margin-bottom:0"></p></div>
+<div class="gcard"><svg class="porco" aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4.6" r="2.4"/><path d="M8.2 13.6c1-3 4.5-5 9-5 3.5 0 6.4 1.2 8 3.3l2.6-.3-.6 3.6.9 1.2v2.6l-1.9.6c-.6 1.3-1.6 2.4-2.9 3.2v3.3h-3.2l-.7-2.1c-1.4.3-3 .3-4.5 0l-.7 2.1h-3.2v-3.4c-2.2-1.4-3.3-3.4-3.3-5.6 0-.5 0-1 .1-1.5"/><path d="M8.2 13.6c-1.4.2-2.9-.6-3-2.2"/><path d="M19.6 8.9l2-2.7 1.3 3.5"/><path d="M13.6 12.2h5.2" stroke-width="1.6"/><circle cx="22.2" cy="14.4" r=".9" fill="currentColor" stroke="none"/></svg><span class="dl">Total guardado</span><p class="saldo" id="gtot">R$ 0,00</p><p class="sub" id="gsub" style="margin-bottom:0"></p></div>
 <p class="hint">Guardado é separado do Disponível.</p>
 <h2>Onde está</h2>
 <div id="gplaces"></div>
@@ -706,7 +707,7 @@ table.itab{margin-top:8px}
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v43';
+var VERSAO='v44';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -1766,7 +1767,7 @@ function autoAtualiza(nova,tent){var tk='financas-tentativa',ant='';try{ant=loca
  try{localStorage.setItem(tk,nova+'|'+Date.now());localStorage.setItem('financas-atualizado',nova)}catch(e){}
  if(st)save();setTimeout(atualizaApp,1200)}
 function avisoAtualizado(){var v='';try{v=localStorage.getItem('financas-atualizado')||''}catch(e){}if(v&&v===VERSAO){try{localStorage.removeItem('financas-atualizado');localStorage.removeItem('financas-tentativa')}catch(e){}}}
-var NOVIDADES={v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
+var NOVIDADES={v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
 function mostraNovidades(v){var L=NOVIDADES[v||VERSAO];if(!L)return false;$('novt').textContent='Novidades da '+(v||VERSAO);var u=$('novl');u.innerHTML='';L.forEach(function(x){u.appendChild(el_('li',null,x))});$('nov').hidden=false;try{$('novok').focus()}catch(e){}return true}
 function novidades(){var vis='';try{vis=localStorage.getItem('financas-visto')||''}catch(e){}if(vis===VERSAO)return false;try{localStorage.setItem('financas-visto',VERSAO)}catch(e){}
  if(!st||!(st.items.length||(st.arquivo&&st.arquivo.length)||(st.tut&&st.tut.pg1)))return false;return mostraNovidades()}
