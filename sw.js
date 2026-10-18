@@ -12,7 +12,7 @@ if(e.request.method==='POST'&&u.origin===self.location.origin&&/\/(index\.html)?
 if(e.request.method!=='GET'||u.origin!==self.location.origin)return;
 var key=new Request(u.origin+u.pathname);
 /* leitores de foto e PDF: não mudam, vêm direto do aparelho (para trocar, mude o nome do arquivo) */
-if(/\/(ocr|pdf)\/[^\/]+$/.test(u.pathname)){e.respondWith(caches.open(LEITOR).then(function(c){return c.match(key)}).then(function(m){return m||fetch(e.request).then(function(r){return guarda(LEITOR,key,r)})}));return}
+if(/\/(ocr|pdf|fonts)\/[^\/]+$/.test(u.pathname)){e.respondWith(caches.open(LEITOR).then(function(c){return c.match(key)}).then(function(m){return m||fetch(e.request).then(function(r){return guarda(LEITOR,key,r)})}));return}
 /* abrir o app: mostra na hora a cópia do aparelho e atualiza por trás (a troca de versão é avisada pelo próprio app) */
 if(e.request.mode==='navigate'){var rede=fetch(e.request,{cache:'no-cache'}).then(function(r){return guarda(CACHE,key,r)});e.waitUntil(rede.catch(function(){}));
  e.respondWith(caches.match(key).then(function(m){return m||rede.catch(function(){return caches.match('./index.html')})}));return}

@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v47">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-KBu4tCNe7QNUaIUKgTWPvO5EeXEVlEqwIKgsDrKA/ko='; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v48">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-CWwgLzCaTOR50txOP/JxWI90l55QRRC4fYAIHzYVLbk='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças</title>
@@ -16,8 +16,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Finanças">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'DM Sans';src:url(fonts/dm-sans.woff) format('woff');font-weight:400 700;font-display:swap}
+@font-face{font-family:'Bricolage Grotesque';src:url(fonts/bricolage.woff) format('woff');font-weight:600 800;font-display:swap}
 :root{--bg:#F1F3EE;--card:#FFFFFF;--ink:#15251D;--mute:#68766E;--line:#DDE3DC;--pos:#1F8A55;--neg:#D6403A;--mid:#D99A12;--rec:#1F8A55;--uti:#2F6FDB;--des:#8E1B3C;--gua:#7B847F;--sem:#B9C1BC;--btn:#15251D;--btnt:#F1F3EE}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1814;--card:#18251E;--ink:#EDF2EC;--mute:#93A399;--line:#263830;--pos:#3DBB7A;--neg:#EF6A63;--mid:#EBB63E;--rec:#3DBB7A;--uti:#6AA0FF;--des:#C73E62;--gua:#A9B2AD;--sem:#5F6F66;--btn:#EDF2EC;--btnt:#0F1814}}
 :root[data-theme="dark"]{--bg:#0F1814;--card:#18251E;--ink:#EDF2EC;--mute:#93A399;--line:#263830;--pos:#3DBB7A;--neg:#EF6A63;--mid:#EBB63E;--rec:#3DBB7A;--uti:#6AA0FF;--des:#C73E62;--gua:#A9B2AD;--sem:#5F6F66;--btn:#EDF2EC;--btnt:#0F1814}
@@ -413,6 +414,11 @@ table.itab{margin-top:8px}
 .icard>b{display:block;font-size:14px;margin:10px 0 2px}
 #nvvl .add{margin-top:6px}
 .crow.dv4{grid-template-columns:1fr 96px 52px 40px}.crow.dv4 .cd{grid-column:3;grid-row:1;padding:11px 6px;text-align:center}.crow.dv4 .x{grid-column:4;grid-row:1}
+#fatbtn{min-height:40px;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:600;font-size:13px;margin:4px 0 0}
+.linkb{min-height:36px}
+.fab{transition:transform .2s ease,opacity .2s ease}.fab.esc{transform:translateY(140%);opacity:0;pointer-events:none}
+.consd{margin-bottom:12px}
+#relDoc table.rt{font-size:11px}#relDoc .rt th,#relDoc .rt td{padding:3px 2px}@media(max-width:400px){#relDoc table.rt{font-size:10px}#relDoc .rt td.n,#relDoc .rt th.n{white-space:normal}}
 </style>
 </head>
 <body>
@@ -505,6 +511,7 @@ table.itab{margin-top:8px}
 <p class="msg">Automático segue o tema do celular.</p>
 </div></details>
 <details class="cfgs" id="cfgcon"><summary><span>👤</span><div>Conta<small id="quem"></small></div></summary><div class="cfgb">
+<details class="cfgsub" id="trocapw"><summary>Trocar a senha do app</summary><label for="pwa">Senha atual</label><input id="pwa" type="password" autocomplete="current-password"><label for="pwn">Nova senha</label><input id="pwn" type="password" autocomplete="new-password" placeholder="8+ caracteres, letras e números"><label for="pwn2">Repita a nova senha</label><input id="pwn2" type="password" autocomplete="new-password"><button type="button" class="add pri" id="pwok">Trocar senha</button><p class="msg" id="pwmsg" role="status"></p></details>
 <button type="button" class="add" id="novab">Novidades desta versão</button>
 <button type="button" class="add" id="rever">Rever o tutorial</button>
 <p class="msg">O mês fecha sozinho no dia 1: o resumo vai para o Histórico e o saldo passa para o mês novo.</p>
@@ -590,9 +597,7 @@ table.itab{margin-top:8px}
 <main>
 <div class="mencard"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><div><h2 style="margin:0">Seu mentor</h2><p class="sub" style="margin:2px 0 0">Converse, tire dúvidas e receba um plano para sair das dívidas.</p></div></div>
 <button type="button" class="add pri" id="menab">💬 Conversar com o mentor<span class="mnovo" id="menn" hidden>novo</span></button>
-<h2 style="margin-top:20px">Análise do mês</h2>
-<p class="sub">Feita no seu aparelho.</p>
-<div id="consBox"></div>
+<p class="sub" style="margin-top:14px">A nota do mês, a reserva e o limite de desnecessários ficam em 🧠 Inteligência.</p>
 </main>
 </section>
 
@@ -609,6 +614,7 @@ table.itab{margin-top:8px}
 <!-- ============ INTELIGÊNCIA ============ -->
 <section class="pg" id="pgx">
 <main>
+<details class="cfgs consd" id="consd"><summary><span>📊</span><div>Nota do mês<small id="consres">Nota, dívidas, reserva e limite de desnecessários</small></div></summary><div class="cfgb"><div id="consBox"></div></div></details>
 <div id="xBox"></div>
 </main>
 </section>
@@ -616,7 +622,6 @@ table.itab{margin-top:8px}
 <!-- ============ HISTÓRICO ============ -->
 <section class="pg" id="pg4">
 <main>
-<h1>Minhas Finanças</h1>
 <h2 style="margin-top:4px">Histórico completo</h2>
 <p class="sub">Entradas, gastos e valores guardados em uma única lista.</p>
 <button type="button" class="add pri" id="relab">📄 Relatório do mês (PDF)</button>
@@ -724,7 +729,7 @@ table.itab{margin-top:8px}
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v47';
+var VERSAO='v48';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -795,7 +800,7 @@ var cur=0,voltaK=0,PGS=['pg1','pgi','pgk','pg4','pgx'],TITS=['Principal','Invest
 function marcaNav(k){TBS.forEach(function(id,i){$(id).setAttribute('aria-selected',i===k?'true':'false')});$('ptit').textContent=k>=0?TITS[k]:''}
 function tela(qual){if(qual==='pga'||qual==='pgs'){$('bio').hidden=true;bioAberto=false;bioOk=bioNao=null;$('aviso').hidden=true;$('lanc').hidden=true;$('nov').hidden=true;$('men').hidden=true;MEN.esp=null}ALLP.forEach(function(i){$(i).className='pg'});$(qual).className='pg on';$('top').hidden=(qual==='pga'||qual==='pgs');window.scrollTo(0,0);fabUpd()}
 function fabUpd(){var on=!!st&&['pg1','pgi','pgk','pg4','pgc','pgx'].some(function(i){return $(i).className.indexOf('on')>=0});$('fab').hidden=!on}
-function vaiPagina(k,sub){if(!st)return;k=Math.max(0,Math.min(4,k));telaHist(k!==0);ALLP.forEach(function(i){$(i).className='pg'});$(PGS[k]).className='pg on';$('top').hidden=false;eng.setAttribute('aria-expanded','false');marcaNav(k);cur=k;$('topvolta').hidden=k===0;window.scrollTo(0,0);fabUpd();if(k===1){itTab(sub||IT.cur);return}if(k===2){renderConsultor();mDot()}if(k===3)renderHistorico();if(k===4)renderIntel();setTimeout(function(){tour(k===0?'pg1':PGS[k])},380)}
+function vaiPagina(k,sub){if(!st)return;k=Math.max(0,Math.min(4,k));telaHist(k!==0);ALLP.forEach(function(i){$(i).className='pg'});$(PGS[k]).className='pg on';$('top').hidden=false;eng.setAttribute('aria-expanded','false');marcaNav(k);cur=k;$('topvolta').hidden=k===0;window.scrollTo(0,0);fabUpd();if(k===1){itTab(sub||IT.cur);return}if(k===2){mDot()}if(k===3)renderHistorico();if(k===4){renderIntel();renderConsultor();resNota()}setTimeout(function(){tour(k===0?'pg1':PGS[k])},380)}
 /* botão voltar do Android: dentro de uma tela, volta para a principal */
 function telaHist(dentro){try{if(dentro&&!(history.state&&history.state.tela))history.pushState({tela:1},'')}catch(e){}}
 function voltaInicio(){if(history.state&&history.state.tela){try{history.back();return}catch(e){}}vaiPagina(0)}
@@ -805,9 +810,12 @@ function irPara(n,direto){vaiPagina(0)}
 function abreHistorico(){vaiPagina(3)}
 function histMatch(i,q){var t=normT([i.desc,i.pay,i.ent?'entrada':'',i.cat&&catOk(i.cat)?catNomeP(i.cat):'',i.lug||'',kor(i).n].join(' '));return q.split(/\s+/).every(function(w){return t.indexOf(w)>=0})}
 function renderHistorico(){var L=$('listaHist');if(!L||!st)return;L.innerHTML='';var q=normT(($('hbusca')||{}).value||'').trim(),R=$('hbres');$('cal').hidden=!!q;if(!q){R.hidden=true;renderCal()}desenhaHistCats();var arr=(q?itemsTodos().concat(faturaView()).filter(function(i){return histMatch(i,q)}):st.items.concat(faturaView())).sort(function(a,b){return (b.d||'').localeCompare(a.d||'')||(Number(b.id)||0)-(Number(a.id)||0)});if(histCat)arr=arr.filter(function(i){return !i.ent&&i.cor!=='gua'&&!i.fat&&(histCat==='_'?!(i.cat&&catOk(i.cat)):i.cat===histCat)});if(q){var tg=0,te=0;arr.forEach(function(i){if(i.ent)te+=i.val;else if(i.cor!=='gua'&&!i.fat)tg+=i.val});R.hidden=false;R.textContent='';R.appendChild(document.createTextNode(arr.length+(arr.length===1?' lançamento':' lançamentos')+' com “'+$('hbusca').value.trim()+'”'));if(tg>0){R.appendChild(document.createTextNode(' · gastos '));R.appendChild(el_('b',null,brl(r2(tg))))}if(te>0){R.appendChild(document.createTextNode(' · entradas '));R.appendChild(el_('b',null,brl(r2(te))))}}
-if(!arr.length){L.innerHTML='<p class="vazio">'+(q?'Nada encontrado. Tente outra palavra.':'Nenhum lançamento neste mês.')+'</p>';if(!q)arquivoHist(L);return}arr.forEach(function(i){var r=document.createElement('div');r.className='it';var c=document.createElement('span');c.className='c';c.style.display='inline-block';c.style.background='var('+kor(i).v+')';var t=document.createElement('div');t.className='t';t.innerHTML='<b></b><small></small>';t.firstChild.textContent=i.desc;t.lastChild.textContent=(q&&i.d.slice(0,4)!==hoje().slice(0,4)?dm(i.d)+'/'+i.d.slice(0,4):dm(i.d))+(i.t?' · '+i.t:'')+' · '+i.pay+' · '+(i.ent?'Entrada':kor(i).n)+(i.cat&&catOk(i.cat)?' · '+catNome(i.cat):'')+(i.lug?' · '+i.lug:'');var v=document.createElement('div');v.className='v'+(i.ent?' pos':'');v.style.color='var('+(i.ent?'--pos':(i.cor==='gua'?'--gua':'--ink'))+')';v.textContent=(i.ent?'+ ':'− ')+brl(i.val);if(!i.fat&&acha(i.id)){t.title='Toque para editar';t.onclick=function(){abreEdicao(i.id)}}r.appendChild(c);r.appendChild(t);r.appendChild(v);L.appendChild(r)});if(!q)arquivoHist(L)}
+if(!arr.length){L.innerHTML='<p class="vazio">'+(q?'Nada encontrado. Tente outra palavra.':'Nenhum lançamento neste mês.')+'</p>';if(!q)arquivoHist(L);return}var tot_=arr.length;if(histQ!==q+'|'+histCat){histQ=q+'|'+histCat;histLim=60}arr=arr.slice(0,histLim);arr.forEach(function(i){var r=document.createElement('div');r.className='it';var c=document.createElement('span');c.className='c';c.style.display='inline-block';c.style.background='var('+kor(i).v+')';var t=document.createElement('div');t.className='t';t.innerHTML='<b></b><small></small>';t.firstChild.textContent=i.desc;t.lastChild.textContent=(q&&i.d.slice(0,4)!==hoje().slice(0,4)?dm(i.d)+'/'+i.d.slice(0,4):dm(i.d))+(i.t?' · '+i.t:'')+' · '+i.pay+' · '+(i.ent?'Entrada':kor(i).n)+(i.cat&&catOk(i.cat)?' · '+catNome(i.cat):'')+(i.lug?' · '+i.lug:'');var v=document.createElement('div');v.className='v'+(i.ent?' pos':'');v.style.color='var('+(i.ent?'--pos':(i.cor==='gua'?'--gua':'--ink'))+')';v.textContent=(i.ent?'+ ':'− ')+brl(i.val);if(!i.fat&&acha(i.id)){t.title='Toque para editar';t.onclick=function(){abreEdicao(i.id)}}r.appendChild(c);r.appendChild(t);r.appendChild(v);L.appendChild(r)});if(tot_>arr.length){var mb=el_('button','add','Ver mais ('+(tot_-arr.length)+')');mb.type='button';mb.onclick=function(){histLim+=60;renderHistorico()};L.appendChild(mb)}if(!q)arquivoHist(L)}
+var histLim=60,histQ='';
 (function(){var tb=null;$('hbusca').addEventListener('input',function(){clearTimeout(tb);tb=setTimeout(renderHistorico,180)});$('hbusca').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur()}})})();
-function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
+/* conectado sem digital: qualquer pessoa com o celular desbloqueado abre o app */
+function avisoBio(){if(!st||!lembrado||bioId(uid)||!$('aviso').hidden||st.avBioAte>=hoje())return;bioPode().then(function(p){if(!p||!$('aviso').hidden)return;mostraAviso('Você está conectado sem digital: quem pegar seu celular desbloqueado abre o app. Ligue a digital para proteger.','Ligar digital',function(){$('aviso').hidden=true;abreCfg(false,'cfgseg')},'Depois',function(){st.avBioAte=isoAdd(hoje(),7);save()})})}
+function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda)avisoBio();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
 var modo='login';
 function authModo(m){modo=m;var novo=(m==='criar');$('atit').textContent=novo?'Criar conta':'Entrar';$('ucw').hidden=!novo;$('uok').textContent=novo?'Criar conta':'Entrar';$('usw').textContent=novo?'Já tenho conta':'Criar conta';
 $('up').autocomplete=novo?'new-password':'current-password';$('umsg').textContent='';
@@ -866,6 +874,7 @@ clearTimeout(dTm);dArm=false;b.textContent='Excluir minha conta';try{localStorag
 /* ---------- velocímetro ---------- */
 var TOPO=0;
 function ring(saldo,gasto,gua,base){var C=2*Math.PI*80,sw=20,h='<circle cx="100" cy="100" r="80" fill="none" stroke="var(--line)" stroke-width="'+sw+'"/>',g=0,rd=0,gu=0;
+if(saldo<0){$('ring').innerHTML=h+'<circle cx="100" cy="100" r="80" fill="none" stroke="var(--neg)" stroke-width="'+sw+'"/>';$('ring').setAttribute('aria-label','Anel todo vermelho: o Disponível está negativo');return}$('ring').setAttribute('aria-label','Anel: verde é o disponível, vermelho os gastos');
 if(base>0){g=Math.max(0,saldo)/base;rd=gasto/base;gu=gua/base;var t=g+rd+gu;if(t>1){g/=t;rd/=t;gu/=t}}
 var segs=[[g,'--pos'],[gu,'--gua'],[rd,'--neg']].filter(function(x){return x[0]>0.002}),gap=segs.length>1?7:0,off=0;
 segs.forEach(function(x){var len=x[0]*C,d=Math.max(len-gap,0.8);h+='<circle cx="100" cy="100" r="80" fill="none" stroke="var('+x[1]+')" stroke-width="'+sw+'" stroke-dasharray="'+d.toFixed(2)+' '+(C-d).toFixed(2)+'" stroke-dashoffset="'+(-off).toFixed(2)+'" transform="rotate(-90 100 100)"/>';off+=len});
@@ -1046,7 +1055,7 @@ box.appendChild(b)})}
 /* ---------- botão + e folha de lançamento ---------- */
 function abreLanc(){if(!st)return;fechaMn();$('lanc').hidden=false;atalhos();setTimeout(ocrAquece,400);if(!$('digbox').hidden)setTimeout(function(){try{fr.focus()}catch(e){}},80)}
 function fechaLanc(){if($('lanc').hidden)return;$('lanc').hidden=true;try{fr.blur()}catch(e){}}
-$('fab').onclick=abreLanc;$('abinv').onclick=function(){fechaLanc();vaiPagina(1,'inv')};$('abmen').onclick=function(){fechaLanc();vaiPagina(2)};$('abhis').onclick=function(){fechaLanc();vaiPagina(3)};$('abint').onclick=function(){fechaLanc();vaiPagina(4)};$('lancx').onclick=fechaLanc;$('lanc').onclick=function(e){if(e.target===this)fechaLanc()};
+$('fab').onclick=abreLanc;(function(){var y0=window.scrollY;window.addEventListener('scroll',function(){var y=window.scrollY;$('fab').classList.toggle('esc',y>y0+4&&y>120);if(y<y0-4||y<120)$('fab').classList.remove('esc');y0=y},{passive:true})})();$('abinv').onclick=function(){fechaLanc();vaiPagina(1,'inv')};$('abmen').onclick=function(){fechaLanc();vaiPagina(2)};$('abhis').onclick=function(){fechaLanc();vaiPagina(3)};$('abint').onclick=function(){fechaLanc();vaiPagina(4)};$('lancx').onclick=fechaLanc;$('lanc').onclick=function(e){if(e.target===this)fechaLanc()};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('lanc').hidden)fechaLanc()});
 /* ---------- tela inicial: últimos lançamentos e previsão ---------- */
 function renderUlt(){var L=$('ultl');if(!L)return;L.innerHTML='';var arr=st.items.concat(faturaView()).slice().sort(function(a,b){return(b.d||'').localeCompare(a.d||'')||(b.t||'').localeCompare(a.t||'')||(Number(b.id)||0)-(Number(a.id)||0)}).slice(0,3);
@@ -1778,9 +1787,9 @@ clearTimeout(rTm);rArm=false;b.textContent='Desfazer o último fechamento';
 st.arquivo.pop();st.items=a.items.concat(st.items);st.faturas=(a.faturas||[]).concat(st.faturas||[]);st.contas=a.prevContas;st.start=somaContas(st);st.gAnt=a.prevGAnt;st.fechaPausa=mesAt();save();render();desenhaCfg();$('fmsg').textContent='Fechamento de '+a.rotulo+' desfeito. Os lançamentos voltaram para a lista. Quando quiser, toque em “Fechar o mês anterior agora”.'};
 function arquivoHist(L){if(!st.arquivo||!st.arquivo.length)return;
 var h=document.createElement('h2');h.style.marginTop='20px';h.textContent='Meses anteriores';L.appendChild(h);
-st.arquivo.slice().reverse().forEach(function(a){var d=document.createElement('details');d.className='mes';
+st.arquivo.slice().reverse().forEach(function(a){var d=document.createElement('details');d.className='mes';var feito=false;
 var sm=document.createElement('summary');sm.textContent=a.rotulo;var sg=document.createElement('small');sg.textContent='Entradas +'+brl(a.rec)+' · Gastos −'+brl(a.gasto)+' · Guardado '+brl(a.gua)+' · Saldo '+brl(a.ini)+' → '+brl(a.fim);sm.appendChild(sg);d.appendChild(sm);
-(a.items||[]).slice().sort(function(x,y){return (y.d||'').localeCompare(x.d||'')}).forEach(function(i){var r=document.createElement('div');r.className='mi';var l=document.createElement('span');l.textContent=dm(i.d)+' · '+i.desc;var v=document.createElement('b');v.textContent=(i.ent?'+ ':'− ')+brl(i.val);r.appendChild(l);r.appendChild(v);d.appendChild(r)});
+d.addEventListener('toggle',function(){if(!d.open||feito)return;feito=true;(a.items||[]).slice().sort(function(x,y){return (y.d||'').localeCompare(x.d||'')}).forEach(function(i){var r=document.createElement('div');r.className='mi';var l=document.createElement('span');l.textContent=dm(i.d)+' · '+i.desc;var v=document.createElement('b');v.textContent=(i.ent?'+ ':'− ')+brl(i.val);r.appendChild(l);r.appendChild(v);d.appendChild(r)})});
 L.appendChild(d)})}
 
 /* ---------- avisos: backup e nova versão ---------- */
@@ -1805,12 +1814,18 @@ function autoAtualiza(nova,tent){var tk='financas-tentativa',ant='';try{ant=loca
  try{localStorage.setItem(tk,nova+'|'+Date.now());localStorage.setItem('financas-atualizado',nova)}catch(e){}
  if(st)save();setTimeout(atualizaApp,1200)}
 function avisoAtualizado(){var v='';try{v=localStorage.getItem('financas-atualizado')||''}catch(e){}if(v&&v===VERSAO){try{localStorage.removeItem('financas-atualizado');localStorage.removeItem('financas-tentativa')}catch(e){}}}
-var NOVIDADES={v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
+var NOVIDADES={v48:['Anel fica vermelho quando o Disponível está negativo.','Trocar a senha do app em ⚙ → Conta.','Nota do mês agora fica em 🧠 Inteligência.','Histórico mais leve e o botão + some ao rolar a tela.','Aviso para ligar a digital quando você fica conectado sem ela.','Letras do app guardadas no próprio celular: abre sem pedir nada ao Google.'],v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
 function mostraNovidades(v){var L=NOVIDADES[v||VERSAO];if(!L)return false;$('novt').textContent='Novidades da '+(v||VERSAO);var u=$('novl');u.innerHTML='';L.forEach(function(x){u.appendChild(el_('li',null,x))});$('nov').hidden=false;try{$('novok').focus()}catch(e){}return true}
 function novidades(){var vis='';try{vis=localStorage.getItem('financas-visto')||''}catch(e){}if(vis===VERSAO)return false;try{localStorage.setItem('financas-visto',VERSAO)}catch(e){}
  if(!st||!(st.items.length||(st.arquivo&&st.arquivo.length)||(st.tut&&st.tut.pg1)))return false;return mostraNovidades()}
 $('novok').onclick=function(){$('nov').hidden=true;setTimeout(function(){tour('pg1')},300)};$('nov').onclick=function(e){if(e.target===this)$('novok').click()};
 $('novab').onclick=function(){mostraNovidades()};
+/* trocar a senha: confere a atual, gera chave nova e recriptografa tudo */
+$('pwok').onclick=function(){var a=$('pwa').value,n=$('pwn').value,n2=$('pwn2').value,m=$('pwmsg'),b=this,u=users.filter(function(x){return x.id===uid})[0];if(!u||!st)return;
+ if(!a){m.textContent='Digite a senha atual.';return}var fr=senhaFraca(n,u.nome);if(fr){m.textContent=fr;return}if(n!==n2){m.textContent='As senhas novas não são iguais.';return}if(n===a){m.textContent='A nova senha precisa ser diferente.';return}
+ b.disabled=true;m.textContent='Conferindo...';derive(a,unb64(u.salt),u.it).then(function(k){return dec(k,u.chk)}).then(function(){var salt=crypto.getRandomValues(new Uint8Array(16)),nk;m.textContent='Trocando e protegendo seus dados...';
+  return derive(n,salt,KDF_IT).then(function(k){nk=k;return enc(k,'ok')}).then(function(chk){var id=uid,snap=JSON.stringify(st);return enc(nk,snap).then(function(r){localStorage.setItem(dkey(id),JSON.stringify(r));u.salt=b64(salt);u.it=KDF_IT;u.chk=chk;saveUsers();KEYC=nk;if(lembrado)return idbSet('sessao',{uid:id,key:nk}).catch(function(){})})})
+   .then(function(){$('pwa').value=$('pwn').value=$('pwn2').value='';m.textContent='Senha trocada. Use a nova senha da próxima vez. (A senha do backup na nuvem não mudou.)'})},function(){m.textContent='Senha atual incorreta.'}).catch(function(){m.textContent='Não consegui trocar agora. Nada foi alterado.'}).then(function(){b.disabled=false})};
 document.addEventListener('visibilitychange',function(){if(!document.hidden&&st&&Date.now()-ultChecaV>600000){ultChecaV=Date.now();checaVersao()}});
 
 /* ---------- configurações, backup ---------- */
@@ -1948,8 +1963,7 @@ pgi:[
 {e:'#itabs',t:'Investir',x:'Três abas: Investir (simulador, onde guardar, metas e projeção), Planejamento (salário e dívidas) e Guardados.'},
 {e:'#invBox .icard',t:'Taxas de hoje',x:'CDI, Selic, IPCA e poupança, buscados no Banco Central. Só as taxas vêm da internet: seus dados ficam no celular.'}],
 pgk:[
-{e:'#menab',t:'Mentor',x:'Converse com o mentor: resumo do dia, plano para sair das dívidas, missões e dúvidas.'},
-{e:'#consBox',t:'Análise do mês',x:'Nota de 0 a 100, reserva de emergência e plano para quitar dívidas. Tudo calculado no seu aparelho.'}],
+{e:'#menab',t:'Mentor',x:'Converse com o mentor: resumo do dia, plano para sair das dívidas, missões e dúvidas.'}],
 pg4:[
 {e:'#hbusca',t:'Buscar',x:'Digite “uber” ou “mercado” para ver todos os lançamentos e o total, de todos os meses.'},
 {e:'#relab',t:'Relatório',x:'Escolha o mês e veja gráficos, dicas e a comparação entre meses. Dá para salvar em PDF.'},
@@ -2221,6 +2235,7 @@ function patrimonio(){var tem=r2(saldoAtual()+guardadoTotal()),cart=temLimite()?
 function patriGuarda(){if(!st)return;var p=patrimonio().liq;if(!st.patri||typeof st.patri!=='object')st.patri={};if(st.patri[mesAt()]!==p){st.patri[mesAt()]=p;var ks=Object.keys(st.patri).sort();if(ks.length>36)delete st.patri[ks[0]]}}
 /* tela */
 var SIMC={v:0,n:1},SIMD={id:'',v:0};
+function resNota(){try{var L=mesesLista(),m=L[L.length-1],sk=scoreMes(m,statsMes(m)),e=$('consres');if(e)e.textContent=sk?'Nota '+sk.nota+' · '+sk.rot+' · toque para ver':'Nota, dívidas, reserva e limite de desnecessários'}catch(x){}}
 function renderIntel(){var B=$('xBox');if(!B||!st)return;B.innerHTML='';patriGuarda();
  /* 1. previsão */
  var c1=iCard('Previsão','📅'),V=vencs(),neg=diaNegativo();
@@ -2228,7 +2243,7 @@ function renderIntel(){var B=$('xBox');if(!B||!st)return;B.innerHTML='';patriGua
  c1.appendChild(el_('b',null,'Contas a vencer'));
  if(!V.length)c1.appendChild(el_('p','imsg',(st.dividas||[]).some(function(d){return d.dia})?'Tudo pago neste mês. 🎉':'Coloque o dia do vencimento nas contas em Investir → Planejamento. O app avisa 3 dias antes.'));
  V.forEach(function(v){var r=el_('div','irow ivenc'+(v.falta<0?' al':v.falta<=3?' at':'')),a=el_('span');a.appendChild(el_('b',null,v.d.nome));a.appendChild(el_('small',null,' · '+txtFalta(v.falta)+' (dia '+(+v.data.slice(8))+')'));r.appendChild(a);var bx=el_('div','ivr');bx.appendChild(el_('b',null,brl(v.val)));var pb=el_('button','add pgb','Paguei');pb.type='button';pb.onclick=function(){paguei(v.d);renderIntel()};bx.appendChild(pb);r.appendChild(bx);c1.appendChild(r)});
- var P=prevMeses(3);if(P[0].renda>0||P.some(function(x){return x.contas||x.cart})){c1.appendChild(el_('b',null,'Próximos meses'));var tb=rTab(['','Entra','Sai','Sobra'],P.map(function(x){return[mesNome(x.ym),{t:brl(x.renda),n:1},{t:brl(r2(x.contas+x.cart+x.va)),n:1},{t:brl(x.sobra),n:1}]}));tb.classList.add('itab');c1.appendChild(tb);
+ var P=prevMeses(3);if(P[0].renda>0||P.some(function(x){return x.contas||x.cart})){c1.appendChild(el_('b',null,'Próximos meses'));var tb=rTab(['','Entra','Sai','Sobra'],P.map(function(x){return[mesNome(x.ym).slice(0,3),{t:brl(x.renda),n:1},{t:brl(r2(x.contas+x.cart+x.va)),n:1},{t:brl(x.sobra),n:1}]}));tb.classList.add('itab');c1.appendChild(tb);
   c1.appendChild(el_('p','imsg','Sai = contas e dívidas + parcelas do cartão + gasto do dia a dia (média de '+brl(gastoVar())+'/mês).'));var ruim=P.filter(function(x){return x.sobra<0})[0];if(ruim)c1.appendChild(el_('p','idica al','Em '+mesNome(ruim.ym).toLowerCase()+' falta '+brl(-ruim.sobra)+'. Segure compras parceladas.'))}
  else c1.appendChild(el_('p','imsg','Cadastre o salário em Investir → Planejamento para ver os próximos meses.'));B.appendChild(c1);
  /* 2. auditor */
