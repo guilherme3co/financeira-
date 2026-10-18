@@ -1,0 +1,65 @@
+# Teste diário do Minhas Finanças.
+# Se algo falhar, o GitHub manda um e-mail para o dono do repositório.
+name: Teste diário
+
+on:
+  schedule:
+    - cron: '0 10 * * *'   # todo dia às 7h (horário de Fortaleza)
+  push:
+    branches: [main]
+    paths: ['index.html', 'sw.js', 'testes/**', '.github/workflows/**']
+  workflow_dispatch:       # botão "Run workflow" para rodar na hora
+
+permissions:
+  contents: write
+
+concurrency:
+  group: teste-diario
+  cancel-in-progress: false
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar o navegador de teste
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          npx playwright install --with-deps chromium
+
+      - name: Testar o app (conta de teste, servidor simulado)
+        run: node testes/diario.js
+
+      - name: Conferir se o site no ar está na mesma versão
+        run: |
+          v=$(grep -o 'name="app-versao" content="[^"]*"' index.html)
+          for i in $(seq 1 20); do
+            if curl -fsSL "https://guilherme3co.github.io/financeiro/?t=$(date +%s)" | grep -q "$v"; then echo "Site no ar: $v"; exit 0; fi
+            echo "Ainda publicando... ($i)"; sleep 30
+          done
+          echo "O site no ar não está na versão do repositório ($v)"; exit 1
+
+      - name: Manter o Supabase acordado (e conferir se responde)
+        env:
+          SB_URL: https://ezivqczibtsqqqzpzcdh.supabase.co
+          SB_KEY: sb_publishable_YhQFxwQmRruAh7aDATquFQ_sR81kg-Z   # chave pública do app, não é segredo
+        run: |
+          curl -fsS -X POST "$SB_URL/rest/v1/rpc/ping" -H "apikey: $SB_KEY" -H "Content-Type: application/json" -d '{}'
+          echo
+
+      - name: Manter o teste diário ligado (o GitHub desliga após 60 dias sem mudanças)
+        if: github.event_name == 'schedule'
+        run: |
+          if [ "$(date +%d)" = "01" ]; then
+            date -u +%F > testes/ultimo-teste.txt
+            git config user.name "teste-diario"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add testes/ultimo-teste.txt
+            git commit -m "Teste diário: manter ligado [skip ci]" && git push
+          fi

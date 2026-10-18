@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v49">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-nUR8GrKMUpwQ2er6wmYU2OAYQu0UN7pGjiL54oo2FfA='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-esEFQrW2OZ+tk/dKzu7wUKWzYC9OgAbuAsGAW9bcdWg='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças</title>
@@ -428,7 +428,9 @@ table.itab{margin-top:8px}
 .cybar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--des);margin:8px 0 4px}.cybar i{display:block;background:var(--uti)}
 .cyleg{display:flex;justify-content:space-between;font-size:12px;color:var(--mute)}.cyleg span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--uti)}.cyleg .cyela::before{background:var(--des)}
 .cyjun{border-top:1px solid var(--line);margin-top:6px;padding-top:8px}.cyit span small{color:var(--mute)}.cyd{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
-#casqr,#casok{text-align:center}#cascod{font:700 15px ui-monospace,monospace;white-space:nowrap}
+#casqr,#casok{text-align:center}
+.chki{display:flex;gap:8px;align-items:flex-start;padding:7px 0;font-size:14px;border-bottom:1px solid var(--line)}.chki:last-child{border-bottom:0}.chki>span:nth-child(2){flex:1;min-width:0}.chki .linkb{width:auto;margin:0;padding:0;flex:none;white-space:nowrap;align-self:center}.chkic{flex:none}#chkres{font-weight:700}
+.errit{font-size:12px;margin:6px 0;padding:6px 8px;background:var(--bg);border-radius:6px;word-break:break-word}#cascod{font:700 15px ui-monospace,monospace;white-space:nowrap}
 .consd{margin-bottom:12px}
 #relDoc table.rt{font-size:11px}#relDoc .rt th,#relDoc .rt td{padding:3px 2px}@media(max-width:400px){#relDoc table.rt{font-size:10px}#relDoc .rt td.n,#relDoc .rt th.n{white-space:normal}}
 </style>
@@ -495,7 +497,9 @@ table.itab{margin-top:8px}
 <label for="catn">Nova categoria</label><div class="row2"><div><input id="catn" maxlength="24" autocomplete="off" placeholder="Ex.: Pet, Academia"></div><div><button type="button" class="add" id="catadd" style="margin:0">Criar</button></div></div>
 <p class="msg" id="catmsg" role="status"></p>
 </div></details>
-<details class="cfgs" id="cfgseg"><summary><span>🔒</span><div>Segurança e backup<small>Digital e backup na nuvem</small></div></summary><div class="cfgb">
+<details class="cfgs" id="cfgseg"><summary><span>🔒</span><div>Segurança e backup<small>Checkup, digital e backup na nuvem</small></div></summary><div class="cfgb">
+<h2 style="margin-top:0">Checkup de segurança · <span id="chkres"></span></h2><div id="chkl"></div>
+<hr>
 <label class="chk"><input type="checkbox" id="biochk"> Entrar com a digital / Face ID</label>
 <p class="msg" id="biocfg" role="status"></p>
 <hr>
@@ -518,6 +522,11 @@ table.itab{margin-top:8px}
 <p class="msg" id="bkmsg"></p>
 </details>
 </div></details>
+<details class="cfgs" id="cfgavi"><summary><span>🔔</span><div>Avisos<small>Contas a vencer, mesmo com o app fechado</small></div></summary><div class="cfgb">
+<label class="chk"><input type="checkbox" id="avchk"> Avisar das contas a vencer</label>
+<p class="msg" id="avmsg" role="status"></p>
+<p class="msg">Avisa 3 dias antes, na véspera e no dia, às 9h. Usa o dia do vencimento das contas (Investir → Planejamento). O servidor só recebe as datas: nunca nomes nem valores.</p>
+</div></details>
 <details class="cfgs" id="cfgcas"><summary><span>👫</span><div>Casal<small id="casres">Ver os gastos um do outro</small></div></summary><div class="cfgb">
 <div id="casoff"><p class="msg" style="margin-top:0">Um celular mostra o QR Code e o outro lê com a câmera. Só os gastos são mostrados. Entradas, salário, guardados e dívidas ficam só com você.</p><button type="button" class="add pri" id="casmos">📱 Mostrar meu QR Code</button><button type="button" class="add" id="casler">📷 Ler o QR Code do outro celular</button></div>
 <div id="casqr" hidden><canvas id="qcv" width="10" height="10" aria-label="QR Code do casal"></canvas><p class="msg">Ou digite no outro celular:<br><b id="cascod"></b></p><button type="button" class="add" id="casqx">Fechar QR Code</button></div>
@@ -532,6 +541,7 @@ table.itab{margin-top:8px}
 </div></details>
 <details class="cfgs" id="cfgcon"><summary><span>👤</span><div>Conta<small id="quem"></small></div></summary><div class="cfgb">
 <details class="cfgsub" id="trocapw"><summary>Trocar a senha do app</summary><label for="pwa">Senha atual</label><input id="pwa" type="password" autocomplete="current-password"><label for="pwn">Nova senha</label><input id="pwn" type="password" autocomplete="new-password" placeholder="8+ caracteres, letras e números"><label for="pwn2">Repita a nova senha</label><input id="pwn2" type="password" autocomplete="new-password"><button type="button" class="add pri" id="pwok">Trocar senha</button><p class="msg" id="pwmsg" role="status"></p></details>
+<details class="cfgsub" id="errbox"><summary>Erros do app <span id="errn"></span></summary><div id="errl"></div><button type="button" class="add" id="errcp" hidden>Copiar para mandar ao Claude</button><button type="button" class="add" id="errlimpa" hidden>Limpar</button><p class="msg">Guarda só a mensagem técnica, sem valores. Se algo der errado, copie e mande ao Claude.</p></details>
 <button type="button" class="add" id="novab">Novidades desta versão</button>
 <button type="button" class="add" id="rever">Rever o tutorial</button>
 <p class="msg">O mês fecha sozinho no dia 1: o resumo vai para o Histórico e o saldo passa para o mês novo.</p>
@@ -746,11 +756,17 @@ table.itab{margin-top:8px}
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="tmsg"></span><button type="button" id="tuti" hidden>Útil</button><button type="button" id="tdes" hidden>Desnecessário</button><button type="button" id="tedi" hidden>Editar</button><button type="button" id="tund">Desfazer</button><div id="tcats" hidden></div></div>
 
 <script>
+/* caixa de erros: guarda só a mensagem técnica (sem valores) para mandar ao Claude */
+var ERROS=[];try{ERROS=JSON.parse(localStorage.getItem('financas-erros')||'[]');if(!Array.isArray(ERROS))ERROS=[];ERROS=ERROS.filter(function(x){return x&&typeof x.m==='string'}).slice(0,20)}catch(e){ERROS=[]}
+function errGuarda(m,o){try{m=String(m||'erro').replace(/R\$\s?[\d.,]+/g,'R$ •').replace(/\d{5,}/g,'#').slice(0,220);o=String(o||'').slice(0,80);var q=new Date(),qs=q.getFullYear()+'-'+String(q.getMonth()+1).padStart(2,'0')+'-'+String(q.getDate()).padStart(2,'0')+'T'+String(q.getHours()).padStart(2,'0')+':'+String(q.getMinutes()).padStart(2,'0');
+ var v=typeof VERSAO==='string'?VERSAO:'?',ja=ERROS.filter(function(x){return x.m===m&&x.o===o&&x.v===v})[0];if(ja){ja.n=(ja.n||1)+1;ja.q=qs;ERROS.splice(ERROS.indexOf(ja),1);ERROS.unshift(ja)}else ERROS.unshift({q:qs,v:v,m:m,o:o,n:1});ERROS=ERROS.slice(0,20);localStorage.setItem('financas-erros',JSON.stringify(ERROS))}catch(e){}}
+window.addEventListener('error',function(e){if(!e||!e.message)return;errGuarda(e.message,String(e.filename||'').split('/').pop()+':'+e.lineno+':'+e.colno)});
+window.addEventListener('unhandledrejection',function(e){var r=e&&e.reason;var m=r&&r.message?r.message:String(r);if(/AbortError|NotAllowedError|play\(\)/.test(m))return;errGuarda('Promessa: '+m,r&&r.stack?String(r.stack).split('\n')[1]||'':'')});
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v49';
-var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
+var VERSAO='v1.0';
+var PARAMS=(function(){var o={mic:false,txt:'',share:false,aviso:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.aviso=q.get('aviso')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share||o.aviso)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
 function norm(i){var m={pos:'uti',neg:'des',mid:'gua'};if(m[i.cor])i.cor=m[i.cor];if(i.ent)i.cor='rec';else if(i.cor==='rec')i.ent=true;if(!COR[i.cor])i.cor='sem';i.val=Number(i.val)||0;i.desc=String(i.desc||'');i.pay=String(i.pay||'Não informada');i.d=String(i.d||hoje());i.t=String(i.t||'');i.ent=!!i.ent;return i}
@@ -768,7 +784,7 @@ o.obj=(Array.isArray(o.obj)?o.obj:[]).slice(0,30).map(function(x,k){x=x||{};var 
 o.parcelas=(Array.isArray(o.parcelas)?o.parcelas:[]).slice(0,60).map(function(p,k){p=p||{};var n=Math.max(2,Math.min(60,parseInt(p.n)||2)),v2=!!p.v2,r={id:Number(p.id)||Date.now()+k,desc:String(p.desc||'Compra').slice(0,60),tot:Math.max(0,Number(p.tot)||0),n:n,k:Math.max(v2?1:2,Math.min(n+1,parseInt(p.k)||(v2?1:2))),d0:/^\d{4}-\d{2}-\d{2}$/.test(p.d0)?p.d0:hoje(),cor:(p.cor==='uti'||p.cor==='des')?p.cor:'sem'};if(v2){r.v2=1;r.t=/^\d{2}:\d{2}$/.test(p.t)?p.t:'';if(/^[a-z0-9]{1,16}$/.test(p.cat))r.cat=p.cat;if(p.txid)r.txid=String(p.txid).slice(0,48);if(/^\d{14}$/.test(p.doc))r.doc=p.doc}return r});
 var mt=(o.metas&&typeof o.metas==='object')?o.metas:{};o.metas={uti:Math.max(0,Number(mt.uti)||0),des:Math.max(0,Number(mt.des)||0),tot:Math.max(0,Number(mt.tot)||0)};
 var ma=(o.metaAv&&typeof o.metaAv==='object')?o.metaAv:{};function nv_(x){x=+x;return(x===80||x===100)?x:0}o.metaAv={m:/^\d{4}-\d{2}$/.test(ma.m)?ma.m:'',uti:nv_(ma.uti),des:nv_(ma.des),tot:nv_(ma.tot)};
-var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);o.nuvem=limpaNuvem(o.nuvem);o.casal=limpaCasal(o.casal);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
+var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);o.nuvem=limpaNuvem(o.nuvem);o.casal=limpaCasal(o.casal);o.avisos=limpaAvisos(o.avisos);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
 var tu={};if(o.tut&&typeof o.tut==='object')['pg1','pg3','pgp','pgk','pg4','pgc','pgr','sheet'].forEach(function(k){if(o.tut[k])tu[k]=1});o.tut=tu;
 var gb={};if(o.gBase&&typeof o.gBase==='object')Object.keys(o.gBase).slice(0,30).forEach(function(k){var v=Number(o.gBase[k]);if(isFinite(v))gb[String(k).slice(0,30)]=v});o.gBase=gb;
 var rd={};if(o.rend&&typeof o.rend==='object')Object.keys(o.rend).slice(0,30).forEach(function(k){var r=o.rend[k];if(!r||typeof r!=='object')return;var p=Number(r.pct);if(!(p>=1&&p<=500)||!/^\d{4}-\d{2}-\d{2}$/.test(r.ini))return;rd[String(k).slice(0,30)]={pct:p,ini:r.ini,iso:!!r.iso}});o.rend=rd;
@@ -835,7 +851,7 @@ var histLim=60,histQ='';
 (function(){var tb=null;$('hbusca').addEventListener('input',function(){clearTimeout(tb);tb=setTimeout(renderHistorico,180)});$('hbusca').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur()}})})();
 /* conectado sem digital: qualquer pessoa com o celular desbloqueado abre o app */
 function avisoBio(){if(!st||!lembrado||bioId(uid)||!$('aviso').hidden||st.avBioAte>=hoje())return;bioPode().then(function(p){if(!p||!$('aviso').hidden)return;mostraAviso('Você está conectado sem digital: quem pegar seu celular desbloqueado abre o app. Ligue a digital para proteger.','Ligar digital',function(){$('aviso').hidden=true;abreCfg(false,'cfgseg')},'Depois',function(){st.avBioAte=isoAdd(hoje(),7);save()})})}
-function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda)avisoBio();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);setTimeout(function(){casSync(true)},2500);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
+function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda)avisoBio();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);setTimeout(function(){casSync(true)},2500);setTimeout(avSync,3500);if(PARAMS.aviso){PARAMS.aviso=false;setTimeout(function(){vaiPagina(4)},400)}$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
 var modo='login';
 function authModo(m){modo=m;var novo=(m==='criar');$('atit').textContent=novo?'Criar conta':'Entrar';$('ucw').hidden=!novo;$('uok').textContent=novo?'Criar conta':'Entrar';$('usw').textContent=novo?'Já tenho conta':'Criar conta';
 $('up').autocomplete=novo?'new-password':'current-password';$('umsg').textContent='';
@@ -1837,7 +1853,7 @@ function autoAtualiza(nova,tent){var tk='financas-tentativa',ant='';try{ant=loca
  try{localStorage.setItem(tk,nova+'|'+Date.now());localStorage.setItem('financas-atualizado',nova)}catch(e){}
  if(st)save();setTimeout(atualizaApp,1200)}
 function avisoAtualizado(){var v='';try{v=localStorage.getItem('financas-atualizado')||''}catch(e){}if(v&&v===VERSAO){try{localStorage.removeItem('financas-atualizado');localStorage.removeItem('financas-tentativa')}catch(e){}}}
-var NOVIDADES={v49:['Novo 👫 Casal: liguem os dois celulares pelo QR Code (⚙ → Casal) e vejam os gastos um do outro. Cada um escolhe o que mostra.','O botão + agora mostra as opções: Lançar, Investir, Casal, Inteligência, Mentor e Histórico.'],v48:['Anel fica vermelho quando o Disponível está negativo.','Trocar a senha do app em ⚙ → Conta.','Nota do mês agora fica em 🧠 Inteligência.','Histórico mais leve e o botão + some ao rolar a tela.','Aviso para ligar a digital quando você fica conectado sem ela.','Letras do app guardadas no próprio celular: abre sem pedir nada ao Google.'],v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
+var NOVIDADES={'v1.0':['Versão 1.0: app finalizado e revisado.','🔔 Avisos das contas a vencer, mesmo com o app fechado (⚙ → Avisos).','🔒 Checkup de segurança em ⚙ → Segurança e backup.','Erros do app ficam anotados em ⚙ → Conta, prontos para copiar.','O app é testado sozinho todo dia.'],v49:['Novo 👫 Casal: liguem os dois celulares pelo QR Code (⚙ → Casal) e vejam os gastos um do outro. Cada um escolhe o que mostra.','O botão + agora mostra as opções: Lançar, Investir, Casal, Inteligência, Mentor e Histórico.'],v48:['Anel fica vermelho quando o Disponível está negativo.','Trocar a senha do app em ⚙ → Conta.','Nota do mês agora fica em 🧠 Inteligência.','Histórico mais leve e o botão + some ao rolar a tela.','Aviso para ligar a digital quando você fica conectado sem ela.','Letras do app guardadas no próprio celular: abre sem pedir nada ao Google.'],v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
 function mostraNovidades(v){var L=NOVIDADES[v||VERSAO];if(!L)return false;$('novt').textContent='Novidades da '+(v||VERSAO);var u=$('novl');u.innerHTML='';L.forEach(function(x){u.appendChild(el_('li',null,x))});$('nov').hidden=false;try{$('novok').focus()}catch(e){}return true}
 function novidades(){var vis='';try{vis=localStorage.getItem('financas-visto')||''}catch(e){}if(vis===VERSAO)return false;try{localStorage.setItem('financas-visto',VERSAO)}catch(e){}
  if(!st||!(st.items.length||(st.arquivo&&st.arquivo.length)||(st.tut&&st.tut.pg1)))return false;return mostraNovidades()}
@@ -2168,6 +2184,62 @@ function renderCasal(){var B=$('cyBox');if(!B||!st)return;B.innerHTML='';var c=s
  for(var i=0;i<mostra;i++){var it=L[i];if(it.d!==dia){dia=it.d;k4.appendChild(el_('b',null,dm(it.d)))}var r=el_('div','irow cyit'),s=el_('span');var dt=el_('i','cyd');dt.style.background='var(--'+it.c+')';s.appendChild(dt);s.appendChild(document.createTextNode(it.ds||'Gasto'));var sub=[it.t,it.k,it.pg].filter(Boolean).join(' · ');if(sub)s.appendChild(el_('small',null,' · '+sub));r.appendChild(s);r.appendChild(el_('b',null,brl(it.v)));k4.appendChild(r)}
  if(L.length>mostra){var bm=el_('button','add','Ver todos ('+L.length+')');bm.type='button';bm.onclick=function(){CAS.todos=true;renderCasal()};k4.appendChild(bm)}
  B.appendChild(k4)}
+/* ---------- avisos com o app fechado (contas a vencer) ---------- */
+var AV_PUB='BKnxDO9MHRt3lAPbCK1gNz_mc36ngXga3qE8iK-pOgXZDJgftOEWpXmtAY7Hva5uXa_MJYGa-Kw9SYFmJKyzM5Y',avRod=false;
+function limpaAvisos(a){if(!a||typeof a!=='object'||!a.on||!/^[a-f0-9]{64}$/.test(a.tok))return{on:false};return{on:true,tok:a.tok,ult:/^\d{4}-\d{2}-\d{2}$/.test(a.ult)?a.ult:'',sig:typeof a.sig==='string'?a.sig.slice(0,6000):''}}
+function avPode(){return 'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window&&location.protocol==='https:'||(location.hostname==='localhost'&&'PushManager' in window)}
+function avIOS(){return /iPhone|iPad|iPod/.test(navigator.userAgent)}
+function avInstalado(){try{return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true}catch(e){return false}}
+function avU8(s){s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';return unb64(s)}
+function avDatas(){var hj=hoje(),ym=mesAt(),prox=addMes(ym+'-01',1).slice(0,7),out={};(st.dividas||[]).forEach(function(d){var dia=Number(d.dia)||0;if(!dia||dia>31)return;
+ if(dvAtivo(d)&&!dvPago(d)){var a=ym+'-'+pad(Math.min(dia,diasMes(ym)));if(a>=hj)out[a]=(out[a]||0)+1}
+ var segue=ehPar(d)?((Number(d.pagas)||0)+(dvPago(d)?0:1))<d.n:true;if(segue){var b=prox+'-'+pad(Math.min(dia,diasMes(prox)));out[b]=(out[b]||0)+1}});
+ return Object.keys(out).sort().slice(0,60).map(function(k){return{d:k,n:Math.min(20,out[k])}})}
+function avReg(){return navigator.serviceWorker.ready}
+function avEnvia(sub,forca){var datas=avDatas(),js=JSON.stringify(sub.toJSON?sub.toJSON():sub),sig=JSON.stringify([js,datas]);
+ if(!forca&&st.avisos.sig===sig&&st.avisos.ult===hoje())return Promise.resolve(false);
+ return casRpc('avisos_salvar',{p_token:st.avisos.tok,p_sub:js,p_datas:datas}).then(function(){st.avisos.sig=sig;st.avisos.ult=hoje();save();return true})}
+function avSync(){if(!st||!st.avisos||!st.avisos.on||avRod||!avPode())return Promise.resolve();avRod=true;
+ return avReg().then(function(r){return r.pushManager.getSubscription()}).then(function(sub){if(!sub){if(Notification.permission==='granted')return avReg().then(function(r){return r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:avU8(AV_PUB)})}).then(function(s){return avEnvia(s,true)});AV_ERR='perm';return}return avEnvia(sub,false)})
+ .then(function(){avRod=false;avUI()},function(){avRod=false;avUI()})}
+var AV_ERR='';
+function avUI(){var c=$('avchk');if(!c||!st)return;var on=!!(st.avisos&&st.avisos.on),m=$('avmsg');c.checked=on;
+ if(!avPode()){c.disabled=true;m.textContent=avIOS()&&!avInstalado()?'No iPhone: abra no Safari, toque em Compartilhar → “Adicionar à Tela de Início” e ligue por lá.':'Este navegador não recebe avisos.';return}
+ c.disabled=false;if(on&&Notification.permission==='denied'){m.textContent='⚠️ Os avisos estão bloqueados nas permissões do navegador. Libere as notificações deste site.';return}
+ var n=avDatas().length;m.textContent=on?'✅ Ligado. '+(n?n+(n===1?' data de vencimento programada.':' datas de vencimento programadas.'):'Coloque o dia do vencimento nas contas (Investir → Planejamento).'):''}
+function avLiga(){var m=$('avmsg'),c=$('avchk');if(!avPode())return avUI();m.textContent='Pedindo permissão...';c.disabled=true;
+ Notification.requestPermission().then(function(p){if(p!=='granted')throw 'neg';return avReg()}).then(function(r){return r.pushManager.getSubscription().then(function(s){return s||r.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:avU8(AV_PUB)})})})
+ .then(function(sub){st.avisos={on:true,tok:(st.avisos&&st.avisos.tok)||casHex(crypto.getRandomValues(new Uint8Array(32))),ult:'',sig:''};save();return avEnvia(sub,true)})
+ .then(function(){m.textContent='Mandando um aviso de teste...';return fetch(SB_URL+'/functions/v1/avisos',{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({token:st.avisos.tok}),cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer'}).catch(function(){})})
+ .then(function(){c.disabled=false;avUI()},function(e){c.disabled=false;if(st.avisos&&!st.avisos.on)st.avisos={on:false};c.checked=!!(st.avisos&&st.avisos.on);m.textContent=e==='neg'?'Você não permitiu as notificações. Libere nas permissões do navegador e tente de novo.':'Não consegui ligar agora. Confira a internet e tente de novo.'})}
+function avDesliga(){var a=st.avisos||{},m=$('avmsg');st.avisos={on:false};save();avUI();m.textContent='Avisos desligados.';
+ if(a.tok)casRpc('avisos_salvar',{p_token:a.tok,p_sub:'',p_datas:[]}).catch(function(){});if(avPode())avReg().then(function(r){return r.pushManager.getSubscription()}).then(function(s){if(s)return s.unsubscribe()}).catch(function(){})}
+$('avchk').onchange=function(){if(this.checked)avLiga();else avDesliga()};
+$('cfgavi').addEventListener('toggle',function(){if(this.open)avUI()});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&st&&st.avisos&&st.avisos.on)avSync()});
+if(navigator.serviceWorker)navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.aviso&&st)vaiPagina(4)});
+/* ---------- caixa de erros ---------- */
+function errUI(){var b=$('errl');if(!b)return;b.innerHTML='';$('errn').textContent=ERROS.length?'('+ERROS.length+')':'';if(!ERROS.length){b.appendChild(el_('p','msg','Nenhum erro registrado. 👍'));$('errcp').hidden=$('errlimpa').hidden=true;return}
+ $('errcp').hidden=$('errlimpa').hidden=false;ERROS.forEach(function(x){var p=el_('p','errit');p.appendChild(el_('b',null,x.q.replace('T',' ')+' · '+x.v+(x.n>1?' · '+x.n+'x':'')));p.appendChild(document.createElement('br'));p.appendChild(document.createTextNode(x.m+(x.o?' ('+x.o+')':'')));b.appendChild(p)})}
+function errTexto(){return 'Erros do app Minhas Finanças '+VERSAO+' ('+navigator.userAgent.replace(/[^\w .;:()\/-]/g,'').slice(0,140)+'):\n'+ERROS.map(function(x){return '- '+x.q+' '+x.v+(x.n>1?' ['+x.n+'x]':'')+': '+x.m+(x.o?' @ '+x.o:'')}).join('\n')}
+$('errcp').onclick=function(){var b=this,t=errTexto(),ok=function(){b.textContent='Copiado! Cole na conversa com o Claude';setTimeout(function(){b.textContent='Copiar para mandar ao Claude'},2500)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,function(){b.textContent='Não consegui copiar'});else b.textContent='Não consegui copiar'};
+$('errlimpa').onclick=function(){ERROS=[];try{localStorage.removeItem('financas-erros')}catch(e){}errUI();checkup()};
+$('errbox').addEventListener('toggle',function(){if(this.open)errUI()});
+/* ---------- checkup de segurança ---------- */
+function checkup(){var B=$('chkl');if(!B||!st)return;B.innerHTML='';var L=[],ok=0;
+ function it(est,txt,bot,fn){L.push(1);if(est==='ok')ok++;var r=el_('div','chki '+est);r.appendChild(el_('span','chkic',est==='ok'?'✅':est==='al'?'⚠️':'💡'));var s=el_('span',null,txt);r.appendChild(s);if(bot){var b=el_('button','linkb',bot+' ›');b.type='button';b.onclick=fn;r.appendChild(b)}B.appendChild(r)}
+ it('ok','Dados criptografados no celular (AES-256), só abrem com a sua senha.');
+ it('ok','Bloqueia sozinho depois de 5 minutos sem uso.');
+ var bio=!!bioId(uid);it(bio?'ok':'al',bio?'Digital / Face ID ligada.':'Digital / Face ID desligada.',bio?null:'Ligar',function(){var c=$('biochk');c.scrollIntoView({block:'center'});c.focus()});
+ var N=st.nuvem||{},dd=N.ult?Math.floor((Date.now()-Date.parse(N.ult))/864e5):99;
+ if(!N.on)it('al','Backup na nuvem desligado. Se perder o celular, perde os dados.','Ligar',function(){var c=$('nvpw');c.scrollIntoView({block:'center'});c.focus()});
+ else it(dd<=2?'ok':'al',dd<=2?'Backup na nuvem em dia.':'Último backup na nuvem há '+dd+' dias.',dd<=2?null:'Enviar agora',function(){$('nvagora').click();setTimeout(checkup,2500)});
+ var inst=avInstalado();it(inst?'ok':'dica',inst?'App instalado na tela inicial.':'Instale o app na tela inicial: abre mais rápido e fica separado do navegador.');
+ var av=!!(st.avisos&&st.avisos.on);it(av?'ok':'dica',av?'Avisos de contas ligados.':'Avisos de contas desligados.',av?null:'Ligar',function(){abreCfg(false,'cfgavi');setTimeout(function(){$('cfgavi').scrollIntoView({block:'start'})},50)});
+ if(st.casal)it('ok','Casal: você mostra '+({det:'os gastos detalhados',tot:'só os totais',pau:'nada (pausado)'})[st.casal.niv]+'. Criptografado de ponta a ponta.');
+ it(ERROS.length?'al':'ok',ERROS.length?ERROS.length+(ERROS.length===1?' erro registrado no app.':' erros registrados no app.'):'Nenhum erro registrado no app.',ERROS.length?'Ver':null,function(){abreCfg(false,'cfgcon');$('errbox').open=true;setTimeout(function(){$('errbox').scrollIntoView({block:'center'})},50)});
+ $('chkres').textContent=ok+' de '+L.length+' em dia'}
+$('cfgseg').addEventListener('toggle',function(){if(this.open)checkup()});
 var SB_URL='https://ezivqczibtsqqqzpzcdh.supabase.co',SB_KEY='sb_publishable_YhQFxwQmRruAh7aDATquFQ_sR81kg-Z',NV_IT=310000;
 var nvTm=null,nvRodando=false,nvMudo=false;
 function limpaNuvem(n){if(!n||typeof n!=='object'||!n.on)return{on:false};var ok=/^[a-f0-9]{64}$/.test(n.id)&&typeof n.salt==='string'&&typeof n.k==='string'&&n.k.length>=40&&n.k.length<=64;

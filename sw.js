@@ -1,5 +1,5 @@
-var CACHE='financas-v11',LEITOR='financas-leitor';
-var ARQ=['./','./index.html','./manifest.json','./icon.svg'];
+var CACHE='financas-v12',LEITOR='financas-leitor';
+var ARQ=['./','./index.html','./manifest.json','./icon.svg','./icon-192.png'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ARQ)}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE&&k!=='financas-share'&&k!==LEITOR}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
 /* receber comprovante pelo Compartilhar do Android: guarda o arquivo (só neste aparelho) e abre o app */
@@ -18,3 +18,9 @@ if(e.request.mode==='navigate'){var rede=fetch(e.request,{cache:'no-cache'}).the
  e.respondWith(caches.match(key).then(function(m){return m||rede.catch(function(){return caches.match('./index.html')})}));return}
 e.respondWith(fetch(e.request,{cache:'no-cache'}).then(function(r){return guarda(CACHE,key,r)}).catch(function(){return caches.match(key).then(function(m){return m||caches.match('./index.html')})}));
 });
+/* avisos com o app fechado (contas a vencer): o servidor só manda o texto genérico, sem nomes nem valores */
+self.addEventListener('push',function(e){var d={};try{d=e.data?e.data.json():{}}catch(x){}
+var t=String(d.t||'Minhas Finanças').slice(0,60),b=String(d.b||'Abra o app para ver.').slice(0,160),tag=String(d.tag||'aviso').slice(0,40);
+e.waitUntil(self.registration.showNotification(t,{body:b,tag:tag,icon:'icon-192.png',badge:'icon-192.png',lang:'pt-BR',data:{u:'./?aviso=1'}}))});
+self.addEventListener('notificationclick',function(e){e.notification.close();var alvo=new URL('./?aviso=1',self.registration.scope).href;
+e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(cs){for(var i=0;i<cs.length;i++){if(cs[i].url.indexOf(self.registration.scope)===0&&'focus' in cs[i]){cs[i].postMessage({aviso:1});return cs[i].focus()}}return self.clients.openWindow(alvo)}))});
