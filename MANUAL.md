@@ -1,4 +1,4 @@
-# Manual do Minhas Finanças (v1.0)
+# Manual do Minhas Finanças (v1.1)
 
 App de controle de gastos que funciona no navegador do celular.
 Endereço: **https://guilherme3co.github.io/financeiro**
@@ -24,6 +24,7 @@ Endereço: **https://guilherme3co.github.io/financeiro**
 | 🔒 Segurança e backup | **Checkup de segurança**, digital e backup na nuvem |
 | 🔔 Avisos | Contas a vencer, mesmo com o app fechado |
 | 👫 Casal | Ligar com o celular do par pelo QR Code |
+| 🛡️ Administrador | Só para o administrador: convites e quem usa o app |
 | 🎨 Aparência | Tema claro ou escuro |
 | 👤 Conta | Senha, **erros do app**, novidades, sair |
 
@@ -43,6 +44,18 @@ Endereço: **https://guilherme3co.github.io/financeiro**
 - Dados ficam **no celular**, criptografados (AES-256) com a sua senha.
 - Bloqueia sozinho depois de 5 minutos sem uso. Digital/Face ID opcional.
 - **Esqueceu a senha?** Não tem como recuperar sem ela. Por isso, deixe o backup na nuvem ligado.
+
+## 6.1 Acesso por convite (administrador)
+- Conta nova só é criada com um **código de convite** (`FIN-XXXX-XXXX`).
+- O administrador gera o código em **⚙ → Administrador → Gerar convite** e manda pelo WhatsApp (botão **Enviar**).
+- Cada código serve para **1 pessoa** e vale **30 dias**.
+- **Bloquear:** a pessoa não abre mais o app (vale na próxima vez que abrir com internet). **Liberar** desfaz.
+- **Remover:** tira da lista; para voltar, precisa de um código novo.
+- Quem fica **30 dias sem abrir o app** precisa de um código novo. O administrador não vence.
+- O app funciona sem internet normalmente. A internet só é usada para conferir o acesso.
+- O administrador **nunca** vê os gastos de ninguém: só nome, data de entrada e último acesso.
+- Para virar administrador: ⚙ → Conta → **Ativar administrador** → código de ativação (uso único).
+- Backup na nuvem, casal e avisos só funcionam para quem está liberado (o servidor confere).
 
 ## 7. Backup e restaurar
 - **Backup na nuvem:** ⚙ → Segurança e backup. Vai sozinho a cada mudança.
@@ -71,5 +84,5 @@ Endereço: **https://guilherme3co.github.io/financeiro**
 - Pastas: `ocr/` (leitor de foto), `pdf/` (leitor de PDF), `qr/` (leitor de QR Code), `fonts/` (letras).
 - A segurança (CSP) usa o hash do script: ao mudar o código, o hash no topo do `index.html` precisa ser recalculado.
 - Ao lançar versão nova: mude `VERSAO` **e** `<meta name="app-versao">` juntos, senão o app fica recarregando.
-- **Servidor (Supabase):** tabelas `backups`, `backup_versoes`, `casal`, `avisos`, todas com RLS e sem acesso direto. O app só usa funções (`salvar_backup`, `casal_salvar`, `avisos_salvar`, …). A chave privada dos avisos fica no **Vault** do Supabase.
+- **Servidor (Supabase):** tabelas `backups`, `backup_versoes`, `casal`, `avisos`, `acessos`, `convites`, `config`, todas com RLS e sem acesso direto. O app só usa funções (`salvar_backup`, `casal_salvar`, `avisos_salvar`, …). A chave privada dos avisos fica no **Vault** do Supabase.
 - Nunca coloque a chave **secreta** (service_role) no app ou no GitHub. A chave **publishable** pode ficar.

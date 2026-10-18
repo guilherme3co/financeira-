@@ -17,7 +17,7 @@ async function servidorFalso(ctx){
   return ok_(null)})}
 async function novaConta(ctx,nome){const pg=await ctx.newPage(),erros=[];pg.on('pageerror',e=>erros.push(e.message));pg.on('console',m=>{if(/Content Security Policy|Refused to/.test(m.text()))erros.push('CSP: '+m.text())});
  await pg.goto(BASE);const v=await pg.evaluate(()=>VERSAO);await pg.evaluate(v=>localStorage.setItem('financas-visto',v),v);
- await pg.fill('#un',nome);await pg.fill('#up',SENHA);if(await pg.isVisible('#up2'))await pg.fill('#up2',SENHA);await pg.check('#ulem');await pg.click('#uok');
+ await pg.fill('#un',nome);await pg.fill('#up',SENHA);if(await pg.isVisible('#up2'))await pg.fill('#up2',SENHA);if(await pg.isVisible('#ucod'))await pg.fill('#ucod','FIN-TEST-2345');await pg.check('#ulem');await pg.click('#uok');
  await pg.waitForSelector('#ini0',{state:'visible',timeout:30000});await pg.fill('#ini0','1000');await pg.click('#ini0ok');await pg.waitForTimeout(800);
  await pg.evaluate(()=>{st.tut={pg1:1,pg3:1,pgp:1,pgk:1,pg4:1,pgc:1,pgr:1,pgi:1,pgx:1,sheet:1};document.getElementById('tut').hidden=true;document.getElementById('nov').hidden=true;save()});
  return {pg,erros}}
