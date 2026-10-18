@@ -38,13 +38,15 @@ jobs:
 
       - name: Conferir se o site no ar está na mesma versão
         run: |
-          v=$(grep -o 'name="app-versao" content="[^"]*"' index.html)
+          v=$(grep -o 'name="app-versao" content="[^"]*"' index.html | head -1)
           for i in $(seq 1 20); do
-            no_ar=$(curl -sSL -H 'Cache-Control: no-cache' "https://guilherme3co.github.io/financeiro/index.html?t=$(date +%s)" | grep -o 'name="app-versao" content="[^"]*"' | head -1 || true)
+            code=$(curl -sSL -o site.html -w '%{http_code}' -H 'Cache-Control: no-cache' "https://guilherme3co.github.io/financeiro/index.html?t=$(date +%s)" || echo erro)
+            no_ar=$(grep -o 'name="app-versao" content="[^"]*"' site.html 2>/dev/null | head -1 || true)
             if [ "$no_ar" = "$v" ]; then echo "Site no ar: $v"; exit 0; fi
-            echo "Ainda publicando... ($i) no ar: [$no_ar] esperado: [$v]"; sleep 30
+            if [ "$i" = "1" ] || [ "$i" = "20" ]; then echo "::warning::Tentativa $i: HTTP $code, no ar [$no_ar], esperado [$v], tamanho $(wc -c < site.html 2>/dev/null)"; fi
+            sleep 30
           done
-          echo "O site no ar não está na versão do repositório ($v)"; exit 1
+          exit 1
 
       - name: Manter o Supabase acordado (e conferir se responde)
         env:
