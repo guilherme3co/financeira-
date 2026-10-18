@@ -40,8 +40,9 @@ jobs:
         run: |
           v=$(grep -o 'name="app-versao" content="[^"]*"' index.html)
           for i in $(seq 1 20); do
-            if curl -fsSL "https://guilherme3co.github.io/financeiro/?t=$(date +%s)" | grep -q "$v"; then echo "Site no ar: $v"; exit 0; fi
-            echo "Ainda publicando... ($i)"; sleep 30
+            no_ar=$(curl -sSL -H 'Cache-Control: no-cache' "https://guilherme3co.github.io/financeiro/index.html?t=$(date +%s)" | grep -o 'name="app-versao" content="[^"]*"' | head -1 || true)
+            if [ "$no_ar" = "$v" ]; then echo "Site no ar: $v"; exit 0; fi
+            echo "Ainda publicando... ($i) no ar: [$no_ar] esperado: [$v]"; sleep 30
           done
           echo "O site no ar não está na versão do repositório ($v)"; exit 1
 
