@@ -1,4 +1,4 @@
-# Manual do Minhas Finanças (v1.1)
+# Manual do Minhas Finanças (v1.2)
 
 App de controle de gastos que funciona no navegador do celular.
 Endereço: **https://guilherme3co.github.io/financeiro**
@@ -43,11 +43,15 @@ Endereço: **https://guilherme3co.github.io/financeiro**
 ## 6. Segurança
 - Dados ficam **no celular**, criptografados (AES-256) com a sua senha.
 - Bloqueia sozinho depois de 5 minutos sem uso. Digital/Face ID opcional.
-- **Esqueceu a senha?** Não tem como recuperar sem ela. Por isso, deixe o backup na nuvem ligado.
+- **Esqueceu a senha?** Na tela de entrar, toque em **Esqueci a senha** e use o **código de recuperação** (`REC-XXXX-XXXX-XXXX-XXXX`). Você cria uma senha nova e não perde nada.
+- O código aparece ao criar a conta. Quem já tinha conta cria em **⚙ → Conta → Código de recuperação**. Guarde num print ou papel: ninguém mais tem esse código, nem o administrador.
+- Sem o código e sem a senha, só dá para voltar pelo backup na nuvem.
+- **iPhone:** o ícone da tela inicial e o navegador (Safari/Chrome) guardam contas separadas. Use sempre pelo ícone.
 
 ## 6.1 Acesso por convite (administrador)
 - Conta nova só é criada com um **código de convite** (`FIN-XXXX-XXXX`).
-- O administrador gera o código em **⚙ → Administrador → Gerar convite** e manda pelo WhatsApp (botão **Enviar**).
+- O administrador gera o código em **⚙ → Administrador → Gerar convite** e manda pelo WhatsApp (botão **Enviar**). A mensagem leva um **link que já abre o app com o código preenchido**: a pessoa só digita o nome e a senha.
+- Cancelar um convite pede **dois toques**, para não cancelar sem querer.
 - Cada código serve para **1 pessoa** e vale **30 dias**.
 - **Bloquear:** a pessoa não abre mais o app (vale na próxima vez que abrir com internet). **Liberar** desfaz.
 - **Remover:** tira da lista; para voltar, precisa de um código novo.
