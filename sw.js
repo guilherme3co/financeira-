@@ -1,4 +1,4 @@
-var CACHE='financas-v10',LEITOR='financas-leitor';
+var CACHE='financas-v11',LEITOR='financas-leitor';
 var ARQ=['./','./index.html','./manifest.json','./icon.svg'];
 self.addEventListener('install',function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ARQ)}).then(function(){return self.skipWaiting()}))});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE&&k!=='financas-share'&&k!==LEITOR}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
@@ -12,7 +12,7 @@ if(e.request.method==='POST'&&u.origin===self.location.origin&&/\/(index\.html)?
 if(e.request.method!=='GET'||u.origin!==self.location.origin)return;
 var key=new Request(u.origin+u.pathname);
 /* leitores de foto e PDF: não mudam, vêm direto do aparelho (para trocar, mude o nome do arquivo) */
-if(/\/(ocr|pdf|fonts)\/[^\/]+$/.test(u.pathname)){e.respondWith(caches.open(LEITOR).then(function(c){return c.match(key)}).then(function(m){return m||fetch(e.request).then(function(r){return guarda(LEITOR,key,r)})}));return}
+if(/\/(ocr|pdf|fonts|qr)\/[^\/]+$/.test(u.pathname)){e.respondWith(caches.open(LEITOR).then(function(c){return c.match(key)}).then(function(m){return m||fetch(e.request).then(function(r){return guarda(LEITOR,key,r)})}));return}
 /* abrir o app: mostra na hora a cópia do aparelho e atualiza por trás (a troca de versão é avisada pelo próprio app) */
 if(e.request.mode==='navigate'){var rede=fetch(e.request,{cache:'no-cache'}).then(function(r){return guarda(CACHE,key,r)});e.waitUntil(rede.catch(function(){}));
  e.respondWith(caches.match(key).then(function(m){return m||rede.catch(function(){return caches.match('./index.html')})}));return}

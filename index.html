@@ -2,8 +2,8 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="app-versao" content="v48">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-CWwgLzCaTOR50txOP/JxWI90l55QRRC4fYAIHzYVLbk='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="app-versao" content="v49">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-nUR8GrKMUpwQ2er6wmYU2OAYQu0UN7pGjiL54oo2FfA='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Minhas Finanças</title>
@@ -416,7 +416,19 @@ table.itab{margin-top:8px}
 .crow.dv4{grid-template-columns:1fr 96px 52px 40px}.crow.dv4 .cd{grid-column:3;grid-row:1;padding:11px 6px;text-align:center}.crow.dv4 .x{grid-column:4;grid-row:1}
 #fatbtn{min-height:40px;padding:8px 14px;border:1.5px solid var(--line);border-radius:999px;text-decoration:none;color:var(--ink);font-weight:600;font-size:13px;margin:4px 0 0}
 .linkb{min-height:36px}
-.fab{transition:transform .2s ease,opacity .2s ease}.fab.esc{transform:translateY(140%);opacity:0;pointer-events:none}
+.fab{transition:transform .2s ease,opacity .2s ease}.fab.esc{transform:translateY(140%);opacity:0;pointer-events:none}.fab.ab{transform:rotate(45deg)}
+.mais{position:fixed;inset:0;z-index:14;background:rgba(0,0,0,.5);display:flex;align-items:flex-end;justify-content:flex-end;padding:0 18px calc(92px + env(safe-area-inset-bottom,0px))}.mais[hidden]{display:none}
+.maisl{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.maisl button{position:relative;display:flex;align-items:center;gap:10px;border:0;background:none;padding:0;margin:0;cursor:pointer;color:var(--ink);font:700 15px 'DM Sans',sans-serif;animation:maisv .18s ease both}
+.maisl b{background:var(--card);padding:8px 12px;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.maisl span{width:52px;height:52px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 3px 10px rgba(0,0,0,.3);margin-right:4px}
+.maisl .mpri span{background:var(--pos)}.maisl .mdot{top:0;right:4px}
+@keyframes maisv{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@media (prefers-reduced-motion:reduce){.maisl button{animation:none}}
+.cytop{display:flex;justify-content:space-between;align-items:center;margin:0 0 10px;color:var(--mute);font-size:13px}.cytop .linkb{width:auto;margin:0;flex:none}
+.cybar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--des);margin:8px 0 4px}.cybar i{display:block;background:var(--uti)}
+.cyleg{display:flex;justify-content:space-between;font-size:12px;color:var(--mute)}.cyleg span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:var(--uti)}.cyleg .cyela::before{background:var(--des)}
+.cyjun{border-top:1px solid var(--line);margin-top:6px;padding-top:8px}.cyit span small{color:var(--mute)}.cyd{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+#casqr,#casok{text-align:center}#cascod{font:700 15px ui-monospace,monospace;white-space:nowrap}
 .consd{margin-bottom:12px}
 #relDoc table.rt{font-size:11px}#relDoc .rt th,#relDoc .rt td{padding:3px 2px}@media(max-width:400px){#relDoc table.rt{font-size:10px}#relDoc .rt td.n,#relDoc .rt th.n{white-space:normal}}
 </style>
@@ -505,6 +517,14 @@ table.itab{margin-top:8px}
 <input type="file" id="imp" accept="application/json,.json" hidden>
 <p class="msg" id="bkmsg"></p>
 </details>
+</div></details>
+<details class="cfgs" id="cfgcas"><summary><span>👫</span><div>Casal<small id="casres">Ver os gastos um do outro</small></div></summary><div class="cfgb">
+<div id="casoff"><p class="msg" style="margin-top:0">Um celular mostra o QR Code e o outro lê com a câmera. Só os gastos são mostrados. Entradas, salário, guardados e dívidas ficam só com você.</p><button type="button" class="add pri" id="casmos">📱 Mostrar meu QR Code</button><button type="button" class="add" id="casler">📷 Ler o QR Code do outro celular</button></div>
+<div id="casqr" hidden><canvas id="qcv" width="10" height="10" aria-label="QR Code do casal"></canvas><p class="msg">Ou digite no outro celular:<br><b id="cascod"></b></p><button type="button" class="add" id="casqx">Fechar QR Code</button></div>
+<div id="cascam" hidden><video id="qvid" playsinline muted hidden></video><p class="msg" id="cascmsg" role="status"></p><label for="qcode">Ou digite o código</label><div class="campo"><input id="qcode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX" maxlength="40"><button type="button" class="add pri" id="casdig" style="width:auto;margin:0;padding:0 16px">OK</button></div><button type="button" class="add" id="cascx">Cancelar</button></div>
+<div id="casok" hidden><p class="msg"><b>✅ Pronto! Celulares ligados.</b><br>Agora escolha o que você mostra.</p></div>
+<div id="cason" hidden><p class="msg" id="casst" style="margin-top:0"></p><label for="casnome">Seu nome no casal</label><input id="casnome" maxlength="20" autocomplete="off" placeholder="Ex.: Gui"><label>O que você mostra</label><div class="temas" id="casniv" role="radiogroup" aria-label="O que você mostra"><button type="button" role="radio" data-n="det">Detalhado</button><button type="button" role="radio" data-n="tot">Só totais</button><button type="button" role="radio" data-n="pau">Pausar</button></div><p class="msg" id="casnivx"></p><button type="button" class="add pri" id="casver">👫 Ver gastos do casal</button><button type="button" class="add" id="casmos2">Mostrar meu QR Code de novo</button><button type="button" class="add" id="casler2">📷 Ler o QR Code do outro celular</button><p class="msg">Criptografado de ponta a ponta: nem o servidor consegue ler. Atualiza quando o app é aberto.</p><button type="button" class="add perigo" id="cassai">Desfazer casal</button></div>
+<p class="msg" id="casmsg" role="status"></p>
 </div></details>
 <details class="cfgs" id="cfgapa"><summary><span>🎨</span><div>Aparência<small>Tema claro ou escuro</small></div></summary><div class="cfgb">
 <div class="temas" id="temas" role="radiogroup" aria-label="Tema"><button type="button" data-t="auto" role="radio">Automático</button><button type="button" data-t="light" role="radio">☀️ Claro</button><button type="button" data-t="dark" role="radio">🌙 Escuro</button></div>
@@ -612,6 +632,7 @@ table.itab{margin-top:8px}
 </section>
 
 <!-- ============ INTELIGÊNCIA ============ -->
+<section class="pg" id="pgy"><main><div id="cyBox"></div></main></section>
 <section class="pg" id="pgx">
 <main>
 <details class="cfgs consd" id="consd"><summary><span>📊</span><div>Nota do mês<small id="consres">Nota, dívidas, reserva e limite de desnecessários</small></div></summary><div class="cfgb"><div id="consBox"></div></div></details>
@@ -711,7 +732,8 @@ table.itab{margin-top:8px}
 <button type="button" class="robo" id="robo" hidden aria-label="Abrir o mentor financeiro" title="Mentor financeiro"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><i id="robodot" hidden></i></button>
 <div class="sheet" id="men" hidden role="dialog" aria-modal="true" aria-labelledby="ment"><div class="sheetbox menbox"><div class="lanh"><h2 class="mhead" id="ment"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Mentor</h2><button type="button" class="add" id="menx">Fechar</button></div><div class="menlog" id="menlog" aria-live="polite"></div><div class="menops" id="menops"></div><div class="menin" id="menin" hidden><input id="mentx" autocomplete="off" maxlength="300" placeholder="Escreva uma dúvida" aria-label="Mensagem para o mentor"><button type="button" class="add pri" id="mensend">Enviar</button></div></div></div>
 <div class="bio" id="bio" hidden role="dialog" aria-modal="true" aria-labelledby="biot"><div class="biobox"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9.9 0-18 8.1-18 18M24 12c-6.6 0-12 5.4-12 12v4M24 18c-3.3 0-6 2.7-6 6v8c0 3 1 5.5 3 7.5M24 24v10c0 4 2 7 5 9M30 24c0-3.3-2.7-6-6-6M36 24c0-6.6-5.4-12-12-12M42 24c0-9.9-8.1-18-18-18M30 24v6M36 28v2c0 3-1 6-2.5 8.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><h2 id="biot">Minhas Finanças</h2><p>Confirme que é você para abrir.</p><button type="button" class="add pri" id="biobtn">Entrar com a digital</button><button type="button" class="linkb" id="biosenha">Usar a senha</button><p class="msg" id="biomsg" role="alert"></p></div></div>
-<button type="button" class="fab" id="fab" hidden aria-label="Novo lançamento" title="Novo lançamento">+</button>
+<div class="mais" id="mais" hidden><div class="maisl" role="menu" aria-label="Opções do botão +"><button type="button" role="menuitem" id="abhis"><b>Histórico</b><span aria-hidden="true">📋</span></button><button type="button" role="menuitem" id="abmen"><b>Mentor</b><span aria-hidden="true">🤖</span><i class="mdot" id="abmend" hidden></i></button><button type="button" role="menuitem" id="abint"><b>Inteligência</b><span aria-hidden="true">🧠</span></button><button type="button" role="menuitem" id="abcas"><b>Casal</b><span aria-hidden="true">👫</span></button><button type="button" role="menuitem" id="abinv"><b>Investir</b><span aria-hidden="true">📈</span></button><button type="button" role="menuitem" id="ablan" class="mpri"><b>Lançar</b><span aria-hidden="true">✏️</span></button></div></div>
+<button type="button" class="fab" id="fab" hidden aria-label="Abrir opções" aria-haspopup="menu" aria-expanded="false" title="Opções">+</button>
 <div class="sheet" id="lanc" hidden role="dialog" aria-modal="true" aria-labelledby="lanct"><div class="sheetbox">
 <div class="lanh"><h2 id="lanct">Lançar</h2><button type="button" class="add" id="lancx">Fechar</button></div>
 <div class="lopc"><button type="button" class="mic lmic" id="mic1" aria-label="Falar o lançamento" title="Falar o lançamento"><span aria-hidden="true">🎤</span>Falar</button><button type="button" id="digita"><span aria-hidden="true">⌨️</span>Digitar</button><button type="button" id="ocrbtn"><span aria-hidden="true">📷</span>Foto</button><button type="button" id="compbtn"><span aria-hidden="true">📄</span>PDF</button></div>
@@ -719,8 +741,6 @@ table.itab{margin-top:8px}
 <div class="campo" id="digbox" hidden><input id="frase" placeholder="Ex.: padaria 12,50 pix" autocomplete="off" enterkeyhint="done"><button type="button" class="add pri" id="digok" style="width:auto;margin:0;padding:0 16px">OK</button></div>
 <div id="atalhos" hidden><label>Atalhos · toque para lançar de novo</label><div class="chips" id="chips"></div></div>
 <input type="file" id="ocrfile" accept="image/*" hidden><input type="file" id="compfile" accept="application/pdf,.pdf" hidden>
-<h2 class="mabr">Abrir</h2>
-<div class="mtelas"><button type="button" id="abinv"><span aria-hidden="true">📈</span>Investir</button><button type="button" id="abmen"><span aria-hidden="true">🤖</span>Mentor<i class="mdot" id="abmend" hidden></i></button><button type="button" id="abhis"><span aria-hidden="true">📋</span>Histórico</button><button type="button" id="abint"><span aria-hidden="true">🧠</span>Inteligência</button></div>
 </div></div>
 <div class="sheet" id="nov" hidden role="dialog" aria-modal="true" aria-labelledby="novt"><div class="sheetbox"><h2 id="novt">Novidades</h2><ul class="novl" id="novl"></ul><button type="button" class="add pri" id="novok">Entendi</button></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="tmsg"></span><button type="button" id="tuti" hidden>Útil</button><button type="button" id="tdes" hidden>Desnecessário</button><button type="button" id="tedi" hidden>Editar</button><button type="button" id="tund">Desfazer</button><div id="tcats" hidden></div></div>
@@ -729,7 +749,7 @@ table.itab{margin-top:8px}
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v48';
+var VERSAO='v49';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share)history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();
@@ -748,7 +768,7 @@ o.obj=(Array.isArray(o.obj)?o.obj:[]).slice(0,30).map(function(x,k){x=x||{};var 
 o.parcelas=(Array.isArray(o.parcelas)?o.parcelas:[]).slice(0,60).map(function(p,k){p=p||{};var n=Math.max(2,Math.min(60,parseInt(p.n)||2)),v2=!!p.v2,r={id:Number(p.id)||Date.now()+k,desc:String(p.desc||'Compra').slice(0,60),tot:Math.max(0,Number(p.tot)||0),n:n,k:Math.max(v2?1:2,Math.min(n+1,parseInt(p.k)||(v2?1:2))),d0:/^\d{4}-\d{2}-\d{2}$/.test(p.d0)?p.d0:hoje(),cor:(p.cor==='uti'||p.cor==='des')?p.cor:'sem'};if(v2){r.v2=1;r.t=/^\d{2}:\d{2}$/.test(p.t)?p.t:'';if(/^[a-z0-9]{1,16}$/.test(p.cat))r.cat=p.cat;if(p.txid)r.txid=String(p.txid).slice(0,48);if(/^\d{14}$/.test(p.doc))r.doc=p.doc}return r});
 var mt=(o.metas&&typeof o.metas==='object')?o.metas:{};o.metas={uti:Math.max(0,Number(mt.uti)||0),des:Math.max(0,Number(mt.des)||0),tot:Math.max(0,Number(mt.tot)||0)};
 var ma=(o.metaAv&&typeof o.metaAv==='object')?o.metaAv:{};function nv_(x){x=+x;return(x===80||x===100)?x:0}o.metaAv={m:/^\d{4}-\d{2}$/.test(ma.m)?ma.m:'',uti:nv_(ma.uti),des:nv_(ma.des),tot:nv_(ma.tot)};
-var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);o.nuvem=limpaNuvem(o.nuvem);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
+var lb=(o.lemb&&typeof o.lemb==='object')?o.lemb:null;o.lemb={on:lb?!!lb.on:true,h:(lb&&lb.h>=18&&lb.h<=23)?Math.round(lb.h):21};o.lembDia=/^\d{4}-\d{2}-\d{2}$/.test(o.lembDia)?o.lembDia:'';o.abreMic=!!o.abreMic;o.autoComp=o.autoComp!==false;o.mentor=limpaMentor(o.mentor);o.nuvem=limpaNuvem(o.nuvem);o.casal=limpaCasal(o.casal);var mm_=limpaMem(o);o.cats=mm_.cats;o.regras=mm_.regras;(o.items||[]).forEach(function(i){if(i&&i.cat&&!/^[a-z0-9]{1,16}$/.test(i.cat))delete i.cat});if(!o.memV){try{memInicial(o)}catch(e){}o.memV=1}
 var tu={};if(o.tut&&typeof o.tut==='object')['pg1','pg3','pgp','pgk','pg4','pgc','pgr','sheet'].forEach(function(k){if(o.tut[k])tu[k]=1});o.tut=tu;
 var gb={};if(o.gBase&&typeof o.gBase==='object')Object.keys(o.gBase).slice(0,30).forEach(function(k){var v=Number(o.gBase[k]);if(isFinite(v))gb[String(k).slice(0,30)]=v});o.gBase=gb;
 var rd={};if(o.rend&&typeof o.rend==='object')Object.keys(o.rend).slice(0,30).forEach(function(k){var r=o.rend[k];if(!r||typeof r!=='object')return;var p=Number(r.pct);if(!(p>=1&&p<=500)||!/^\d{4}-\d{2}-\d{2}$/.test(r.ini))return;rd[String(k).slice(0,30)]={pct:p,ini:r.ini,iso:!!r.iso}});o.rend=rd;
@@ -796,15 +816,15 @@ function idbGet(k){return idb().then(function(db){return new Promise(function(ok
 function idbDel(k){return idb().then(function(db){return new Promise(function(ok){var t=db.transaction('s','readwrite');t.objectStore('s').delete(k);t.oncomplete=ok;t.onerror=ok})}).catch(function(){})}
 
 /* ---------- telas: login, primeiro uso, app ---------- */
-var cur=0,voltaK=0,PGS=['pg1','pgi','pgk','pg4','pgx'],TITS=['Principal','Investir','Mentor','Histórico','Inteligência'],TBS=['t1','tp','tk','t2'],ALLP=['pg1','pg3','pg4','pgp','pgk','pgi','pgx','pga','pgs','pgc','pgr'];
+var cur=0,voltaK=0,PGS=['pg1','pgi','pgk','pg4','pgx','pgy'],TITS=['Principal','Investir','Mentor','Histórico','Inteligência','Casal'],TBS=['t1','tp','tk','t2'],ALLP=['pg1','pg3','pg4','pgp','pgk','pgi','pgx','pga','pgs','pgc','pgr','pgy'];
 function marcaNav(k){TBS.forEach(function(id,i){$(id).setAttribute('aria-selected',i===k?'true':'false')});$('ptit').textContent=k>=0?TITS[k]:''}
 function tela(qual){if(qual==='pga'||qual==='pgs'){$('bio').hidden=true;bioAberto=false;bioOk=bioNao=null;$('aviso').hidden=true;$('lanc').hidden=true;$('nov').hidden=true;$('men').hidden=true;MEN.esp=null}ALLP.forEach(function(i){$(i).className='pg'});$(qual).className='pg on';$('top').hidden=(qual==='pga'||qual==='pgs');window.scrollTo(0,0);fabUpd()}
-function fabUpd(){var on=!!st&&['pg1','pgi','pgk','pg4','pgc','pgx'].some(function(i){return $(i).className.indexOf('on')>=0});$('fab').hidden=!on}
-function vaiPagina(k,sub){if(!st)return;k=Math.max(0,Math.min(4,k));telaHist(k!==0);ALLP.forEach(function(i){$(i).className='pg'});$(PGS[k]).className='pg on';$('top').hidden=false;eng.setAttribute('aria-expanded','false');marcaNav(k);cur=k;$('topvolta').hidden=k===0;window.scrollTo(0,0);fabUpd();if(k===1){itTab(sub||IT.cur);return}if(k===2){mDot()}if(k===3)renderHistorico();if(k===4){renderIntel();renderConsultor();resNota()}setTimeout(function(){tour(k===0?'pg1':PGS[k])},380)}
+function fabUpd(){var on=!!st&&['pg1','pgi','pgk','pg4','pgc','pgx','pgy'].some(function(i){return $(i).className.indexOf('on')>=0});$('fab').hidden=!on}
+function vaiPagina(k,sub){if(!st)return;k=Math.max(0,Math.min(5,k));fechaMais();telaHist(k!==0);ALLP.forEach(function(i){$(i).className='pg'});$(PGS[k]).className='pg on';$('top').hidden=false;eng.setAttribute('aria-expanded','false');marcaNav(k);cur=k;$('topvolta').hidden=k===0;window.scrollTo(0,0);fabUpd();if(k===1){itTab(sub||IT.cur);return}if(k===2){mDot()}if(k===3)renderHistorico();if(k===4){renderIntel();renderConsultor();resNota()}if(k===5){CAS.todos=false;renderCasal();casSync(false)}setTimeout(function(){tour(k===0?'pg1':PGS[k])},380)}
 /* botão voltar do Android: dentro de uma tela, volta para a principal */
 function telaHist(dentro){try{if(dentro&&!(history.state&&history.state.tela))history.pushState({tela:1},'')}catch(e){}}
 function voltaInicio(){if(history.state&&history.state.tela){try{history.back();return}catch(e){}}vaiPagina(0)}
-window.addEventListener('popstate',function(){if(!st)return;['lanc','nov','men','edit','fat','lan'].forEach(function(id){var e=$(id);if(e&&!e.hidden){if(id==='men')fechaMentor();else if(id==='edit')fechaEdicao();else e.hidden=true}});if($('pg1').className.indexOf('on')<0&&!$('top').hidden)vaiPagina(0)});
+window.addEventListener('popstate',function(){if(!st)return;fechaMais();['lanc','nov','men','edit','fat','lan'].forEach(function(id){var e=$(id);if(e&&!e.hidden){if(id==='men')fechaMentor();else if(id==='edit')fechaEdicao();else e.hidden=true}});if($('pg1').className.indexOf('on')<0&&!$('top').hidden)vaiPagina(0)});
 $('topvolta').onclick=voltaInicio;
 function irPara(n,direto){vaiPagina(0)}
 function abreHistorico(){vaiPagina(3)}
@@ -815,7 +835,7 @@ var histLim=60,histQ='';
 (function(){var tb=null;$('hbusca').addEventListener('input',function(){clearTimeout(tb);tb=setTimeout(renderHistorico,180)});$('hbusca').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur()}})})();
 /* conectado sem digital: qualquer pessoa com o celular desbloqueado abre o app */
 function avisoBio(){if(!st||!lembrado||bioId(uid)||!$('aviso').hidden||st.avBioAte>=hoje())return;bioPode().then(function(p){if(!p||!$('aviso').hidden)return;mostraAviso('Você está conectado sem digital: quem pegar seu celular desbloqueado abre o app. Ligue a digital para proteger.','Ligar digital',function(){$('aviso').hidden=true;abreCfg(false,'cfgseg')},'Depois',function(){st.avBioAte=isoAdd(hoje(),7);save()})})}
-function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda)avisoBio();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
+function entra(){var fx=null,vinda=!!(PARAMS.share||PARAMS.txt);try{fx=fechaAuto()}catch(e){}cur=-1;irPara(0,true);gaveta();render();setTimeout(function(){buscaCdi(false);buscaTaxas(false)},1600);avisoAtualizado();nvDiario();setTimeout(function(){checaVersao();if(fx)avisoFechou(fx);else if(!vinda)lembreteBackup();if(!vinda)avisoBio();if(!vinda&&!novidades())tour('pg1')},1200);setTimeout(aposEntrada,vinda?0:900);setTimeout(function(){casSync(true)},2500);$('quem').textContent='Conta: '+(users.filter(function(u){return u.id===uid})[0]||{nome:''}).nome}
 var modo='login';
 function authModo(m){modo=m;var novo=(m==='criar');$('atit').textContent=novo?'Criar conta':'Entrar';$('ucw').hidden=!novo;$('uok').textContent=novo?'Criar conta':'Entrar';$('usw').textContent=novo?'Já tenho conta':'Criar conta';
 $('up').autocomplete=novo?'new-password':'current-password';$('umsg').textContent='';
@@ -1053,9 +1073,12 @@ b.firstChild.style.background='var('+COR[l.cor].v+')';b.lastChild.textContent=(l
 b.onclick=function(){var it={id:nid(),d:hoje(),t:hora(),desc:l.desc,val:l.val,pay:l.pay,cor:l.cor,ent:false};if(l.cat&&catOk(l.cat))it.cat=l.cat;addItem(it);render();toast('Lançado: '+it.desc+' · '+brl(it.val)+rotulo(it)+'. Valor diferente? Toque em Editar.',it.id)};
 box.appendChild(b)})}
 /* ---------- botão + e folha de lançamento ---------- */
-function abreLanc(){if(!st)return;fechaMn();$('lanc').hidden=false;atalhos();setTimeout(ocrAquece,400);if(!$('digbox').hidden)setTimeout(function(){try{fr.focus()}catch(e){}},80)}
+function abreLanc(){if(!st)return;fechaMn();fechaMais();$('lanc').hidden=false;atalhos();setTimeout(ocrAquece,400);if(!$('digbox').hidden)setTimeout(function(){try{fr.focus()}catch(e){}},80)}
 function fechaLanc(){if($('lanc').hidden)return;$('lanc').hidden=true;try{fr.blur()}catch(e){}}
-$('fab').onclick=abreLanc;(function(){var y0=window.scrollY;window.addEventListener('scroll',function(){var y=window.scrollY;$('fab').classList.toggle('esc',y>y0+4&&y>120);if(y<y0-4||y<120)$('fab').classList.remove('esc');y0=y},{passive:true})})();$('abinv').onclick=function(){fechaLanc();vaiPagina(1,'inv')};$('abmen').onclick=function(){fechaLanc();vaiPagina(2)};$('abhis').onclick=function(){fechaLanc();vaiPagina(3)};$('abint').onclick=function(){fechaLanc();vaiPagina(4)};$('lancx').onclick=fechaLanc;$('lanc').onclick=function(e){if(e.target===this)fechaLanc()};
+function abreMais(){if(!st)return;fechaMn();var f=$('fab');$('mais').hidden=false;f.classList.add('ab');f.classList.remove('esc');f.setAttribute('aria-expanded','true');f.setAttribute('aria-label','Fechar opções')}
+function fechaMais(){var m=$('mais');if(!m||m.hidden)return;m.hidden=true;var f=$('fab');f.classList.remove('ab');f.setAttribute('aria-expanded','false');f.setAttribute('aria-label','Abrir opções')}
+$('fab').onclick=function(){if($('mais').hidden)abreMais();else fechaMais()};$('mais').onclick=function(e){if(e.target===this||e.target.className==='maisl')fechaMais()};document.addEventListener('keydown',function(e){if(e.key==='Escape')fechaMais()});
+$('ablan').onclick=function(){fechaMais();abreLanc()};$('abcas').onclick=function(){vaiPagina(5)};(function(){var y0=window.scrollY;window.addEventListener('scroll',function(){var y=window.scrollY;$('fab').classList.toggle('esc',y>y0+4&&y>120);if(y<y0-4||y<120)$('fab').classList.remove('esc');y0=y},{passive:true})})();$('abinv').onclick=function(){vaiPagina(1,'inv')};$('abmen').onclick=function(){vaiPagina(2)};$('abhis').onclick=function(){vaiPagina(3)};$('abint').onclick=function(){vaiPagina(4)};$('lancx').onclick=fechaLanc;$('lanc').onclick=function(e){if(e.target===this)fechaLanc()};
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('lanc').hidden)fechaLanc()});
 /* ---------- tela inicial: últimos lançamentos e previsão ---------- */
 function renderUlt(){var L=$('ultl');if(!L)return;L.innerHTML='';var arr=st.items.concat(faturaView()).slice().sort(function(a,b){return(b.d||'').localeCompare(a.d||'')||(b.t||'').localeCompare(a.t||'')||(Number(b.id)||0)-(Number(a.id)||0)}).slice(0,3);
@@ -1814,7 +1837,7 @@ function autoAtualiza(nova,tent){var tk='financas-tentativa',ant='';try{ant=loca
  try{localStorage.setItem(tk,nova+'|'+Date.now());localStorage.setItem('financas-atualizado',nova)}catch(e){}
  if(st)save();setTimeout(atualizaApp,1200)}
 function avisoAtualizado(){var v='';try{v=localStorage.getItem('financas-atualizado')||''}catch(e){}if(v&&v===VERSAO){try{localStorage.removeItem('financas-atualizado');localStorage.removeItem('financas-tentativa')}catch(e){}}}
-var NOVIDADES={v48:['Anel fica vermelho quando o Disponível está negativo.','Trocar a senha do app em ⚙ → Conta.','Nota do mês agora fica em 🧠 Inteligência.','Histórico mais leve e o botão + some ao rolar a tela.','Aviso para ligar a digital quando você fica conectado sem ela.','Letras do app guardadas no próprio celular: abre sem pedir nada ao Google.'],v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
+var NOVIDADES={v49:['Novo 👫 Casal: liguem os dois celulares pelo QR Code (⚙ → Casal) e vejam os gastos um do outro. Cada um escolhe o que mostra.','O botão + agora mostra as opções: Lançar, Investir, Casal, Inteligência, Mentor e Histórico.'],v48:['Anel fica vermelho quando o Disponível está negativo.','Trocar a senha do app em ⚙ → Conta.','Nota do mês agora fica em 🧠 Inteligência.','Histórico mais leve e o botão + some ao rolar a tela.','Aviso para ligar a digital quando você fica conectado sem ela.','Letras do app guardadas no próprio celular: abre sem pedir nada ao Google.'],v47:['Nova tela 🧠 Inteligência no botão +: previsão dos próximos meses, auditor de gastos, simulador de compra e seu patrimônio.','Contas com dia de vencimento (em Investir → Planejamento): aviso na tela principal 3 dias antes, com botão Paguei.','Backup na nuvem guarda os últimos 7 dias: dá para restaurar o de ontem.'],v46:['Compra parcelada como na fatura: a 1ª parcela entra no mês seguinte e as outras mês a mês; o Limite já reserva o total no dia da compra, igual ao banco.','Comprovante parcelado (ex.: 3x de R$ 30,00) é lançado sozinho quando as parcelas batem com o total.'],v45:['Comprovante do Nubank (cartão, NuPay) lido como os de Pix: valor, iFood/loja, data, hora, crédito e CNPJ. Compra parcelada abre já com as parcelas.'],v44:['Porquinho no Guardado: no anel da tela principal e no total dos Guardados.'],v43:['Botão + é o menu do app: lançar e abrir Investir, Mentor e Histórico. As abas do topo saíram.','Nova tela Investir: estou pronto para investir, simulador (poupança, CDB, LCI/LCA, Tesouro Selic), onde guardar cada objetivo, análise dos seus guardados, meta do mês e projeção de 10 anos.','Taxas do dia (CDI, Selic, IPCA) buscadas no Banco Central.','Planejamento e Guardados agora ficam dentro de Investir. No anel, deslize para ver o total guardado.','O botão voltar do Android volta para a tela principal.'],v42:['Comprovante mais rápido: a leitura começa assim que o app abre, ainda durante a digital.','Gasto que o app já conhece entra logo depois da primeira leitura da foto.','O leitor de foto fica pronto enquanto o app está aberto, e o app abre mais leve.'],v41:['Botão + em todas as telas: fale, digite, leia a foto ou o PDF do comprovante e use os atalhos dos gastos que você mais repete.','Comprovante de um gasto que o app já conhece entra sozinho, com aviso para desfazer ou editar.','Tela inicial mais limpa: previsão do fim do mês e os últimos lançamentos.','Mentor e Consultoria agora ficam juntos na aba Mentor.','Busca no Histórico: digite “uber” e veja todos os lançamentos e o total.','Objetivos com prazo: o app diz quanto guardar por semana.','O mês fecha sozinho no dia 1 e mostra o resumo.','Configurações organizadas em blocos, tema claro ou escuro e ícones nas categorias.']};
 function mostraNovidades(v){var L=NOVIDADES[v||VERSAO];if(!L)return false;$('novt').textContent='Novidades da '+(v||VERSAO);var u=$('novl');u.innerHTML='';L.forEach(function(x){u.appendChild(el_('li',null,x))});$('nov').hidden=false;try{$('novok').focus()}catch(e){}return true}
 function novidades(){var vis='';try{vis=localStorage.getItem('financas-visto')||''}catch(e){}if(vis===VERSAO)return false;try{localStorage.setItem('financas-visto',VERSAO)}catch(e){}
  if(!st||!(st.items.length||(st.arquivo&&st.arquivo.length)||(st.tut&&st.tut.pg1)))return false;return mostraNovidades()}
@@ -1933,7 +1956,7 @@ pg1:[
 {e:'#limc',t:'Limite',x:'Seu limite do crédito. Gasto no crédito sai daqui, não do Disponível.'},
 {e:'#fatbtn',t:'Pagar fatura',x:'Paga a fatura com o dinheiro do débito e devolve o valor ao Limite.'},
 {e:'#gaugeCard .gauge-nav',t:'Painéis',x:'Deslize ou toque nas setas para ver quanto você tem guardado. Toque no valor para abrir os guardados.'},
-{e:'#fab',t:'Botão +',x:'Tudo começa aqui: lançar (falar, digitar, foto ou PDF do comprovante) e abrir Investir, Mentor e Histórico.'},
+{e:'#fab',t:'Botão +',x:'Tudo começa aqui. Toque para ver as opções: Lançar, Investir, Casal, Inteligência, Mentor e Histórico.'},
 {e:'#prev',t:'Previsão',x:'Quanto sobra no fim do mês se você continuar gastando nesse ritmo.'},
 {e:'#ultimos',t:'Últimos lançamentos',x:'Os 3 mais recentes. Toque para editar ou em Ver todos.'},
 {e:'#mic1',t:'Microfone',x:'Toque e fale: “gastei 12 no pix na padaria”. Com valor e pagamento, salva sozinho.'},
@@ -2005,6 +2028,146 @@ window.addEventListener('resize',function(){if(tutAt)tutShow()});
 $('tut').addEventListener('touchmove',function(e){e.preventDefault()},{passive:false});
 
 /* ---------- backup na nuvem (Supabase): sai do celular já criptografado ---------- */
+/* ---------- casal: gastos compartilhados, criptografados de ponta a ponta ---------- */
+var QR=(function(){
+var EXP=[],LOG=[];(function(){var x=1,i;for(i=0;i<255;i++){EXP[i]=x;LOG[x]=i;x<<=1;if(x&256)x^=0x11d}for(i=255;i<512;i++)EXP[i]=EXP[i-255]})();
+function mul(a,b){return a&&b?EXP[LOG[a]+LOG[b]]:0}
+function rsGen(n){var g=[1],i,j;for(i=0;i<n;i++){var ng=[];for(j=0;j<=g.length;j++)ng[j]=0;for(j=0;j<g.length;j++){ng[j]^=g[j];ng[j+1]^=mul(g[j],EXP[i])}g=ng}return g}
+function rsEnc(data,n){var g=rsGen(n),r=data.slice(),i,j;for(i=0;i<n;i++)r.push(0);for(i=0;i<data.length;i++){var c=r[i];if(c)for(j=0;j<g.length;j++)r[i+j]^=mul(g[j],c)}return r.slice(data.length)}
+var T=[null,[7,1,19,0,0],[10,1,34,0,0],[15,1,55,0,0],[20,1,80,0,0],[26,1,108,0,0],[18,2,68,0,0],[20,2,78,0,0],[24,2,97,0,0],[30,2,116,0,0],[18,2,68,2,69],[20,4,81,0,0],[24,2,92,2,93],[26,4,107,0,0],[30,3,115,1,116],[22,5,87,1,88],[24,5,98,1,99],[28,1,107,5,108],[30,5,120,1,121],[28,3,113,4,114],[28,3,107,5,108]];
+var AL=[null,[],[6,18],[6,22],[6,26],[6,30],[6,34],[6,22,38],[6,24,42],[6,26,46],[6,28,50],[6,30,54],[6,32,58],[6,34,62],[6,26,46,66],[6,26,48,70],[6,26,50,74],[6,30,54,78],[6,30,56,82],[6,30,58,86],[6,34,62,90]];
+function dataCap(v){var t=T[v];return t[1]*t[2]+t[3]*t[4]}
+function bch(v,g,nb){var r=v<<nb;var gl=g.toString(2).length;for(var i=r.toString(2).length-gl;i>=0;i--)if((r>>>(i+gl-1))&1)r^=g<<i;return r}
+function make(bytes){var v=1;for(;v<=20;v++){var cb=v<10?8:16;if(4+cb+8*bytes.length<=dataCap(v)*8)break}if(v>20)return null;
+var bits=[];function put(val,n){for(var i=n-1;i>=0;i--)bits.push((val>>>i)&1)}
+put(4,4);put(bytes.length,v<10?8:16);bytes.forEach(function(b){put(b,8)});var cap=dataCap(v)*8;put(0,Math.min(4,cap-bits.length));while(bits.length%8)bits.push(0);
+var cw=[];for(var i=0;i<bits.length;i+=8){var x=0;for(var j=0;j<8;j++)x=x*2+bits[i+j];cw.push(x)}
+for(var pd=0xEC;cw.length<dataCap(v);pd^=0xEC^0x11)cw.push(pd);
+var t=T[v],blocks=[],pos=0,k;for(k=0;k<t[1];k++){blocks.push(cw.slice(pos,pos+t[2]));pos+=t[2]}for(k=0;k<t[3];k++){blocks.push(cw.slice(pos,pos+t[4]));pos+=t[4]}
+var ecs=blocks.map(function(b){return rsEnc(b,t[0])}),all=[],mx=Math.max(t[2],t[4]);
+for(i=0;i<mx;i++)blocks.forEach(function(b){if(i<b.length)all.push(b[i])});for(i=0;i<t[0];i++)ecs.forEach(function(e){all.push(e[i])});
+var N=17+4*v,M=[],F=[],r,c;for(r=0;r<N;r++){M[r]=[];F[r]=[];for(c=0;c<N;c++){M[r][c]=0;F[r][c]=0}}
+function setF(r,c,d){M[r][c]=d?1:0;F[r][c]=1}
+function finder(r0,c0){for(var dr=-1;dr<=7;dr++)for(var dc=-1;dc<=7;dc++){var rr=r0+dr,cc=c0+dc;if(rr<0||cc<0||rr>=N||cc>=N)continue;var d=Math.max(Math.abs(dr-3),Math.abs(dc-3));setF(rr,cc,d!==2&&d!==4)}}
+finder(0,0);finder(0,N-7);finder(N-7,0);
+for(i=8;i<N-8;i++){setF(6,i,i%2===0);setF(i,6,i%2===0)}
+var a=AL[v];a.forEach(function(ar){a.forEach(function(ac){if((ar===6&&ac===6)||(ar===6&&ac===a[a.length-1])||(ar===a[a.length-1]&&ac===6))return;for(var dr=-2;dr<=2;dr++)for(var dc=-2;dc<=2;dc++)setF(ar+dr,ac+dc,Math.max(Math.abs(dr),Math.abs(dc))!==1)})});
+for(i=0;i<9;i++){F[8][i]=1;F[i][8]=1}for(i=0;i<8;i++){F[8][N-1-i]=1;F[N-1-i][8]=1}F[N-8][8]=1;M[N-8][8]=1;
+if(v>=7){var vi=(v<<12)|bch(v,0x1F25,12);for(i=0;i<18;i++){var bt=(vi>>>i)&1,aa=N-11+i%3,bb=Math.floor(i/3);setF(bb,aa,bt);setF(aa,bb,bt)}}
+var bi=0,up=true;for(c=N-1;c>0;c-=2){if(c===6)c--;for(var s=0;s<N;s++){r=up?N-1-s:s;for(var dx=0;dx<2;dx++){var cc2=c-dx;if(!F[r][cc2]){var by=all[bi>>3];M[r][cc2]=by===undefined?0:(by>>>(7-(bi&7)))&1;bi++}}}up=!up}
+var MK=[function(r,c){return(r+c)%2===0},function(r){return r%2===0},function(r,c){return c%3===0},function(r,c){return(r+c)%3===0},function(r,c){return(Math.floor(r/2)+Math.floor(c/3))%2===0},function(r,c){return(r*c)%2+(r*c)%3===0},function(r,c){return((r*c)%2+(r*c)%3)%2===0},function(r,c){return((r+c)%2+(r*c)%3)%2===0}];
+var best=null,bs=1e9;
+for(var m=0;m<8;m++){var Q=M.map(function(row){return row.slice()});for(r=0;r<N;r++)for(c=0;c<N;c++)if(!F[r][c]&&MK[m](r,c))Q[r][c]^=1;
+ var fb=((1<<3)|m);var fm=((fb<<10)|bch(fb,0x537,10))^0x5412;
+ function sf(r,c,bit){Q[r][c]=bit}
+ for(i=0;i<=5;i++)sf(i,8,(fm>>>i)&1);sf(7,8,(fm>>>6)&1);sf(8,8,(fm>>>7)&1);sf(8,7,(fm>>>8)&1);for(i=9;i<15;i++)sf(8,14-i,(fm>>>i)&1);
+ for(i=0;i<8;i++)sf(8,N-1-i,(fm>>>i)&1);for(i=8;i<15;i++)sf(N-15+i,8,(fm>>>i)&1);Q[N-8][8]=1;
+ var p=pen(Q,N);if(p<bs){bs=p;best=Q}}
+return{n:N,m:best,v:v}}
+function pen(Q,N){var p=0,r,c,i;
+for(var pass=0;pass<2;pass++){for(r=0;r<N;r++){var run=1;for(c=1;c<N;c++){var cur=pass?Q[c][r]:Q[r][c],prv=pass?Q[c-1][r]:Q[r][c-1];if(cur===prv){run++;if(run===5)p+=3;else if(run>5)p++}else run=1}}}
+for(r=0;r<N-1;r++)for(c=0;c<N-1;c++){var x=Q[r][c];if(x===Q[r][c+1]&&x===Q[r+1][c]&&x===Q[r+1][c+1])p+=3}
+var P1=[1,0,1,1,1,0,1,0,0,0,0],P2=[0,0,0,0,1,0,1,1,1,0,1];
+for(pass=0;pass<2;pass++)for(r=0;r<N;r++)for(c=0;c<=N-11;c++){var a=true,b=true;for(i=0;i<11;i++){var vv=pass?Q[c+i][r]:Q[r][c+i];if(vv!==P1[i])a=false;if(vv!==P2[i])b=false;if(!a&&!b)break}if(a||b)p+=40}
+var d=0;for(r=0;r<N;r++)for(c=0;c<N;c++)d+=Q[r][c];var k=Math.ceil(Math.abs(d*20-N*N*10)/(N*N))-1;p+=Math.max(0,k)*10;return p}
+return{make:make,cap:function(){return dataCap(20)}}})();
+var CAS={cod:'',sala:'',eu:'',key:null,rod:false,ult:'',env:0,cam:null,camOn:false,erro:''},CAS_AB='23456789ABCDEFGHJKLMNPQRSTUVWXYZ',casArm=false;
+function casHex(buf){var a=new Uint8Array(buf),s='';for(var i=0;i<a.length;i++)s+=(a[i]<16?'0':'')+a[i].toString(16);return s}
+function casNovoCod(){var b=crypto.getRandomValues(new Uint8Array(20)),s='';for(var i=0;i<20;i++)s+=CAS_AB[b[i]&31];return s}
+function casLimpaCod(s){s=String(s||'').toUpperCase().replace(/^FCASAL1:/,'').replace(/[\s-]/g,'');return /^[2-9A-HJ-NP-Z]{20}$/.test(s)?s:''}
+function casFmt(c){return c.match(/.{4}/g).join('-')}
+function casNivOk(n){return n==='det'||n==='tot'||n==='pau'}
+function casLimpaPar(o){if(!o||typeof o!=='object')return null;var n=function(x){x=Number(x);return isFinite(x)&&x>=0&&x<1e9?r2(x):0},niv=casNivOk(o.niv)?o.niv:'pau',p={v:1,n:tx(o.n,20),niv:niv,m:tx(o.m,12)};if(niv==='pau')return p;
+ p.tot=n(o.tot);var c=(o.cor&&typeof o.cor==='object')?o.cor:{};p.cor={uti:n(c.uti),des:n(c.des),sem:n(c.sem)};
+ p.cat=(Array.isArray(o.cat)?o.cat:[]).slice(0,12).filter(Array.isArray).map(function(x){return[tx(x[0],40),n(x[1])]});
+ if(niv==='det')p.it=(Array.isArray(o.it)?o.it:[]).slice(0,300).filter(function(i){return i&&typeof i==='object'&&/^\d{4}-\d{2}-\d{2}$/.test(i.d)}).map(function(i){return{d:i.d,t:/^\d{2}:\d{2}$/.test(i.t)?i.t:'',v:n(i.v),ds:tx(i.ds,60),c:(i.c==='uti'||i.c==='des')?i.c:'sem',k:tx(i.k,40),pg:tx(i.pg,30)}});
+ return p}
+function limpaCasal(c){if(!c||typeof c!=='object'||!/^[2-9A-HJ-NP-Z]{20}$/.test(c.cod)||!/^[a-f0-9]{64}$/.test(c.tok))return undefined;
+ var r={cod:c.cod,tok:c.tok,nome:tx(c.nome,20),niv:casNivOk(c.niv)?c.niv:'det',desde:/^\d{4}-\d{2}-\d{2}$/.test(c.desde)?c.desde:hoje(),sync:typeof c.sync==='string'?c.sync.slice(0,30):''};
+ if(c.saiu)r.saiu=1;var p=c.par&&casLimpaPar(c.par);if(p){r.par=p;r.parQ=tx(c.parQ,40)}return r}
+function casPrep(){var c=st&&st.casal;if(!c)return Promise.reject(new Error('sem'));if(CAS.cod===c.cod&&CAS.key)return Promise.resolve();
+ var te=new TextEncoder(),salt=te.encode('financas-casal-v1');
+ return crypto.subtle.importKey('raw',te.encode(c.cod),'HKDF',false,['deriveKey','deriveBits']).then(function(k){
+  return Promise.all([crypto.subtle.deriveBits({name:'HKDF',hash:'SHA-256',salt:salt,info:te.encode('sala')},k,256),
+   crypto.subtle.deriveKey({name:'HKDF',hash:'SHA-256',salt:salt,info:te.encode('chave')},k,{name:'AES-GCM',length:256},false,['encrypt','decrypt']),
+   crypto.subtle.digest('SHA-256',te.encode(c.tok))])}).then(function(r){CAS.cod=c.cod;CAS.sala=casHex(r[0]);CAS.key=r[1];CAS.eu=casHex(r[2]);CAS.ult=''})}
+function casRpc(fn,args){var body=JSON.stringify(args);return fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json',Accept:'application/json'},body:body,cache:'no-store',credentials:'omit',referrerPolicy:'no-referrer',keepalive:body.length<60000}).then(function(r){return r.text().then(function(t){var j=null;try{j=JSON.parse(t)}catch(e){}if(!r.ok)throw new Error((j&&j.message)||('http'+r.status));return j})})}
+function casMeus(){return st.items.filter(function(i){return !i.ent&&i.cor!=='gua'&&i.val>0})}
+function casResumo(g){var r={tot:0,cor:{uti:0,des:0,sem:0},cat:{}};g.forEach(function(i){r.tot+=i.val;r.cor[(i.cor==='uti'||i.cor==='des')?i.cor:'sem']+=i.val;var k=catNome(i.cat)||(COR[i.cor]||COR.sem).n;r.cat[k]=(r.cat[k]||0)+i.val});
+ r.tot=r2(r.tot);Object.keys(r.cor).forEach(function(k){r.cor[k]=r2(r.cor[k])});r.lc=Object.keys(r.cat).map(function(k){return[k,r2(r.cat[k])]}).sort(function(a,b){return b[1]-a[1]}).slice(0,12);return r}
+function casPacote(){var c=st.casal,p={v:1,n:c.nome||'',niv:c.niv,m:rotuloMes()};if(c.niv==='pau')return p;var g=casMeus(),r=casResumo(g);p.tot=r.tot;p.cor=r.cor;p.cat=r.lc;
+ if(c.niv==='det')p.it=g.slice(-300).map(function(i){return{d:i.d,t:i.t,v:r2(i.val),ds:tx(i.desc,60),c:i.cor,k:catNome(i.cat)||'',pg:tx(i.pay,30)}});return p}
+function casSync(forca){var c=st&&st.casal;if(!c||CAS.rod)return Promise.resolve(false);if(!forca&&CAS.env&&Date.now()-CAS.env<60000)return Promise.resolve(false);
+ CAS.rod=true;var cod=c.cod;
+ return casPrep().then(function(){var js=JSON.stringify(casPacote());if(js===CAS.ult)return;return enc(CAS.key,js).then(function(r){return casRpc('casal_salvar',{p_sala:CAS.sala,p_token:c.tok,p_dados:JSON.stringify({v:1,iv:r.iv,ct:r.ct})})}).then(function(){CAS.ult=js})})
+ .then(function(){return casRpc('casal_ler',{p_sala:CAS.sala})}).then(function(rows){if(!st||!st.casal||st.casal.cod!==cod)return;
+  var o=(Array.isArray(rows)?rows:[]).filter(function(x){return x&&x.autor!==CAS.eu&&typeof x.dados==='string'})[0];if(!o)return;
+  if(!o.dados){if(st.casal.par){delete st.casal.par;st.casal.saiu=1}return}
+  var e=null;try{e=JSON.parse(o.dados)}catch(_){}if(!e||typeof e.iv!=='string'||typeof e.ct!=='string')return;
+  return dec(CAS.key,e).then(function(t){var p=casLimpaPar(JSON.parse(t));if(p&&st.casal&&st.casal.cod===cod){st.casal.par=p;st.casal.parQ=tx(o.atualizado,40);delete st.casal.saiu}})})
+ .then(function(){CAS.rod=false;CAS.erro='';CAS.env=Date.now();if(st&&st.casal&&st.casal.cod===cod){st.casal.sync=new Date().toISOString();save()}casTela();return true},
+  function(e){CAS.rod=false;CAS.erro=String(e&&e.message||e);casTela();return false})}
+function casTela(){casUI();if(st&&$('pgy').className.indexOf('on')>=0)renderCasal()}
+function casQuando(iso){var t=Date.parse(iso);if(!t)return '';var m=Math.round((Date.now()-t)/60000);if(m<1)return 'agora';if(m<60)return 'há '+m+' min';var h=Math.round(m/60);if(h<24)return 'há '+h+' h';var d=new Date(t);return 'em '+pad(d.getDate())+'/'+pad(d.getMonth()+1)}
+function casErroTxt(){var e=CAS.erro;if(!e)return '';if(/completo/.test(e))return 'Este código já está ligado a dois celulares. Desfaça e gere um novo.';if(/muitos/.test(e))return 'Muitas atualizações seguidas. Tente em instantes.';return navigator.onLine===false?'Sem internet. Mostrando os últimos dados salvos.':'Não consegui atualizar agora. Mostrando os últimos dados salvos.'}
+var CAS_NIVX={det:'Seu par vê cada gasto: valor, dia, local e categoria.',tot:'Seu par vê só o total do mês e por categoria.',pau:'Nada é mostrado até você voltar a compartilhar.'};
+function casUI(){if(!st||!$('cason'))return;var c=st.casal;$('casoff').hidden=!!c;$('cason').hidden=!c;
+ $('casres').textContent=c?(c.par?'Ligado com '+(c.par.n||'seu par'):'Esperando o outro celular'):'Ver os gastos um do outro';
+ $('casmsg').textContent=casErroTxt();if(!c){$('casqr').hidden=true;return}
+ if(document.activeElement!==$('casnome'))$('casnome').value=c.nome||'';
+ [].forEach.call($('casniv').children,function(b){b.setAttribute('aria-checked',b.getAttribute('data-n')===c.niv?'true':'false')});$('casnivx').textContent=CAS_NIVX[c.niv];
+ $('casst').textContent=c.par?'✅ Ligado com '+(c.par.n||'seu par')+(c.sync?' · atualizado '+casQuando(c.sync):''):(c.saiu?'Seu par desfez a ligação.':'⏳ Esperando o outro celular ler o seu QR Code.');
+ $('casler2').hidden=!!c.par}
+function casDesenhaQR(){var c=st.casal,s='FCASAL1:'+c.cod,bytes=[];for(var i=0;i<s.length;i++)bytes.push(s.charCodeAt(i));var q=QR.make(bytes);if(!q)return;
+ var sc=Math.max(4,Math.floor(300/(q.n+8))),px=(q.n+8)*sc,cv=$('qcv'),x=cv.getContext('2d');cv.width=cv.height=px;x.fillStyle='#fff';x.fillRect(0,0,px,px);x.fillStyle='#000';
+ for(var r=0;r<q.n;r++)for(var k=0;k<q.n;k++)if(q.m[r][k])x.fillRect((k+4)*sc,(r+4)*sc,sc,sc);$('cascod').textContent=casFmt(c.cod)}
+function casCria(){if(st.casal)return;st.casal={cod:casNovoCod(),tok:casHex(crypto.getRandomValues(new Uint8Array(32))),nome:'',niv:'det',desde:hoje(),sync:''};CAS.cod='';save()}
+function casMostra(){casCamPara();casCria();casDesenhaQR();$('casqr').hidden=false;casUI();casSync(true)}
+function casEntra(t){var cod=casLimpaCod(t),m=$('cascmsg');if(!cod){m.textContent='Código inválido. Confira e tente de novo.';return false}casCamPara();
+ if(st.casal&&st.casal.cod===cod){$('casmsg').textContent='Vocês já estão ligados.';return true}
+ var nome=st.casal?st.casal.nome:'',niv=st.casal?st.casal.niv:'det';st.casal={cod:cod,tok:casHex(crypto.getRandomValues(new Uint8Array(32))),nome:nome,niv:niv,desde:hoje(),sync:''};CAS.cod='';CAS.key=null;save();
+ $('casqr').hidden=true;casUI();$('casok').hidden=false;try{if(navigator.vibrate)navigator.vibrate(60)}catch(e){}casSync(true);return true}
+function casJsqr(){if(window.jsQR)return Promise.resolve();return new Promise(function(ok,no){var s=document.createElement('script');s.src='qr/jsqr.js';s.onload=function(){if(window.jsQR)ok();else no()};s.onerror=no;document.head.appendChild(s)})}
+function casDetector(){if('BarcodeDetector' in window){try{var d=new BarcodeDetector({formats:['qr_code']});return Promise.resolve(function(v){return d.detect(v).then(function(cs){return cs.length?cs[0].rawValue:''})})}catch(e){}}
+ return casJsqr().then(function(){var cv=document.createElement('canvas'),cx=cv.getContext('2d',{willReadFrequently:true});return function(v){var w=v.videoWidth,h=v.videoHeight;if(!w||!h)return Promise.resolve('');var s=Math.min(1,720/Math.max(w,h));w=Math.round(w*s);h=Math.round(h*s);cv.width=w;cv.height=h;cx.drawImage(v,0,0,w,h);var r=window.jsQR(cx.getImageData(0,0,w,h).data,w,h,{inversionAttempts:'dontInvert'});return Promise.resolve(r?r.data:'')}})}
+function casLoop(det){if(!CAS.camOn)return;det($('qvid')).then(function(t){if(t&&String(t).indexOf('FCASAL1:')===0&&casEntra(t))return 'fim'},function(){}).then(function(r){if(r!=='fim'&&CAS.camOn)setTimeout(function(){casLoop(det)},200)})}
+function casCam(){var m=$('cascmsg');$('casqr').hidden=true;$('casok').hidden=true;$('cascam').hidden=false;$('qcode').value='';
+ if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){m.textContent='Este navegador não abre a câmera. Digite o código abaixo.';return}
+ if(CAS.camOn)return;m.textContent='Abrindo a câmera...';
+ navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false}).then(function(s){if($('cascam').hidden){s.getTracks().forEach(function(t){t.stop()});return null}
+  CAS.cam=s;CAS.camOn=true;var v=$('qvid');v.setAttribute('playsinline','');v.muted=true;v.srcObject=s;v.hidden=false;var pl=v.play();if(pl&&pl.catch)pl.catch(function(){});m.textContent='Aponte para o QR Code do outro celular.';return casDetector()},function(){throw 'cam'})
+ .then(function(det){if(det&&CAS.camOn)casLoop(det)},function(e){m.textContent=e==='cam'?'Não consegui abrir a câmera. Libere a permissão ou digite o código abaixo.':'Não consegui ler pela câmera aqui. Digite o código abaixo.'})}
+function casCamPara(){CAS.camOn=false;if(CAS.cam){CAS.cam.getTracks().forEach(function(t){t.stop()});CAS.cam=null}var v=$('qvid');if(v){try{v.srcObject=null}catch(e){}v.hidden=true}var b=$('cascam');if(b)b.hidden=true}
+$('casmos').onclick=casMostra;$('casmos2').onclick=casMostra;$('casler').onclick=casCam;$('casler2').onclick=casCam;
+$('casqx').onclick=function(){$('casqr').hidden=true};$('cascx').onclick=casCamPara;
+$('casdig').onclick=function(){var t=$('qcode').value;if(!t.trim()){$('cascmsg').textContent='Digite o código que aparece no outro celular.';return}casEntra(t)};
+$('qcode').onkeydown=function(e){if(e.key==='Enter'){e.preventDefault();$('casdig').click()}};
+$('casnome').onchange=function(){if(!st||!st.casal)return;st.casal.nome=tx(this.value.trim(),20);save();casSync(true)};
+$('casniv').onclick=function(e){var b=e.target.closest('button');if(!b||!st||!st.casal)return;st.casal.niv=b.getAttribute('data-n');save();casUI();casSync(true)};
+$('casver').onclick=function(){vaiPagina(5)};
+$('cassai').onclick=function(){var b=this;if(!st||!st.casal)return;if(!casArm){casArm=true;b.textContent='Toque de novo para desfazer';setTimeout(function(){casArm=false;b.textContent='Desfazer casal'},4000);return}
+ casArm=false;b.textContent='Desfazer casal';b.disabled=true;var c=st.casal;casPrep().then(function(){return casRpc('casal_salvar',{p_sala:CAS.sala,p_token:c.tok,p_dados:''})}).catch(function(){}).then(function(){b.disabled=false;if(st){delete st.casal;save()}CAS.cod='';CAS.key=null;CAS.ult='';CAS.erro='';casCamPara();$('casok').hidden=true;casUI();$('casmsg').textContent='Ligação desfeita. Nada mais é compartilhado.'})};
+$('cfgcas').addEventListener('toggle',function(){if(this.open)casUI();else casCamPara()});
+document.addEventListener('visibilitychange',function(){if(!st||!st.casal)return;if(document.hidden){casCamPara();casSync(true)}else casSync(false)});
+function renderCasal(){var B=$('cyBox');if(!B||!st)return;B.innerHTML='';var c=st.casal;
+ if(!c){var k0=iCard('Casal','👫');k0.appendChild(el_('p','imsg','Vejam os gastos um do outro. Cada um escolhe o que mostra. Vai tudo criptografado: nem o servidor consegue ler.'));var b0=el_('button','add pri','Ligar com meu par (QR Code)');b0.type='button';b0.onclick=function(){abreCfg(false,'cfgcas')};k0.appendChild(b0);B.appendChild(k0);return}
+ var P=c.par,nm=(P&&P.n)||'Seu par',eu=casResumo(casMeus());
+ var tp=el_('div','cytop');tp.appendChild(el_('small',null,CAS.rod?'Atualizando...':c.sync?'Atualizado '+casQuando(c.sync):'Ainda não atualizou'));var rb=el_('button','linkb','🔄 Atualizar');rb.type='button';rb.disabled=CAS.rod;rb.onclick=function(){casSync(true);renderCasal()};tp.appendChild(rb);B.appendChild(tp);
+ var et=casErroTxt();if(et)B.appendChild(el_('p','idica al',et));
+ if(!P){var k1=iCard(c.saiu?'Ligação desfeita':'Esperando seu par','⏳');k1.appendChild(el_('p','imsg',c.saiu?'Seu par desfez a ligação. Para ligar de novo, desfaça aqui e leiam um QR Code novo.':'O outro celular ainda não leu o seu QR Code. No celular dele(a): ⚙ → Casal → Ler QR Code.'));var b1=el_('button','add','Abrir Casal em ⚙');b1.type='button';b1.onclick=function(){abreCfg(false,'cfgcas')};k1.appendChild(b1);B.appendChild(k1);return}
+ if(P.niv==='pau'){var kp=iCard(nm,'⏸️');kp.appendChild(el_('p','imsg',nm+' pausou o compartilhamento. Você continua mostrando o que escolheu em ⚙ → Casal.'));B.appendChild(kp);return}
+ var k2=iCard('Gastos do mês','👫');
+ var tb=rTab(['','Você',nm],[['Útil',{t:brl(eu.cor.uti),n:1},{t:brl(P.cor.uti),n:1}],['Desnecessário',{t:brl(eu.cor.des),n:1},{t:brl(P.cor.des),n:1}],['Sem categoria',{t:brl(eu.cor.sem),n:1},{t:brl(P.cor.sem),n:1}],['Total',{t:brl(eu.tot),n:1},{t:brl(P.tot),n:1}]]);tb.classList.add('itab');k2.appendChild(tb);
+ iLinha(k2,'Juntos no mês',brl(r2(eu.tot+P.tot)),'cyjun');var mx=Math.max(eu.tot,P.tot);if(mx>0){var br=el_('div','cybar');var a=el_('i','cyeu');a.style.width=Math.round(eu.tot/(eu.tot+P.tot||1)*100)+'%';br.appendChild(a);k2.appendChild(br);var lg=el_('div','cyleg');lg.appendChild(el_('span','cyeu','Você'));lg.appendChild(el_('span','cyela',nm));k2.appendChild(lg)}
+ if(P.m&&P.m!==rotuloMes())k2.appendChild(el_('p','imsg','Os dados de '+nm+' são de '+P.m+'.'));B.appendChild(k2);
+ if(P.cat&&P.cat.length){var k3=iCard('Onde '+nm+' gastou','📊');P.cat.forEach(function(x){iLinha(k3,x[0],brl(x[1]))});B.appendChild(k3)}
+ if(P.niv!=='det'){B.appendChild(el_('p','imsg',nm+' mostra só os totais.'));return}
+ var k4=iCard('Gastos de '+nm,'🧾'),L=(P.it||[]).slice().sort(function(x,y){return(y.d+y.t).localeCompare(x.d+x.t)});
+ if(!L.length)k4.appendChild(el_('p','imsg','Nenhum gasto neste mês ainda.'));
+ var mostra=Math.min(L.length,CAS.todos?300:40),dia='';
+ for(var i=0;i<mostra;i++){var it=L[i];if(it.d!==dia){dia=it.d;k4.appendChild(el_('b',null,dm(it.d)))}var r=el_('div','irow cyit'),s=el_('span');var dt=el_('i','cyd');dt.style.background='var(--'+it.c+')';s.appendChild(dt);s.appendChild(document.createTextNode(it.ds||'Gasto'));var sub=[it.t,it.k,it.pg].filter(Boolean).join(' · ');if(sub)s.appendChild(el_('small',null,' · '+sub));r.appendChild(s);r.appendChild(el_('b',null,brl(it.v)));k4.appendChild(r)}
+ if(L.length>mostra){var bm=el_('button','add','Ver todos ('+L.length+')');bm.type='button';bm.onclick=function(){CAS.todos=true;renderCasal()};k4.appendChild(bm)}
+ B.appendChild(k4)}
 var SB_URL='https://ezivqczibtsqqqzpzcdh.supabase.co',SB_KEY='sb_publishable_YhQFxwQmRruAh7aDATquFQ_sR81kg-Z',NV_IT=310000;
 var nvTm=null,nvRodando=false,nvMudo=false;
 function limpaNuvem(n){if(!n||typeof n!=='object'||!n.on)return{on:false};var ok=/^[a-f0-9]{64}$/.test(n.id)&&typeof n.salt==='string'&&typeof n.k==='string'&&n.k.length>=40&&n.k.length<=64;
