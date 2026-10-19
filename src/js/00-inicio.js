@@ -8,7 +8,7 @@ window.addEventListener('unhandledrejection',function(e){var r=e&&e.reason;var m
 var EMQUADRO=(window.top!==window.self);
 if(EMQUADRO){var ov=document.createElement('div');ov.setAttribute('style','position:fixed;inset:0;z-index:99999;background:#fff;color:#16301f;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;font:16px/1.5 sans-serif');ov.textContent='Por segurança, o app não abre dentro de outra página. Abra direto pelo endereço do site: guilherme3co.github.io/financeiro';document.body.appendChild(ov)}
 var KDF_IT=600000,LOCK_MS=5*60*1000;
-var VERSAO='v1.3';
+var VERSAO='v1.4';
 var PARAMS=(function(){var o={mic:false,txt:'',share:false,aviso:false,convite:''};try{var q=new URLSearchParams(location.search);o.mic=q.get('mic')==='1';o.share=q.get('share')==='1';o.aviso=q.get('aviso')==='1';var cv=String(q.get('convite')||'').toUpperCase().replace(/[^A-Z0-9]/g,'');if(cv.length===11&&cv.indexOf('FIN')===0)cv=cv.slice(3);if(/^[2-9A-HJ-NP-Z]{8}$/.test(cv))o.convite='FIN-'+cv.slice(0,4)+'-'+cv.slice(4);o.txt=[q.get('title'),q.get('text'),q.get('url')].filter(Boolean).join('\n').slice(0,3000);if(o.mic||o.txt||o.share||o.aviso||q.get('convite'))history.replaceState(null,'',location.pathname)}catch(e){}return o})();
 var COR={rec:{n:'Entrada',v:'--rec'},uti:{n:'Útil',v:'--uti'},des:{n:'Desnecessário',v:'--des'},gua:{n:'Guardado',v:'--gua'},sem:{n:'Sem categoria',v:'--sem'}};
 var st=null,uid=null,KEYC=null,users=[],wq=Promise.resolve();

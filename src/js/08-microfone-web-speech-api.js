@@ -2,18 +2,19 @@
 function mkMic(btn,input,hintEl,done){
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 if(!SR){btn.hidden=true;hintEl.textContent='Sem voz neste navegador. Use o 🎤 do teclado ou digite. '+hintEl.textContent;return}
-var rec=null,on=false,erro=false;
+var rec=null,on=false,erro=false,tm=null;
+function solta(){clearTimeout(tm);on=false;btn.classList.remove('on');btn.setAttribute('aria-label',btn.title)}
 btn.onclick=function(){
-if(on){try{rec.stop()}catch(e){}return}
+if(on){try{rec.stop()}catch(e){}setTimeout(function(){if(on){try{rec.abort()}catch(e){}solta()}},1500);return}
 rec=new SR();rec.lang='pt-BR';rec.interimResults=true;rec.continuous=false;rec.maxAlternatives=1;erro=false;
-rec.onstart=function(){on=true;btn.classList.add('on');btn.setAttribute('aria-label','Parar de ouvir');hintEl.textContent='Ouvindo... fale agora.'};
+rec.onstart=function(){on=true;btn.classList.add('on');btn.setAttribute('aria-label','Parar de ouvir');hintEl.textContent='Ouvindo... fale agora.';clearTimeout(tm);tm=setTimeout(function(){if(on){try{rec.stop()}catch(e){}setTimeout(function(){if(on){try{rec.abort()}catch(e){}solta();if(!input.value.trim())hintEl.textContent='Não ouvi nada. Toque no 🎤 e fale de novo.'}},1500)}},15000)};
 rec.onresult=function(e){var t='';for(var i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;input.value=t};
 rec.onerror=function(e){erro=true;
 var m={'not-allowed':'Microfone bloqueado. Libere nas permissões do site.','service-not-allowed':'O microfone está bloqueado. Libere nas permissões do site e tente de novo.','no-speech':'Não ouvi nada. Toque no 🎤 e fale de novo.','audio-capture':'Não encontrei um microfone neste aparelho.','network':'O reconhecimento de voz precisa de internet.'};
 hintEl.textContent=m[e.error]||('Não consegui ouvir ('+e.error+'). Tente de novo.')};
-rec.onend=function(){on=false;btn.classList.remove('on');btn.setAttribute('aria-label',btn.title);
+rec.onend=function(){solta();
 if(input.value.trim()){input.value=falado(input.value);fmtFrase(input);done()}else if(!erro){hintEl.textContent='Não ouvi nada. Toque no 🎤 e fale de novo.'}};
-try{rec.start()}catch(e){on=false;btn.classList.remove('on')}}}
+try{rec.start()}catch(e){solta();hintEl.textContent='Não consegui abrir o microfone. Tente de novo ou digite.'}};return true}
 function voz1(){
   fmtFrase(fr);if(!fr.value.trim())return;var raw=' '+falado(fr.value).toLowerCase()+' ',r=parse(fr.value);
   r.tipo=r.ent?'rec':/\b(guardar|guardado|guardada|poupar|poupado|reservar|reservado)\b/.test(raw)?'gua':/\bdesnecess[aá]ri[oa]\b/.test(raw)?'des':/\s[uú]til\s/.test(raw)?'uti':null;
@@ -27,5 +28,11 @@ function voz1(){
    toast((en?'Entrada: ':'Lançado: ')+it.desc+' · '+brl(it.val)+rotulo(it)+' · '+it.pay+(db?' · “'+db.nome+'” paga':''),it.id,(db||pl)?function(){if(db)dvMarca(db,false);if(pl)cancelaParc(pl.id);save()}:null,qid);return}
   abreNovo(r)}
 mkMic($('mic1'),fr,hint,voz1);
+/* 🎤 sempre à mostra na tela (canto esquerdo): um toque e já escuta */
+var MICB={el:null,tm:null};
+MICB.el={set textContent(t){var b=$('micb');clearTimeout(MICB.tm);b.textContent=t;b.hidden=!t||$('micf').hidden;if(t&&!$('micf').classList.contains('on')&&!/Ouvindo/.test(t))MICB.tm=setTimeout(function(){b.hidden=true},4500)},get textContent(){return $('micb').textContent}};
+var MICF_OK=!!mkMic($('micf'),fr,MICB.el,function(){$('micb').hidden=true;fechaMais();voz1()});
+$('micf').addEventListener('click',function(){fechaMais();if(!$('lanc').hidden)fechaLanc()},true);
+function micfUpd(){var f=$('micf');if(!f)return;f.hidden=!MICF_OK||$('fab').hidden;if(f.hidden)$('micb').hidden=true}
 if(!(window.SpeechRecognition||window.webkitSpeechRecognition))$('digita').click();
 
