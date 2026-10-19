@@ -1,0 +1,8 @@
+/* ---------- botão + e folha de lançamento ---------- */
+function abreLanc(){if(!st)return;fechaMn();fechaMais();$('lanc').hidden=false;atalhos();setTimeout(ocrAquece,400);if(!$('digbox').hidden)setTimeout(function(){try{fr.focus()}catch(e){}},80)}
+function fechaLanc(){if($('lanc').hidden)return;$('lanc').hidden=true;try{fr.blur()}catch(e){}}
+function abreMais(){if(!st)return;fechaMn();var f=$('fab');$('mais').hidden=false;f.classList.add('ab');f.classList.remove('esc');f.setAttribute('aria-expanded','true');f.setAttribute('aria-label','Fechar opções')}
+function fechaMais(){var m=$('mais');if(!m||m.hidden)return;m.hidden=true;var f=$('fab');f.classList.remove('ab');f.setAttribute('aria-expanded','false');f.setAttribute('aria-label','Abrir opções')}
+$('fab').onclick=function(){if($('mais').hidden)abreMais();else fechaMais()};$('mais').onclick=function(e){if(e.target===this||e.target.className==='maisl')fechaMais()};document.addEventListener('keydown',function(e){if(e.key==='Escape')fechaMais()});
+$('ablan').onclick=function(){fechaMais();abreLanc()};$('abcas').onclick=function(){vaiPagina(5)};(function(){var y0=window.scrollY;window.addEventListener('scroll',function(){var y=window.scrollY;$('fab').classList.toggle('esc',y>y0+4&&y>120);if(y<y0-4||y<120)$('fab').classList.remove('esc');y0=y},{passive:true})})();$('abinv').onclick=function(){vaiPagina(1,'inv')};$('abmen').onclick=function(){vaiPagina(2)};$('abhis').onclick=function(){vaiPagina(3)};$('abint').onclick=function(){vaiPagina(4)};$('lancx').onclick=fechaLanc;$('lanc').onclick=function(e){if(e.target===this)fechaLanc()};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!$('lanc').hidden)fechaLanc()});

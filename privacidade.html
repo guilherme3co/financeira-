@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; font-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer"><title>Privacidade · Minhas Finanças</title>
+<style>
+@font-face{font-family:'DM Sans';src:url(fonts/dm-sans.woff) format('woff');font-weight:100 1000;font-display:swap}
+:root{--bg:#F1F3EE;--card:#fff;--ink:#15251D;--mute:#68766E;--line:#DDE3DC;--pos:#1F8A55}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1814;--card:#18251E;--ink:#EDF2EC;--mute:#93A399;--line:#263830;--pos:#3DBB7A}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 'DM Sans',system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:24px 16px 48px}
+h1{font-size:26px;line-height:1.2;margin:8px 0 4px}h2{font-size:18px;margin:28px 0 6px}
+.sub{color:var(--mute);margin:0 0 20px;font-size:14px}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px 12px;margin:12px 0}
+li{margin:4px 0}a{color:var(--pos)}.volta{display:inline-block;margin-bottom:8px;font-weight:700;text-decoration:none}
+</style></head><body><main>
+<a class="volta" href="./">← Voltar para o app</a>
+<h1>Política de privacidade</h1>
+<p class="sub">Atualizada em 19/10/2026 · App Minhas Finanças</p>
+<section><h2>Resumo</h2><ul>
+<li>Tudo o que você lança fica <b>no seu celular</b>, criptografado com a sua senha. Ninguém mais consegue ler, nem o administrador.</li>
+<li>O servidor só recebe o mínimo para o app funcionar, e o que é pessoal vai <b>criptografado</b>.</li>
+<li>Não vendemos dados, não temos anúncios e não usamos rastreadores.</li></ul></section>
+<section><h2>1. Dados guardados no seu celular</h2>
+<p>Lançamentos, saldos, contas, dívidas, guardados, metas, categorias e conversas com o Mentor ficam no armazenamento do navegador do seu celular, protegidos com criptografia AES-256 derivada da sua senha. Sem a senha (ou o código de recuperação), esses dados não podem ser abertos por ninguém.</p></section>
+<section><h2>2. Dados enviados ao servidor</h2>
+<p>Usamos o Supabase (servidor no Brasil, São Paulo) apenas para:</p><ul>
+<li><b>Controle de acesso</b> (obrigatório): nome da conta, data de entrada, data do último acesso, situação (liberado, bloqueado, vencido) e o código de convite usado. Serve para o administrador liberar ou bloquear o uso do app.</li>
+<li><b>Backup na nuvem</b> (opcional, você liga): uma cópia dos seus dados <b>criptografada com a senha do backup</b>. O servidor guarda até 7 versões (uma por dia da semana) e não consegue lê-las.</li>
+<li><b>Casal</b> (opcional): os gastos que você escolher mostrar, <b>criptografados de ponta a ponta</b> com o código do casal. Só o outro celular ligado consegue ler.</li>
+<li><b>Avisos de contas</b> (opcional): as <b>datas</b> de vencimento e o endereço técnico de notificação do seu navegador. Nunca nomes nem valores.</li></ul></section>
+<section><h2>3. Outros serviços usados</h2><ul>
+<li><b>Fotos e PDFs de comprovantes</b> são lidos no próprio celular. A imagem não é enviada a ninguém.</li>
+<li><b>Lançar falando</b> usa o reconhecimento de voz do navegador. Nesse caso, o Google (Android/Chrome) ou a Apple (iPhone) podem processar o áudio, conforme as regras deles.</li>
+<li><b>Taxas (CDI, Selic, IPCA)</b> são consultadas no Banco Central do Brasil. Nenhum dado seu é enviado.</li>
+<li><b>Notificações</b> passam pelo serviço de notificação do Google ou da Apple, só com o texto genérico do aviso.</li>
+<li>O site é hospedado no GitHub Pages, que pode registrar dados técnicos de acesso (como endereço IP), conforme as regras do GitHub.</li></ul></section>
+<section><h2>4. Seus direitos (LGPD)</h2>
+<p>Você pode, a qualquer momento:</p><ul>
+<li><b>Ver e corrigir</b> seus dados no próprio app.</li>
+<li><b>Apagar tudo do celular</b>: ⚙ → Conta → Excluir minha conta.</li>
+<li><b>Apagar o backup</b>: ⚙ → Segurança e backup → Desligar e apagar da nuvem.</li>
+<li><b>Parar o compartilhamento</b>: ⚙ → Casal → Desfazer casal. <b>Parar os avisos</b>: ⚙ → Avisos.</li>
+<li><b>Pedir a exclusão do registro de acesso</b> ou tirar dúvidas: fale com o administrador que enviou o seu convite.</li></ul></section>
+<section><h2>5. Por quanto tempo</h2>
+<p>Os dados do celular ficam até você apagar. O acesso vence depois de 30 dias sem usar o app. O backup na nuvem fica até você desligar e apagar. Dados do casal e dos avisos são substituídos a cada atualização e deixam de ser usados quando você desfaz ou desliga.</p></section>
+<section><h2>6. Segurança</h2>
+<p>Criptografia no celular e no backup, conexão segura (HTTPS), bloqueio automático por inatividade, entrada com digital/Face ID opcional e servidor sem acesso direto às tabelas. Mesmo assim, nenhum sistema é 100%% seguro: guarde bem sua senha e seu código de recuperação.</p></section>
+<section><h2>7. Mudanças</h2><p>Se esta política mudar, a data no topo é atualizada e o app avisa nas novidades da versão.</p></section>
+</main></body></html>

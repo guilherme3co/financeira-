@@ -1,4 +1,7 @@
-# Teste diário do Minhas Finanças.
+# Teste diário e publicação do Minhas Finanças.
+# - Todo dia às 7h: testa o app, confere o site no ar e mantém o Supabase acordado.
+# - A cada mudança enviada: testa primeiro e só publica se tudo passar
+#   (quando o GitHub Pages estiver em "Source: GitHub Actions").
 # Se algo falhar, o GitHub manda um e-mail para o dono do repositório.
 name: Teste diário
 
@@ -7,11 +10,12 @@ on:
     - cron: '0 10 * * *'   # todo dia às 7h (horário de Fortaleza)
   push:
     branches: [main]
-    paths: ['index.html', 'sw.js', 'testes/**', '.github/workflows/**']
   workflow_dispatch:       # botão "Run workflow" para rodar na hora
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: teste-diario
@@ -23,6 +27,9 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
+
+      - name: Conferir se index.html foi gerado a partir de src/
+        run: python3 build.py --check
 
       - uses: actions/setup-node@v5
         with:
@@ -37,16 +44,8 @@ jobs:
         run: node testes/diario.js
 
       - name: Conferir se o site no ar está na mesma versão
-        run: |
-          v=$(grep -o 'name="app-versao" content="[^"]*"' index.html | head -1)
-          for i in $(seq 1 20); do
-            code=$(curl -sSL -o site.html -w '%{http_code}' -H 'Cache-Control: no-cache' "https://guilherme3co.github.io/financeiro/index.html?t=$(date +%s)" || echo erro)
-            no_ar=$(grep -o 'name="app-versao" content="[^"]*"' site.html 2>/dev/null | head -1 || true)
-            if [ "$no_ar" = "$v" ]; then echo "Site no ar: $v"; exit 0; fi
-            if [ "$i" = "1" ] || [ "$i" = "20" ]; then echo "::warning::Tentativa $i: HTTP $code, no ar [$no_ar], esperado [$v], tamanho $(wc -c < site.html 2>/dev/null)"; fi
-            sleep 30
-          done
-          exit 1
+        if: github.event_name == 'schedule'
+        run: bash testes/site-no-ar.sh
 
       - name: Manter o Supabase acordado (e conferir se responde)
         env:
@@ -66,3 +65,43 @@ jobs:
             git add testes/ultimo-teste.txt
             git commit -m "Teste diário: manter ligado [skip ci]" && git push
           fi
+
+  publicar:
+    needs: testar
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment:
+      name: github-pages
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Ver como o site é publicado
+        id: modo
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          m=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .build_type 2>/dev/null || echo desconhecido)
+          echo "modo=$m" >> "$GITHUB_OUTPUT"
+          if [ "$m" = "workflow" ]; then echo "Publicação só depois dos testes: ligada ✅";
+          else echo "::notice::O site ainda publica direto a cada envio. Para publicar só depois dos testes: Settings → Pages → Source → GitHub Actions."; fi
+
+      - name: Preparar arquivos do site
+        if: steps.modo.outputs.modo == 'workflow'
+        run: |
+          mkdir -p _site
+          cp -r index.html sw.js manifest.json icon.svg icon-192.png privacidade.html termos.html fonts ocr pdf qr _site/
+
+      - uses: actions/configure-pages@v5
+        if: steps.modo.outputs.modo == 'workflow'
+
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.modo.outputs.modo == 'workflow'
+        with:
+          path: _site
+
+      - uses: actions/deploy-pages@v4
+        if: steps.modo.outputs.modo == 'workflow'
+
+      - name: Conferir se o site no ar está na versão nova
+        run: bash testes/site-no-ar.sh

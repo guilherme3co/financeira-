@@ -1,0 +1,7 @@
+/* ---------- caixa de erros ---------- */
+function errUI(){var b=$('errl');if(!b)return;b.innerHTML='';$('errn').textContent=ERROS.length?'('+ERROS.length+')':'';if(!ERROS.length){b.appendChild(el_('p','msg','Nenhum erro registrado. 👍'));$('errcp').hidden=$('errlimpa').hidden=true;return}
+ $('errcp').hidden=$('errlimpa').hidden=false;ERROS.forEach(function(x){var p=el_('p','errit');p.appendChild(el_('b',null,x.q.replace('T',' ')+' · '+x.v+(x.n>1?' · '+x.n+'x':'')));p.appendChild(document.createElement('br'));p.appendChild(document.createTextNode(x.m+(x.o?' ('+x.o+')':'')));b.appendChild(p)})}
+function errTexto(){return 'Erros do app Minhas Finanças '+VERSAO+' ('+navigator.userAgent.replace(/[^\w .;:()\/-]/g,'').slice(0,140)+'):\n'+ERROS.map(function(x){return '- '+x.q+' '+x.v+(x.n>1?' ['+x.n+'x]':'')+': '+x.m+(x.o?' @ '+x.o:'')}).join('\n')}
+$('errcp').onclick=function(){var b=this,t=errTexto(),ok=function(){b.textContent='Copiado! Cole na conversa com o Claude';setTimeout(function(){b.textContent='Copiar para mandar ao Claude'},2500)};if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,function(){b.textContent='Não consegui copiar'});else b.textContent='Não consegui copiar'};
+$('errlimpa').onclick=function(){ERROS=[];try{localStorage.removeItem('financas-erros')}catch(e){}errUI();checkup()};
+$('errbox').addEventListener('toggle',function(){if(this.open)errUI()});

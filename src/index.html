@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="app-versao" content="v1.3">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2mIuvmWd42KYbuBI6RzSqdmKPcouCtnYpSH7JdPOXpA=' 'sha256-kKaYbe5Y71dyZxnCPWUZMLEetuuiaifY48HeVES9iKA='; style-src 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob:; connect-src 'self' https://api.bcb.gov.br https://ezivqczibtsqqqzpzcdh.supabase.co; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Minhas Finanças</title>
+<meta name="theme-color" content="#1F8A55">
+<meta name="description" content="Controle de gastos por voz, com velocímetro de saldo.">
+<script>try{var t_=localStorage.getItem('financas-tema');if(t_==='light'||t_==='dark')document.documentElement.setAttribute('data-theme',t_)}catch(e){}</script>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Finanças">
+<style>/*@@CSS@@*/</style>
+</head>
+<body>
+<div class="top" id="top" hidden>
+<button type="button" class="eng" id="topvolta" hidden aria-label="Voltar" title="Voltar">←</button>
+<nav class="dots" aria-label="Navegação principal" hidden>
+<button type="button" id="t1" aria-label="Principal" aria-selected="true"><i></i></button>
+<button type="button" id="tp" aria-label="Planejamento" aria-selected="false"><i></i></button>
+<button type="button" id="tk" aria-label="Mentor" aria-selected="false"><i></i></button>
+<button type="button" id="t2" aria-label="Histórico" aria-selected="false"><i></i></button>
+</nav>
+<span id="ptit">Principal</span>
+<button type="button" class="eng" id="eng" aria-label="Configurações" title="Configurações" aria-expanded="false">⚙</button>
+</div>
+
+<div class="aviso" id="aviso" hidden role="status"><span id="avmsg"></span><button type="button" class="add pri" id="av1"></button><button type="button" class="add" id="av2">Depois</button></div>
+<div id="pages">
+<section class="pg" id="pgc"><main>
+<section class="cfg" id="cfg" aria-label="Configurações">
+<button type="button" class="add" id="cfgvolta" style="margin:0 0 14px">← Voltar</button>
+<details class="cfgs" id="cfgdin"><summary><span>💰</span><div>Meu dinheiro<small>Saldo, limite, contas, parcelas e CDI</small></div></summary><div class="cfgb">
+<h2>Saldo disponível</h2>
+<p class="msg" style="margin-top:0">Digite o saldo real da conta. O app ajusta o saldo inicial.</p>
+<label for="disp">Disponível agora (R$)</label>
+<input id="disp" inputmode="decimal" placeholder="0,00" autocomplete="off">
+<button type="button" class="add pri" id="dispok">Atualizar disponível</button>
+<p class="msg" id="dispmsg"></p>
+<label for="limv">Limite do crédito agora (R$)</label>
+<input id="limv" inputmode="decimal" placeholder="0,00" autocomplete="off">
+<button type="button" class="add" id="limok">Atualizar limite</button>
+<p class="msg" id="limmsg"></p>
+<hr>
+<h2>Contas e saldo do mês</h2>
+<p class="msg" style="margin-top:0">Débito e limite do crédito de cada conta no começo do mês.</p>
+<div id="contas"></div>
+<button type="button" class="add" id="addc">+ Adicionar conta</button>
+<button type="button" class="add pri" id="iniok">Salvar</button>
+<p class="msg" id="inimsg"></p>
+<hr>
+<h2>Compras parceladas</h2>
+<p class="msg" style="margin-top:0">Diga “tênis 300 em 3x no crédito”. A parcela de cada mês sai do Limite sozinha.</p>
+<div id="parcl"></div>
+<hr>
+<h2>Rendimento (CDI)</h2>
+<p class="msg" style="margin-top:0">Usado para calcular o rendimento dos lugares em Guardados.</p>
+<label class="chk"><input type="checkbox" id="cdion"> Buscar o CDI no Banco Central automaticamente</label>
+<p class="msg">Só a taxa do CDI é consultada. Nenhum dado seu é enviado.</p>
+<label for="cdian">CDI ao ano, em % (usado se não houver conexão)</label>
+<input id="cdian" inputmode="decimal" placeholder="Ex.: 14,65" autocomplete="off">
+<button type="button" class="add pri" id="cdiok">Salvar</button>
+<button type="button" class="add" id="cdiatu">Atualizar agora</button>
+<p class="msg" id="cdimsg" role="status"></p>
+</div></details>
+<details class="cfgs" id="cfglan"><summary><span>✍️</span><div>Lançamentos<small>Microfone, comprovante, memória e categorias</small></div></summary><div class="cfgb">
+<label class="chk"><input type="checkbox" id="abremic"> Abrir o app já ouvindo o microfone</label>
+<label class="chk"><input type="checkbox" id="autocomp"> Lançar sozinho ao ler comprovante</label>
+<p class="msg">Gasto que o app já conhece entra sozinho, com aviso para desfazer. No Android, segure o ícone do app e toque em “Falar um lançamento”.</p>
+<hr>
+<h2>Memória de lançamentos</h2>
+<p class="msg">O app lembra como você classificou cada lugar (Útil ou Desnecessário e a categoria) e repete sozinho nos próximos lançamentos. Mude ou apague aqui.</p>
+<div id="memlist"></div>
+<label for="catn">Nova categoria</label><div class="row2"><div><input id="catn" maxlength="24" autocomplete="off" placeholder="Ex.: Pet, Academia"></div><div><button type="button" class="add" id="catadd" style="margin:0">Criar</button></div></div>
+<p class="msg" id="catmsg" role="status"></p>
+</div></details>
+<details class="cfgs" id="cfgseg"><summary><span>🔒</span><div>Segurança e backup<small>Checkup, digital e backup na nuvem</small></div></summary><div class="cfgb">
+<h2 style="margin-top:0">Checkup de segurança · <span id="chkres"></span></h2><div id="chkl"></div>
+<hr>
+<label class="chk"><input type="checkbox" id="biochk"> Entrar com a digital / Face ID</label>
+<p class="msg" id="biocfg" role="status"></p>
+<hr>
+<h2>Backup na nuvem (automático)</h2>
+<div id="nvoff"><p class="msg">Uma cópia criptografada vai sozinha para a nuvem depois de cada mudança. Só abre com a senha do backup.</p>
+<label for="nvpw">Crie a senha do backup na nuvem</label><input id="nvpw" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+<label for="nvpw2">Repita a senha</label><input id="nvpw2" type="password" autocomplete="new-password">
+<button type="button" class="add pri" id="nvliga">Ligar backup na nuvem</button></div>
+<div id="nvon" hidden><p class="msg" id="nvst"></p><button type="button" class="add" id="nvagora">Enviar agora</button><button type="button" class="add perigo" id="nvdesl">Desligar e apagar da nuvem</button></div>
+<details style="margin-top:10px"><summary class="msg" style="cursor:pointer">Restaurar da nuvem</summary><p class="msg">Usa o nome desta conta e a senha do backup na nuvem. Substitui os dados deste aparelho.</p><input id="nvrpw" type="password" autocomplete="current-password" placeholder="senha do backup na nuvem"><button type="button" class="add" id="nvrest">Restaurar</button><button type="button" class="add" id="nvvers">Ver versões dos últimos 7 dias</button><div id="nvvl"></div></details>
+<p class="msg" id="nvmsg" role="status"></p>
+<details class="cfgsub" id="cfgarq"><summary>Mais opções: backup por arquivo</summary>
+<p class="msg">Backup criptografado com uma senha sua. Sem ela, o arquivo não abre.</p>
+<label for="bkpw">Senha do backup (para salvar e para importar)</label>
+<input id="bkpw" type="password" autocomplete="new-password" placeholder="mínimo 8 caracteres">
+<button type="button" class="add" id="expShare">Compartilhar backup (WhatsApp, Drive...)</button>
+<button type="button" class="add" id="exp">Salvar backup no aparelho (.json)</button>
+<button type="button" class="add" id="impb">Importar backup</button>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+<p class="msg" id="bkmsg"></p>
+</details>
+</div></details>
+<details class="cfgs" id="cfgavi"><summary><span>🔔</span><div>Avisos<small>Contas a vencer, mesmo com o app fechado</small></div></summary><div class="cfgb">
+<label class="chk"><input type="checkbox" id="avchk"> Avisar das contas a vencer</label>
+<p class="msg" id="avimsg" role="status"></p>
+<p class="msg">Avisa 3 dias antes, na véspera e no dia, às 9h. Usa o dia do vencimento das contas (Investir → Planejamento). O servidor só recebe as datas: nunca nomes nem valores.</p>
+</div></details>
+<details class="cfgs" id="cfgcas"><summary><span>👫</span><div>Casal<small id="casres">Ver os gastos um do outro</small></div></summary><div class="cfgb">
+<div id="casoff"><p class="msg" style="margin-top:0">Um celular mostra o QR Code e o outro lê com a câmera. Só os gastos são mostrados. Entradas, salário, guardados e dívidas ficam só com você.</p><button type="button" class="add pri" id="casmos">📱 Mostrar meu QR Code</button><button type="button" class="add" id="casler">📷 Ler o QR Code do outro celular</button></div>
+<div id="casqr" hidden><canvas id="qcv" width="10" height="10" aria-label="QR Code do casal"></canvas><p class="msg">Ou digite no outro celular:<br><b id="cascod"></b></p><button type="button" class="add" id="casqx">Fechar QR Code</button></div>
+<div id="cascam" hidden><video id="qvid" playsinline muted hidden></video><p class="msg" id="cascmsg" role="status"></p><label for="qcode">Ou digite o código</label><div class="campo"><input id="qcode" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX" maxlength="40"><button type="button" class="add pri" id="casdig" style="width:auto;margin:0;padding:0 16px">OK</button></div><button type="button" class="add" id="cascx">Cancelar</button></div>
+<div id="casok" hidden><p class="msg"><b>✅ Pronto! Celulares ligados.</b><br>Agora escolha o que você mostra.</p></div>
+<div id="cason" hidden><p class="msg" id="casst" style="margin-top:0"></p><label for="casnome">Seu nome no casal</label><input id="casnome" maxlength="20" autocomplete="off" placeholder="Ex.: Gui"><label>O que você mostra</label><div class="temas" id="casniv" role="radiogroup" aria-label="O que você mostra"><button type="button" role="radio" data-n="det">Detalhado</button><button type="button" role="radio" data-n="tot">Só totais</button><button type="button" role="radio" data-n="pau">Pausar</button></div><p class="msg" id="casnivx"></p><button type="button" class="add pri" id="casver">👫 Ver gastos do casal</button><button type="button" class="add" id="casmos2">Mostrar meu QR Code de novo</button><button type="button" class="add" id="casler2">📷 Ler o QR Code do outro celular</button><p class="msg">Criptografado de ponta a ponta: nem o servidor consegue ler. Atualiza quando o app é aberto.</p><button type="button" class="add perigo" id="cassai">Desfazer casal</button></div>
+<p class="msg" id="casmsg" role="status"></p>
+</div></details>
+<details class="cfgs" id="cfgadm" hidden><summary><span>🛡️</span><div>Administrador<small>Gerenciar convites e quem usa o app</small></div></summary><div class="cfgb">
+<button type="button" class="add pri" id="admgera">➕ Gerar convite</button>
+<div id="admnovo" hidden><p class="admcod" id="admcod"></p><p class="msg" id="admvence" style="text-align:center"></p><div class="row2"><div><button type="button" class="add" id="admcp" style="margin:0">Copiar</button></div><div><button type="button" class="add" id="admsh" style="margin:0">Enviar</button></div></div></div>
+<p class="msg" id="admmsg" role="status"></p>
+<p class="msg" id="admesp"></p>
+<h2>Quem usa o app</h2><div id="admus"></div>
+<h2>Convites em aberto</h2><div id="admcv"></div>
+<button type="button" class="linkb" id="admatu">🔄 Atualizar</button>
+<p class="msg">Bloquear: a pessoa não abre mais o app (vale na próxima vez que abrir com internet). Remover: precisa de um código novo para voltar. Quem fica 30 dias sem usar precisa de código novo. Você nunca vê os gastos de ninguém.</p>
+</div></details>
+<details class="cfgs" id="cfgapa"><summary><span>🎨</span><div>Aparência<small>Tema claro ou escuro</small></div></summary><div class="cfgb">
+<div class="temas" id="temas" role="radiogroup" aria-label="Tema"><button type="button" data-t="auto" role="radio">Automático</button><button type="button" data-t="light" role="radio">☀️ Claro</button><button type="button" data-t="dark" role="radio">🌙 Escuro</button></div>
+<p class="msg">Automático segue o tema do celular.</p>
+</div></details>
+<details class="cfgs" id="cfgcon"><summary><span>👤</span><div>Conta<small id="quem"></small></div></summary><div class="cfgb">
+<details class="cfgsub" id="trocapw"><summary>Trocar a senha do app</summary><label for="pwa">Senha atual</label><input id="pwa" type="password" autocomplete="current-password"><label for="pwn">Nova senha</label><input id="pwn" type="password" autocomplete="new-password" placeholder="8+ caracteres, letras e números"><label for="pwn2">Repita a nova senha</label><input id="pwn2" type="password" autocomplete="new-password"><button type="button" class="add pri" id="pwok">Trocar senha</button><p class="msg" id="pwmsg" role="status"></p></details>
+<details class="cfgsub" id="recbox"><summary>Código de recuperação <span id="recst"></span></summary><p class="msg" id="recx"></p><label for="recpw">Senha do app</label><input id="recpw" type="password" autocomplete="current-password"><button type="button" class="add" id="recger">Gerar código de recuperação</button><p class="msg" id="recm" role="status"></p></details>
+<details class="cfgsub" id="admatv"><summary>Ativar administrador</summary><label for="admac">Código de ativação</label><input id="admac" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ADM-XXXX-XXXX-XXXX" maxlength="30"><button type="button" class="add" id="admacok">Ativar</button><p class="msg" id="admacm" role="status"></p></details>
+<details class="cfgsub" id="errbox"><summary>Erros do app <span id="errn"></span></summary><div id="errl"></div><button type="button" class="add" id="errcp" hidden>Copiar para mandar ao Claude</button><button type="button" class="add" id="errlimpa" hidden>Limpar</button><p class="msg">Guarda só a mensagem técnica, sem valores. Se algo der errado, copie e mande ao Claude.</p></details>
+<button type="button" class="add" id="novab">Novidades desta versão</button>
+<button type="button" class="add" id="rever">Rever o tutorial</button>
+<p class="msg">O mês fecha sozinho no dia 1: o resumo vai para o Histórico e o saldo passa para o mês novo.</p>
+<button type="button" class="add" id="fecha" hidden>Fechar o mês anterior agora</button>
+<button type="button" class="add" id="reabre" hidden>Desfazer o último fechamento</button>
+<p class="msg" id="fmsg"></p>
+<button type="button" class="add" id="sair">Sair</button>
+<button type="button" class="add perigo" id="zera">Apagar meus dados e recomeçar</button>
+<button type="button" class="add perigo" id="delc">Excluir minha conta</button>
+</div></details>
+<p class="ver" id="ver"></p>
+<p class="ver"><a href="privacidade.html" target="_blank" rel="noopener">Privacidade</a> · <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a></p>
+</section>
+</main></section>
+<section class="pg" id="pgp"><main>
+<div class="planv" id="gaugePlan"></div>
+<section class="cfg" aria-label="Editar salário e dívidas">
+<h2>Editar salário e dívidas</h2>
+<p class="msg" style="margin-top:0">Informe salário e dívidas. O app mostra o que sobra e quanto guardar. Quitou? Toque no ×.</p>
+<label for="sal">Salário do mês (R$)</label>
+<input id="sal" inputmode="decimal" placeholder="1.850,00" autocomplete="off">
+<div id="dividas"></div>
+<button type="button" class="add" id="addd">+ Adicionar dívida fixa</button>
+<button type="button" class="add" id="addp">+ Adicionar dívida parcelada</button>
+<p class="msg">Parcelada: informe o total e as parcelas. Marque a do mês como paga e a próxima entra no mês seguinte.</p>
+<button type="button" class="add pri" id="divok">Salvar planejamento</button>
+<p class="msg" id="divmsg"></p>
+</section>
+</main></section>
+<!-- ============ GASTOS ============ -->
+<section class="pg" id="pg1">
+<main>
+<section class="vencw" id="venc" hidden aria-label="Contas a vencer"></section>
+
+
+<div class="duo summary-grid">
+<div><span class="dl">Entradas</span><p class="saldo" id="entradasTotal" style="color:var(--pos)">R$ 0,00</p></div>
+<div><span class="dl">Gastos</span><p class="saldo gasto" id="gasto">R$ 0,00</p></div>
+</div>
+<span id="guardadoTotal" hidden></span>
+<section class="gauge" id="gaugeCard" aria-label="Painel financeiro: deslize ou use as setas para alternar entre disponível e guardado">
+<div class="gauge-viewport" id="gaugeViewport">
+  <div class="gauge-slide active" data-gslide="0" aria-label="Disponível">
+    <div class="ringbox"><svg id="ring" viewBox="0 0 200 200" role="img" aria-label="Anel: verde é o disponível, vermelho os gastos"></svg><div class="ringc"><span class="dl">Disponível</span><p class="saldo" id="saldo">R$ 0,00</p><span class="lim" id="limc" hidden></span></div></div>
+    <p class="rleg"><span><i style="background:var(--pos)"></i>Disponível</span><span><i style="background:var(--neg)"></i>Gastos</span><button type="button" class="linkb" id="fatbtn" hidden>Pagar fatura</button></p>
+  </div>
+  <div class="gauge-slide" data-gslide="1" aria-label="Guardado" id="gaugeSaved"><div class="gsimp"><svg class="porco" aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4.6" r="2.4"/><path d="M8.2 13.6c1-3 4.5-5 9-5 3.5 0 6.4 1.2 8 3.3l2.6-.3-.6 3.6.9 1.2v2.6l-1.9.6c-.6 1.3-1.6 2.4-2.9 3.2v3.3h-3.2l-.7-2.1c-1.4.3-3 .3-4.5 0l-.7 2.1h-3.2v-3.4c-2.2-1.4-3.3-3.4-3.3-5.6 0-.5 0-1 .1-1.5"/><path d="M8.2 13.6c-1.4.2-2.9-.6-3-2.2"/><path d="M19.6 8.9l2-2.7 1.3 3.5"/><path d="M13.6 12.2h5.2" stroke-width="1.6"/><circle cx="22.2" cy="14.4" r=".9" fill="currentColor" stroke="none"/></svg><span class="dl">Guardado</span><p class="saldo" id="gsv">R$ 0,00</p><p class="sub" id="gss"></p><button type="button" class="linkb" id="gsver">Ver guardados e investir ›</button></div></div>
+</div>
+<div class="gauge-nav" aria-label="Mudar painel">
+  <button type="button" id="gPrev" aria-label="Painel anterior" title="Painel anterior">‹</button>
+  <span class="gauge-name" id="gaugeName">Visão geral</span>
+  <button type="button" id="gNext" aria-label="Próximo painel" title="Próximo painel">›</button>
+</div>
+<div class="gauge-dots" aria-hidden="true"><i class="active"></i><i></i></div>
+</section>
+
+<p class="prev" id="prev" hidden></p>
+<section class="ult" id="ultimos"><div class="ulth"><h2>Últimos lançamentos</h2><button type="button" class="linkb" id="ultver">Ver todos</button></div><div id="ultl"></div></section>
+<details class="cfgs rendd" id="rendd" open><summary><span>📈</span><div>Rendimentos<small>Quanto seus guardados rendem por dia</small></div></summary><div class="cfgb"><section class="rend" id="rendBox" aria-label="Rendimentos"></section></div></details>
+</main>
+</section>
+
+<!-- ============ GUARDADOS ============ -->
+<section class="pg" id="pg3">
+<main>
+<h1>Guardados</h1>
+<div class="gcard"><svg class="porco" aria-hidden="true" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="4.6" r="2.4"/><path d="M8.2 13.6c1-3 4.5-5 9-5 3.5 0 6.4 1.2 8 3.3l2.6-.3-.6 3.6.9 1.2v2.6l-1.9.6c-.6 1.3-1.6 2.4-2.9 3.2v3.3h-3.2l-.7-2.1c-1.4.3-3 .3-4.5 0l-.7 2.1h-3.2v-3.4c-2.2-1.4-3.3-3.4-3.3-5.6 0-.5 0-1 .1-1.5"/><path d="M8.2 13.6c-1.4.2-2.9-.6-3-2.2"/><path d="M19.6 8.9l2-2.7 1.3 3.5"/><path d="M13.6 12.2h5.2" stroke-width="1.6"/><circle cx="22.2" cy="14.4" r=".9" fill="currentColor" stroke="none"/></svg><span class="dl">Total guardado</span><p class="saldo" id="gtot">R$ 0,00</p><p class="sub" id="gsub" style="margin-bottom:0"></p></div>
+<p class="hint">Guardado é separado do Disponível.</p>
+<h2>Onde está</h2>
+<div id="gplaces"></div>
+<div id="grend"></div>
+<h2>Objetivos</h2>
+<div id="gobjs"></div>
+<button type="button" class="add" id="gobjnew">+ Novo objetivo</button>
+<div id="gobjform" hidden><label for="gon">Nome</label><input id="gon" autocomplete="off" placeholder="Ex.: Reserva, Viagem"><div class="row2"><div><label for="gom">Meta (R$)</label><input id="gom" inputmode="decimal" autocomplete="off" placeholder="0,00"></div><div><label for="goi">Já tenho (R$)</label><input id="goi" inputmode="decimal" autocomplete="off" placeholder="0,00"></div></div><label for="gop">Prazo (opcional)</label><input id="gop" type="date"><button type="button" class="add pri" id="gook">Salvar objetivo</button><p class="msg" id="gomsg"></p></div>
+<h2>Valores guardados</h2>
+<div class="gadj"><label for="gnov">Ajustar total guardado (R$)</label><div class="gadjr"><input id="gnov" inputmode="decimal" placeholder="0,00" autocomplete="off"><button type="button" class="add pri" id="gnovok">Ajustar</button></div><p class="msg" id="gmsg"></p></div>
+<div id="lista3"></div>
+</main>
+</section>
+
+<!-- ============ CONSULTORIA ============ -->
+<section class="pg" id="pgk">
+<main>
+<div class="mencard"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><div><h2 style="margin:0">Seu mentor</h2><p class="sub" style="margin:2px 0 0">Converse, tire dúvidas e receba um plano para sair das dívidas.</p></div></div>
+<button type="button" class="add pri" id="menab">💬 Conversar com o mentor<span class="mnovo" id="menn" hidden>novo</span></button>
+<p class="sub" style="margin-top:14px">A nota do mês, a reserva e o limite de desnecessários ficam em 🧠 Inteligência.</p>
+</main>
+</section>
+
+<!-- ============ INVESTIR ============ -->
+<section class="pg" id="pgi">
+<main>
+<div class="itabs" id="itabs" role="tablist"><button type="button" role="tab" data-it="inv" aria-selected="true">📈 Investir</button><button type="button" role="tab" data-it="pla" aria-selected="false">🗓️ Planejamento</button><button type="button" role="tab" data-it="gua" aria-selected="false">💰 Guardados</button></div>
+<div id="itInv"><div id="invBox"></div></div>
+<div id="itPla" hidden></div>
+<div id="itGua" hidden></div>
+</main>
+</section>
+
+<!-- ============ INTELIGÊNCIA ============ -->
+<section class="pg" id="pgy"><main><div id="cyBox"></div></main></section>
+<section class="pg" id="pgx">
+<main>
+<details class="cfgs consd" id="consd"><summary><span>📊</span><div>Nota do mês<small id="consres">Nota, dívidas, reserva e limite de desnecessários</small></div></summary><div class="cfgb"><div id="consBox"></div></div></details>
+<div id="xBox"></div>
+</main>
+</section>
+
+<!-- ============ HISTÓRICO ============ -->
+<section class="pg" id="pg4">
+<main>
+<h2 style="margin-top:4px">Histórico completo</h2>
+<p class="sub">Entradas, gastos e valores guardados em uma única lista.</p>
+<button type="button" class="add pri" id="relab">📄 Relatório do mês (PDF)</button>
+<input id="hbusca" class="hbusca" type="search" placeholder="🔎 Buscar: uber, mercado, pix..." autocomplete="off" enterkeyhint="search" aria-label="Buscar no histórico"><p class="hbres" id="hbres" hidden role="status"></p>
+<section class="cal" id="cal" aria-label="Calendário do mês"></section>
+<div class="hcats" id="histcats" hidden></div>
+<div id="listaHist"></div>
+</main>
+</section>
+
+<!-- ============ RELATÓRIO ============ -->
+<section class="pg" id="pgr">
+<main class="rel">
+<div class="relbar">
+<button type="button" class="add" id="relvolta">← Voltar</button>
+<label for="relmes">Mês do relatório</label>
+<select id="relmes"></select>
+<button type="button" class="add pri" id="relpdf">Baixar PDF</button>
+<p class="msg">Toque em Baixar PDF e escolha “Salvar como PDF”.</p>
+</div>
+<div id="relDoc"></div>
+</main>
+</section>
+
+<!-- ============ LOGIN ============ -->
+<section class="pg" id="pga">
+<main>
+<h1>Minhas Finanças</h1>
+<p class="saldo" style="font-size:30px;margin-bottom:12px" id="atit">Entrar</p>
+<div class="iostip" id="uios" hidden>📱 <b>No iPhone, use pelo ícone.</b> Toque em Compartilhar → “Adicionar à Tela de Início” e abra o app por lá. O que for criado aqui no navegador fica só no navegador.<span id="uiosc"></span></div>
+<section class="form" id="uform">
+<label for="un" style="margin-top:0">Nome</label>
+<input id="un" autocomplete="username" autocapitalize="words" placeholder="Seu nome">
+<label for="up">Senha</label>
+<input id="up" type="password" autocomplete="current-password" placeholder="Pelo menos 4 caracteres">
+<div id="ucw" hidden><label for="up2">Repita a senha</label><input id="up2" type="password" autocomplete="new-password"><label for="ucod">Código de convite</label><input id="ucod" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="FIN-XXXX-XXXX" maxlength="20"><p class="hint" style="margin-top:4px">Peça o código ao administrador do app.</p></div>
+<label class="chk"><input type="checkbox" id="ulem"> Manter conectado neste aparelho</label>
+<p class="hint" id="umsg" role="alert"></p>
+<button class="add pri" id="uok" type="button">Entrar</button>
+<button class="add" id="usw" type="button">Criar conta</button>
+<button class="linkb" id="uesq" type="button" style="margin-top:10px">Esqueci a senha</button>
+<p class="hint" id="unote"></p>
+</section>
+<section class="form" id="resw" hidden>
+<h2 style="margin-top:0">Esqueci a senha</h2><p class="msg" style="margin-top:0">Use o código de recuperação que apareceu quando você criou a conta.</p>
+<label for="rnome">Nome da conta</label><input id="rnome" autocomplete="username" autocapitalize="words">
+<label for="rcod">Código de recuperação</label><input id="rcod" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="REC-XXXX-XXXX-XXXX-XXXX" maxlength="30">
+<label for="rpw">Senha nova</label><input id="rpw" type="password" autocomplete="new-password" placeholder="8+ caracteres, letras e números">
+<label for="rpw2">Repita a senha nova</label><input id="rpw2" type="password" autocomplete="new-password">
+<p class="hint" id="rmsg" role="alert"></p><button class="add pri" id="rok" type="button">Criar senha nova</button><button class="add" id="rvolta" type="button">Voltar</button>
+</section>
+<p class="ver" id="ver2"></p>
+<p class="ver"><a href="privacidade.html" target="_blank" rel="noopener">Privacidade</a> · <a href="termos.html" target="_blank" rel="noopener">Termos de uso</a></p>
+</main>
+</section>
+
+<!-- ============ PRIMEIRO USO ============ -->
+<section class="pg" id="pgs">
+<main>
+<h1>Bem-vindo</h1>
+<p class="saldo" style="font-size:30px" id="bemv">Minhas Finanças</p>
+<p class="sub">Vamos começar. Qual era o saldo da conta no início do mês?</p>
+<section class="form">
+<label for="ini0" style="margin-top:0">Saldo (conta principal)</label>
+<input id="ini0" inputmode="decimal" value="" placeholder="639,73" autocomplete="off">
+<p class="hint" id="ini0msg">Depois, na engrenagem ⚙, você adiciona outras contas.</p>
+<button class="add pri" id="ini0ok" type="button">Começar</button>
+<button class="linkb" id="ininv" type="button" style="margin-top:14px">Já usava o app? Restaurar da nuvem</button>
+<div id="ininvw" hidden><p class="hint">Use o mesmo nome de conta do outro celular e a senha do backup na nuvem.</p><input id="ininvpw" type="password" autocomplete="current-password" placeholder="senha do backup na nuvem"><button class="add" id="ininvok" type="button">Restaurar</button><p class="msg" id="ininvmsg" role="status"></p></div>
+</section>
+</main>
+</section>
+</div>
+
+<div class="sheet" id="lan" hidden role="dialog" aria-modal="true" aria-labelledby="lant"><div class="sheetbox"><div class="lanh"><h2 id="lant">Lançamentos</h2><button type="button" class="add" id="lanx">Fechar</button></div><p class="msg" style="margin-top:4px">Só para ver. Para editar ou apagar, use a aba Histórico.</p><div id="lantot"></div><div id="lanl"></div></div></div>
+<div class="sheet" id="edit" hidden role="dialog" aria-modal="true" aria-label="Lançamento"><div class="sheetbox">
+<h2 id="etit">Editar lançamento</h2>
+<label for="ed" style="margin-top:0">Descrição</label><input id="ed" autocomplete="off">
+<div class="row2"><div><label for="ev">Valor (R$)</label><input id="ev" inputmode="decimal" autocomplete="off"></div><div><label for="edt">Data</label><input id="edt" type="date"></div></div>
+<div class="row2"><div><label for="eh">Hora</label><input id="eh" type="time"></div><div><label for="ep">Pagamento</label><select id="ep"></select></div></div>
+<div id="epw" hidden><label for="epar">Parcelas no crédito</label><select id="epar"></select><p class="hint" id="eparn" style="margin:6px 0 0"></p></div>
+<label>Tipo</label><div class="tipos" id="etipo"></div>
+<div id="ecw" hidden><label for="ecat">Categoria</label><select id="ecat"></select><input id="ecatn" placeholder="Nome da nova categoria" autocomplete="off" maxlength="24" hidden style="margin-top:6px"></div>
+<div id="ewg" hidden><div class="row2"><div><label for="elug">Onde está</label><select id="elug"></select></div><div><label for="eobj">Objetivo</label><select id="eobj"></select></div></div><input id="elugn" placeholder="Nome do novo lugar" autocomplete="off" hidden></div>
+<p class="hint" id="emsg" role="alert"></p>
+<button class="add pri" id="esalva" type="button">Salvar alterações</button>
+<button class="add" id="ecancela" type="button">Cancelar</button>
+<button class="add perigo" id="eapaga" type="button">Apagar lançamento</button>
+</div></div>
+<div class="sheet" id="fat" hidden role="dialog" aria-modal="true" aria-label="Pagar fatura"><div class="sheetbox">
+<h2>Pagar fatura</h2><p class="msg" id="fatinfo" style="margin-top:0"></p>
+<label for="fatv">Valor (R$)</label><input id="fatv" inputmode="decimal" autocomplete="off">
+<p class="hint" id="fatmsg" role="alert"></p>
+<button class="add pri" id="fatok" type="button">Pagar fatura</button>
+<button class="add" id="fatcan" type="button">Cancelar</button>
+</div></div>
+<div class="tut" id="tut" hidden role="dialog" aria-modal="true" aria-label="Tutorial"><div class="tut-hole" id="tuth"></div><div class="tut-b" id="tutb"><div class="tut-ar" id="tuta"></div><b id="tutt"></b><p id="tutx"></p><div class="tf"><button type="button" class="tp" id="tutp">Pular</button><span id="tutn"></span><button type="button" id="tutv">Voltar</button><button type="button" class="pri" id="tutk">Próximo</button></div></div></div>
+<button type="button" class="robo" id="robo" hidden aria-label="Abrir o mentor financeiro" title="Mentor financeiro"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><i id="robodot" hidden></i></button>
+<div class="sheet" id="men" hidden role="dialog" aria-modal="true" aria-labelledby="ment"><div class="sheetbox menbox"><div class="lanh"><h2 class="mhead" id="ment"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3.5V8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="3.2" r="2" fill="currentColor"/><rect x="6" y="8" width="20" height="17" rx="6" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="16" r="2.3" fill="currentColor"/><circle cx="20" cy="16" r="2.3" fill="currentColor"/><path d="M12.5 21h7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M3 14v5M29 14v5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Mentor</h2><button type="button" class="add" id="menx">Fechar</button></div><div class="menlog" id="menlog" aria-live="polite"></div><div class="menops" id="menops"></div><div class="menin" id="menin" hidden><input id="mentx" autocomplete="off" maxlength="300" placeholder="Escreva uma dúvida" aria-label="Mensagem para o mentor"><button type="button" class="add pri" id="mensend">Enviar</button></div></div></div>
+<div class="bio" id="bio" hidden role="dialog" aria-modal="true" aria-labelledby="biot"><div class="biobox"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 6c-9.9 0-18 8.1-18 18M24 12c-6.6 0-12 5.4-12 12v4M24 18c-3.3 0-6 2.7-6 6v8c0 3 1 5.5 3 7.5M24 24v10c0 4 2 7 5 9M30 24c0-3.3-2.7-6-6-6M36 24c0-6.6-5.4-12-12-12M42 24c0-9.9-8.1-18-18-18M30 24v6M36 28v2c0 3-1 6-2.5 8.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg><h2 id="biot">Minhas Finanças</h2><p>Confirme que é você para abrir.</p><button type="button" class="add pri" id="biobtn">Entrar com a digital</button><button type="button" class="linkb" id="biosenha">Usar a senha</button><p class="msg" id="biomsg" role="alert"></p></div></div>
+<div class="mais" id="mais" hidden><div class="maisl" role="menu" aria-label="Opções do botão +"><button type="button" role="menuitem" id="abhis"><b>Histórico</b><span aria-hidden="true">📋</span></button><button type="button" role="menuitem" id="abmen"><b>Mentor</b><span aria-hidden="true">🤖</span><i class="mdot" id="abmend" hidden></i></button><button type="button" role="menuitem" id="abint"><b>Inteligência</b><span aria-hidden="true">🧠</span></button><button type="button" role="menuitem" id="abcas"><b>Casal</b><span aria-hidden="true">👫</span></button><button type="button" role="menuitem" id="abinv"><b>Investir</b><span aria-hidden="true">📈</span></button><button type="button" role="menuitem" id="ablan" class="mpri"><b>Lançar</b><span aria-hidden="true">✏️</span></button></div></div>
+<button type="button" class="fab" id="fab" hidden aria-label="Abrir opções" aria-haspopup="menu" aria-expanded="false" title="Opções">+</button>
+<div class="sheet" id="lanc" hidden role="dialog" aria-modal="true" aria-labelledby="lanct"><div class="sheetbox">
+<div class="lanh"><h2 id="lanct">Lançar</h2><button type="button" class="add" id="lancx">Fechar</button></div>
+<div class="lopc"><button type="button" class="mic lmic" id="mic1" aria-label="Falar o lançamento" title="Falar o lançamento"><span aria-hidden="true">🎤</span>Falar</button><button type="button" id="digita"><span aria-hidden="true">⌨️</span>Digitar</button><button type="button" id="ocrbtn"><span aria-hidden="true">📷</span>Foto</button><button type="button" id="compbtn"><span aria-hidden="true">📄</span>PDF</button></div>
+<p class="hint" id="hint">Diga “gastei 12,50 no pix na padaria”. Com valor e pagamento, salva sozinho.</p>
+<div class="campo" id="digbox" hidden><input id="frase" placeholder="Ex.: padaria 12,50 pix" autocomplete="off" enterkeyhint="done"><button type="button" class="add pri" id="digok" style="width:auto;margin:0;padding:0 16px">OK</button></div>
+<div id="atalhos" hidden><label>Atalhos · toque para lançar de novo</label><div class="chips" id="chips"></div></div>
+<input type="file" id="ocrfile" accept="image/*" hidden><input type="file" id="compfile" accept="application/pdf,.pdf" hidden>
+</div></div>
+<div class="sheet" id="nov" hidden role="dialog" aria-modal="true" aria-labelledby="novt"><div class="sheetbox"><h2 id="novt">Novidades</h2><ul class="novl" id="novl"></ul><button type="button" class="add pri" id="novok">Entendi</button></div></div>
+<div class="sheet" id="recs" hidden role="dialog" aria-modal="true" aria-labelledby="recst2"><div class="sheetbox"><h2 id="recst2">🔑 Guarde seu código de recuperação</h2><p class="msg">Se esquecer a senha, é com ele que você cria uma senha nova sem perder nada. Tire um print ou anote em lugar seguro. Ninguém mais tem esse código, nem o administrador.</p><p class="admcod" id="recc" style="font-size:20px"></p><button type="button" class="add" id="reccp">Copiar</button><button type="button" class="add pri" id="recok">Já guardei</button></div></div>
+<div class="acs" id="acs" hidden role="dialog" aria-modal="true" aria-labelledby="acst"><div class="acsb"><div class="ic" aria-hidden="true">🔒</div><h2 id="acst">Acesso ao app</h2><p class="msg" id="acsx"></p><div id="acsw"><label for="acsc">Código de convite</label><input id="acsc" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="FIN-XXXX-XXXX" maxlength="20"><button type="button" class="add pri" id="acsok">Liberar acesso</button></div><p class="msg" id="acsm" role="alert"></p><p class="msg">Seus dados continuam guardados neste celular.</p><button type="button" class="add" id="acssai">Sair da conta</button></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden><span id="tmsg"></span><button type="button" id="tuti" hidden>Útil</button><button type="button" id="tdes" hidden>Desnecessário</button><button type="button" id="tedi" hidden>Editar</button><button type="button" id="tund">Desfazer</button><div id="tcats" hidden></div></div>
+
+<script>//@@JS@@</script>
+</body>
+</html>

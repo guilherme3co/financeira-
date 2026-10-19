@@ -1,4 +1,4 @@
-# Manual do Minhas Finanças (v1.2)
+# Manual do Minhas Finanças (v1.3)
 
 App de controle de gastos que funciona no navegador do celular.
 Endereço: **https://guilherme3co.github.io/financeiro**
@@ -84,9 +84,13 @@ Endereço: **https://guilherme3co.github.io/financeiro**
 - E-mail de falha: GitHub → Settings → Notifications → **Actions** → marcar e-mail.
 
 ## 10. Para quem for mexer no código
-- Tudo está em `index.html` (um arquivo só, sem dependências externas). `sw.js` faz o app abrir sem internet.
-- Pastas: `ocr/` (leitor de foto), `pdf/` (leitor de PDF), `qr/` (leitor de QR Code), `fonts/` (letras).
-- A segurança (CSP) usa o hash do script: ao mudar o código, o hash no topo do `index.html` precisa ser recalculado.
-- Ao lançar versão nova: mude `VERSAO` **e** `<meta name="app-versao">` juntos, senão o app fica recarregando.
-- **Servidor (Supabase):** tabelas `backups`, `backup_versoes`, `casal`, `avisos`, `acessos`, `convites`, `config`, todas com RLS e sem acesso direto. O app só usa funções (`salvar_backup`, `casal_salvar`, `avisos_salvar`, …). A chave privada dos avisos fica no **Vault** do Supabase.
+- **Código organizado em `src/`:** `src/index.html` (estrutura da tela), `src/css/app.css` (visual) e `src/js/` (uma parte por assunto, na ordem do número).
+- **Depois de mudar algo em `src/`:** rode `python3 build.py`. Ele monta o `index.html` final (o app continua sendo 1 arquivo no site) e recalcula a proteção de segurança (CSP). Envie `src/` e `index.html` juntos.
+- O teste diário confere se o `index.html` bate com `src/` (`python3 build.py --check`).
+- Ao lançar versão nova: mude `VERSAO` (em `src/js/00-inicio.js`) **e** `<meta name="app-versao">` (em `src/index.html`) juntos.
+- `sw.js` faz o app abrir sem internet. Pastas: `ocr/` (leitor de foto), `pdf/` (leitor de PDF), `qr/` (leitor de QR Code), `fonts/` (letras).
+- **Servidor (Supabase):** o molde completo está em `supabase/schema.sql` (tabelas, funções, permissões e o passo a passo para recriar num projeto novo). A função de avisos está em `supabase/functions/avisos/`. Tabelas: `backups`, `backup_versoes`, `casal`, `avisos`, `acessos`, `convites`, `config`, todas com RLS e sem acesso direto; o app só usa funções. As chaves dos avisos ficam no **Vault**.
+- **Publicação:** a cada envio, o GitHub testa o app. Com **Settings → Pages → Source → GitHub Actions**, o site só é atualizado se os testes passarem.
+- Backup na nuvem vai **compactado e criptografado** (cerca de 10 vezes menor). O painel Administrador mostra o espaço usado (plano grátis: 500 MB).
 - Nunca coloque a chave **secreta** (service_role) no app ou no GitHub. A chave **publishable** pode ficar.
+- Licença: todos os direitos reservados (arquivo `LICENSE`). Privacidade e termos: `privacidade.html` e `termos.html`.

@@ -1,0 +1,11 @@
+Copyright (c) 2026 guilherme3co. Todos os direitos reservados.
+
+O código deste repositório (app "Minhas Finanças") é de uso exclusivo do autor.
+Não é permitido copiar, modificar, distribuir, publicar, sublicenciar ou vender
+este software, no todo ou em parte, sem autorização por escrito do autor.
+
+Componentes de terceiros incluídos mantêm suas próprias licenças:
+- qr/jsqr.js (jsQR) — Apache License 2.0 (qr/LICENSE-jsQR.txt)
+- ocr/ (Tesseract.js e dados de idioma) — Apache License 2.0
+- pdf/ (PDF.js) — Apache License 2.0
+- fonts/ (DM Sans, Bricolage Grotesque) — SIL Open Font License 1.1 (fonts/OFL-*.txt)
